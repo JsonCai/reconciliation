@@ -24,5 +24,27 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#06bebe",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+	    "color": "#7A7E83",
+	    "selectedColor": "#06bebe",
+	    "borderStyle": "black",
+	    "backgroundColor": "#ffffff",
+	    "list": [{
+	        "pagePath": "pages/index/index",
+	        "iconPath": "static/image/home.png",
+	        "selectedIconPath": "static/images/home@sel.png",
+	        "text": "首页"
+	    }, {
+	        "pagePath": "pages/msg/msg",
+	        "iconPath": "static/images/msg.png",
+	        "selectedIconPath": "static/images/msg@sel.png",
+	        "text": "消息"
+	    },{
+	        "pagePath": "pages/me/me",
+	        "iconPath": "static/images/me.png",
+	        "selectedIconPath": "static/images/me@sel.png",
+	        "text": "我的"
+	    }]
 	}
 }

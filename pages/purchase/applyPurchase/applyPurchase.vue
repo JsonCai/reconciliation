@@ -8,7 +8,7 @@
 				<swiper-item v-for="(items,index) in newslist" :key="index">
 					<scroll-view :scroll-y="true" class="list" :style="{height:swiperheight+'px'}">
 						<block v-for="(item,index1) in items.list" :key="index1">
-							<!-- <index-list :item="item" :index="index1"></index-list> -->
+							<applyItem :applyItem="item"/>
 						</block>
 					</scroll-view>
 				</swiper-item>
@@ -18,10 +18,10 @@
 </template>
 
 <script>
-	import fakeSearch from '../../components/fakeSearch/fakeSearch.vue'
-
-	import swiperTabHead from '../../components/swiperTabHead/swiperTabHead.vue'
-
+	import fakeSearch from '../../../components/fakeSearch/fakeSearch.vue'
+	import {applyList} from '../../../libs/testDates.js'
+	import swiperTabHead from '../../../components/swiperTabHead/swiperTabHead.vue'
+	import {applyItem} from '../../../components/applyItem/applyItem.vue'
 	export default {
 		data() {
 			return {
@@ -49,79 +49,8 @@
 					}
 				],
 				newslist: [{
-						list: [{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{},
-							{}
-						]
+						list: applyList
+						
 					},
 					{},
 					{},
@@ -135,8 +64,6 @@
 				success: (res) => {
 					const query = uni.createSelectorQuery().in(this);
 					query.select('#swiperTabHead').boundingClientRect(data => {
-						console.log("得到布局位置信息" + JSON.stringify(data));
-						console.log("节点离页面顶部的距离为" + data.top);
 						let height = res.windowHeight - data.height
 						this.swiperheight = height;
 					}).exec();

@@ -12,7 +12,7 @@
 	}
 </script>
 
-<style>
+<style lang="less">
 	/*每个页面公共css */
 	@import url("./common/common.less");
 	/* 引入官方css库 */

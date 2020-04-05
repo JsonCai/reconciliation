@@ -1,12 +1,12 @@
 <template>
 	<view class="external-class fakeSearch">
-	  <view class="search-wrap big" @tap="onSearch()" v-if="!showBtn">
+	  <view class="search-wrap big" @tap="onSearch" v-if="!showBtn">
 	    <text class="search-text iconfont">&#xe614; 输入关键字搜索</text>
 	  </view>
-	   <view class="search-wrap" @tap="onSearch()" v-else>
+	   <view class="search-wrap" @tap="onSearch" v-else>
 	    <text class="search-text iconfont">&#xe614;输入关键字搜索</text>
 	  </view>
-	  <text class="new-btn" @tap="clickBtn()" v-if="showBtn">{{btnText}}</text>
+	  <text class="new-btn" @tap="clickBtn" v-if="showBtn">{{btnText}}</text>
 	</view>
 </template>
 

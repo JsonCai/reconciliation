@@ -32,7 +32,7 @@
 	    "backgroundColor": "#ffffff",
 	    "list": [{
 	        "pagePath": "pages/index/index",
-	        "iconPath": "static/image/home.png",
+	        "iconPath": "static/images/home.png",
 	        "selectedIconPath": "static/images/home@sel.png",
 	        "text": "首页"
 	    }, {

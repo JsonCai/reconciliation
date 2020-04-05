@@ -1,9 +1,9 @@
 <template>
 	<view class="container">
 		<view class="item-list">
-			<indexNavItem @handleClick="handleClick" text="报销" roleName="老板" v-if="showApplyBoss"/>
+			<indexNavItem  text="报销" roleName="老板" v-if="showApplyBoss"/>
 			<indexNavItem @handleClick="handleClick" text="财务" roleName="老板" v-if="showFinanceBoss"/>
-			<indexNavItem @handleClick="handleClick" text="报销" roleName="采购" v-if="showApplyPurchase"/>
+			<indexNavItem @handleClick="handleClick('ApplyPurchase')" text="报销" roleName="采购" v-if="showApplyPurchase"/>
 			<indexNavItem @handleClick="handleClick" text="营收" roleName="营收" v-if="showRevenueRevenuer"/>
 			<indexNavItem @handleClick="handleClick" text="报销" roleName="出纳" v-if="showApplyCashier"/>
 			<indexNavItem @handleClick="handleClick" text="营收" roleName="出纳" v-if="showApplyCashier"/>
@@ -40,13 +40,18 @@
 
 		},
 		methods: {
-			handleClick(){
-				console.log(123123)
+			handleClick(type){
+				if(type == 'ApplyPurchase'){
+					console.log(123123)
+					uni.navigateTo({
+						path:'/pages/purchase/applyPurchase/applyPurchase'
+					})
+				}
 			}
 		}
 	}
 </script>
 
 <style lang="less">
-	@import url('index.less');
+	@import url('./index.less');
 </style>

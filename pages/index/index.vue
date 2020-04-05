@@ -1,39 +1,48 @@
 <template>
 	<view class="container">
 		<view class="item-list">
-			<view class="index-item">
-				<image src="../../static/images/index-rec-icon.png"  class="icon"></image>
-				<text>报销</text>
-				<view class="role-icon"></view>
-			</view>
-			<view class="index-item">
-				<image src="../../static/images/index-revenue-icon.png"  class="icon"></image>
-				<text>营收</text>
-			</view>
-			<view class="index-item">
-				<image src="../../static/images/index-finance-icon.png"  class="icon"></image>
-				<text>财务</text>
-			</view>
-			<view class="index-item">
-				<image src="../../static/images/index-statement-icon.png"  class="icon"></image>
-				<text>报表</text>
-			</view>
+			<indexNavItem @handleClick="handleClick" text="报销" roleName="老板" v-if="showApplyBoss"/>
+			<indexNavItem @handleClick="handleClick" text="财务" roleName="老板" v-if="showFinanceBoss"/>
+			<indexNavItem @handleClick="handleClick" text="报销" roleName="采购" v-if="showApplyPurchase"/>
+			<indexNavItem @handleClick="handleClick" text="营收" roleName="营收" v-if="showRevenueRevenuer"/>
+			<indexNavItem @handleClick="handleClick" text="报销" roleName="出纳" v-if="showApplyCashier"/>
+			<indexNavItem @handleClick="handleClick" text="营收" roleName="出纳" v-if="showApplyCashier"/>
+			<indexNavItem @handleClick="handleClick" text="财务" roleName="出纳" v-if="showFinanceCashier"/>
+			<indexNavItem @handleClick="handleClick" text="报销" roleName="会计" v-if="showApplyAccountant"/>
+			<indexNavItem @handleClick="handleClick" text="营收" roleName="会计" v-if="showRevenueAccountant"/>
+			<indexNavItem @handleClick="handleClick" text="报表" roleName="会计" v-if="showStatementAccountant"/>
 		</view>
 	</view>
 </template>
-
 <script>
+	import indexNavItem from '../../components/indexNavItem/indexNavItem.vue'
 	export default {
+		components:{
+			indexNavItem
+		},
 		data() {
 			return {
-				title: 'Hello'
+				showApplyBoss:true,
+				showFinanceBoss:true,
+				showApplyPurchase:true,
+				showApplyRevenue:true,
+				showCashierApply:true,
+				showApplyCashier:true,
+				showFinanceApply:true,
+				showRevenueRevenuer:true,
+				showStatementAccountant:true,
+				showRevenueAccountant:true,
+				showApplyAccountant:true,
+				showFinanceCashier:true
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-
+			handleClick(){
+				console.log(123123)
+			}
 		}
 	}
 </script>

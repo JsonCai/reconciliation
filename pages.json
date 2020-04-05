@@ -14,6 +14,10 @@
             "path" : "pages/me/me",
             "style" : {}
         }
+        ,{
+            "path" : "pages/purchase/applyPurchase/applyPurchase/applyPurchase",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

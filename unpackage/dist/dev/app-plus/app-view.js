@@ -228,11 +228,58 @@ var render = function() {
         "v-uni-view",
         { staticClass: _vm._$g(1, "sc"), attrs: { _i: 1 } },
         [
-          _c("v-uni-image", {
-            staticClass: _vm._$g(2, "sc"),
-            attrs: { src: _vm._$g(2, "a-src"), _i: 2 }
-          }),
-          _c("v-uni-text", { attrs: { _i: 3 } })
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(2, "sc"), attrs: { _i: 2 } },
+            [
+              _c("v-uni-image", {
+                staticClass: _vm._$g(3, "sc"),
+                attrs: { src: _vm._$g(3, "a-src"), _i: 3 }
+              }),
+              _c("v-uni-text", { attrs: { _i: 4 } }, [_vm._v("报销")]),
+              _c("v-uni-view", {
+                staticClass: _vm._$g(5, "sc"),
+                attrs: { _i: 5 }
+              })
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
+            [
+              _c("v-uni-image", {
+                staticClass: _vm._$g(7, "sc"),
+                attrs: { src: _vm._$g(7, "a-src"), _i: 7 }
+              }),
+              _c("v-uni-text", { attrs: { _i: 8 } }, [_vm._v("营收")])
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
+            [
+              _c("v-uni-image", {
+                staticClass: _vm._$g(10, "sc"),
+                attrs: { src: _vm._$g(10, "a-src"), _i: 10 }
+              }),
+              _c("v-uni-text", { attrs: { _i: 11 } }, [_vm._v("财务")])
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
+            [
+              _c("v-uni-image", {
+                staticClass: _vm._$g(13, "sc"),
+                attrs: { src: _vm._$g(13, "a-src"), _i: 13 }
+              }),
+              _c("v-uni-text", { attrs: { _i: 14 } }, [_vm._v("报表")])
+            ],
+            1
+          )
         ],
         1
       )
@@ -328,7 +375,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../安装文件/HBuilderX.2.2.2.20190816/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".index-item {\n  height: 200rpx;\n  border-radius: 10rpx;\n  width: 100%;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n          align-items: center;\n}\n.index-item .icon {\n  width: 100rpx;\n  height: 100rpx;\n}\n", ""]);
+exports.push([module.i, ".item-list {\n  width: 80%;\n  margin-top: 20rpx;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n  -webkit-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n          justify-content: center;\n}\n.index-item {\n  height: 200rpx;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: flex;\n  -webkit-box-align: center;\n  -webkit-align-items: center;\n          align-items: center;\n  -webkit-box-pack: center;\n  -webkit-justify-content: center;\n          justify-content: center;\n  background: #fff;\n  margin-bottom: 20rpx;\n  position: relative;\n}\n.index-item .icon {\n  width: 100rpx;\n  height: 100rpx;\n  margin-right: 40rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -1157,7 +1204,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../安装文件/HBuilderX.2.2.2.20190816/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*每个页面公共css */\nbody{\r\n\theight:100%;\n}\n.container{\r\n\tdisplay: -webkit-box;\r\n\tdisplay: -webkit-flex;\r\n\tdisplay: flex;\r\n\t-webkit-box-orient: vertical;\r\n\t-webkit-box-direction: normal;\r\n\t-webkit-flex-direction: column;\r\n\t        flex-direction: column;\r\n\t-webkit-box-align: center;\r\n\t-webkit-align-items: center;\r\n\t        align-items: center;\r\n\tmin-height: 100%;\r\n\tpadding: 20rpx;\r\n\tbox-sizing: border-box;\r\n\tbackground: #f5f5fa;\n}\n.bg-f{\r\n\tbackground: #fff;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*每个页面公共css */\nbody{\r\n\theight:100%;\n}\n.container{\r\n\tdisplay: -webkit-box;\r\n\tdisplay: -webkit-flex;\r\n\tdisplay: flex;\r\n\t-webkit-box-orient: vertical;\r\n\t-webkit-box-direction: normal;\r\n\t-webkit-flex-direction: column;\r\n\t        flex-direction: column;\r\n\t-webkit-box-align: center;\r\n\t-webkit-align-items: center;\r\n\t        align-items: center;\r\n\tmin-height: 100%;\r\n\tpadding: 20rpx;\r\n\tbox-sizing: border-box;\r\n\tbackground: #f5f5fa;\n}\n.bg-f{\r\n\tbackground: #fff;\n}\n.ml-10{\r\n\tmargin-left: 10rpx;\n}\n.ml-20{\r\n\tmargin-left: 20rpx;\n}\n.mt-10{\r\n\tmargin-bottom: 10rpx;\n}\n.mt-20{\r\n\tmargin-bottom: 20rpx;\n}\n.mt-10{\r\n\tmargin-top: 10rpx;\n}\n.mt-20{\r\n\tmargin-top: 20rpx;\n}\n.mr-10{\r\n\tmargin-right: 10rpx;\n}\n.mr-20{\r\n\tmargin-right: 20rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 

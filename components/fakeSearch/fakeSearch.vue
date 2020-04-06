@@ -89,18 +89,18 @@
 		width: 600rpx;
 	}
 
-	// .iconfont {
-	// 	font-family: "iconfont" !important;
-	// 	font-style: normal;
+	.iconfont {
+		font-family: "iconfont" !important;
+		font-style: normal;
 
-	// 	/* #ifndef APP-PLUS-NVUE */
-	// 	-webkit-font-smoothing: antialiased;
-	// 	-moz-osx-font-smoothing: grayscale;
-	// 	/* #endif*/
-	// }
+		/* #ifndef APP-PLUS-NVUE */
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		/* #endif*/
+	}
 
-	// @font-face {
-	// 	font-family: iconfont;
-	// 	src: url("/static/icon_font/iconfont.ttf");
-	// }
+	@font-face {
+		font-family: iconfont;
+		src: url("/static/icon_font/iconfont.ttf");
+	}
 </style>

@@ -11,6 +11,8 @@
                 </div>
             </uni-refresh>
             <uni-cell v-for="(item, index) in dataList" :key="item.id">
+                <!-- <news-item :newsItem="item" @close="closeItem(index)" @click="goDetail(item)"></news-item> -->
+				<view>{{item.title}}</view>
 				<slot name="test" :item="item.title"></slot>
             </uni-cell>
             <uni-cell v-if="isLoading || dataList.length > 4">
@@ -46,17 +48,21 @@
 			newsItem
 		},
 		props: {
-			dataList: Array
+			nid: {
+				type: [Number, String],
+				default: ''
+			}
 		},
 		data() {
 			return {
+				dataList: [],
 				navigateFlag: false,
 				pulling: false,
 				refreshing: false,
 				refreshFlag: false,
 				refreshText: "",
 				isLoading: false,
-				loadingText: '11111111加载中...',
+				loadingText: '加载中...',
 				isNoData: false,
 				pulling: false,
 				angle: 0,

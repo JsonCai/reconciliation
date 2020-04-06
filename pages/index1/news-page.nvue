@@ -46,21 +46,17 @@
 			newsItem
 		},
 		props: {
-			nid: {
-				type: [Number, String],
-				default: ''
-			}
+			dataList: Array
 		},
 		data() {
-			return {
-				dataList: [],
+			return {[],
 				navigateFlag: false,
 				pulling: false,
 				refreshing: false,
 				refreshFlag: false,
 				refreshText: "",
 				isLoading: false,
-				loadingText: '加载中...',
+				loadingText: '1111111加载中...',
 				isNoData: false,
 				pulling: false,
 				angle: 0,
@@ -100,6 +96,7 @@
 						var endTime = new Date();
 						console.log("request time " + new Date(endTime - startTime).getTime());
 						const data = result.data;
+						
 						this.isNoData = (data.length <= 0);
 
 						const data_list = data.map((news) => {

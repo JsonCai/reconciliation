@@ -56,7 +56,7 @@
 				refreshFlag: false,
 				refreshText: "",
 				isLoading: false,
-				loadingText: '加载中...',
+				loadingText: '11111111加载中...',
 				isNoData: false,
 				pulling: false,
 				angle: 0,

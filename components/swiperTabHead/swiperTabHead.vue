@@ -1,9 +1,9 @@
 <template>
 	<view class="uni-tab-bar">
 		<scroll-view scroll-x class="uni-swiper-tab">
-			<block v-for="(tab,index) in tabBars" :key="tab.id">
-				<view class="swiper-tab-list" :class="{'active':tabIndex==index}" @tap="tabtap(index)">
-					{{tab.name}}
+			<block v-for="(tab, index) in tabBars" :key="tab.id">
+				<view class="swiper-tab-list" :class="{ active: tabIndex == index }" @tap="tabtap(index)">
+					{{ tab.name }}
 					<view class="swiper-tab-line"></view>
 				</view>
 			</block>
@@ -12,35 +12,38 @@
 </template>
 
 <script>
-	export default {
-		props:{
-			tabBars:Array,
-			tabIndex:Number
-		},
-		methods:{
-			tabtap(index){
-				this.$emit('tabtap',index);
-			},
+export default {
+	props: {
+		tabBars: Array,
+		tabIndex: Number
+	},
+	methods: {
+		tabtap(index) {
+			this.$emit('tabtap', index);
 		}
 	}
+};
 </script>
 
 <style>
-.uni-swiper-tab{
-	border-bottom: 1upx solid #EEEEEE;
+.uni-tab-bar {
+	border-bottom: 1rpx solid #e5e5e5;
 }
-.swiper-tab-list{
+.uni-swiper-tab {
+	border-bottom: 1rpx solid #eeeeee;
+}
+.swiper-tab-list {
 	color: #969696;
 	font-weight: bold;
 }
-.uni-tab-bar .active{
+.uni-tab-bar .active {
 	color: #343434;
 }
-.active .swiper-tab-line{
-	border-bottom: 6upx solid #06bebe;
-	width: 70upx;
+.active .swiper-tab-line {
+	border-bottom: 2rpx solid #06bebe;
+	width: 70rpx;
 	margin: auto;
-	border-top: 6upx solid #06bebe;
-	border-radius:20upx;
+	border-top: 6rpx solid #06bebe;
+	border-radius: 20rpx;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-	<view class="index-item" @click="onClick">
-		<image :src="iconSrc" class="icon" @click="onClick"></image>
+	<view class="index-item" @tap="onClick">
+		<image :src="iconSrc" class="icon" @tap="onClick"></image>
 		<text>{{text}}</text>
 		<view class="role-wrap"><text class="text">{{roleName}}</text></view>
 	</view>
@@ -36,7 +36,6 @@
 		},
 		methods:{
 			onClick(){
-				console.log(2222222222)
 				this.$emit('handleClick')
 			}
 		}

@@ -1,13 +1,12 @@
 <template>
 	<view class="external-class fakeSearch">
-		  <text class="test">&#xe614;</text>
-		<!-- <view class="search-wrap big" @tap="onSearch" v-if="!showBtn">
-			<text class="search-text iconfont">&#xe614;</text>
+		<view class="search-wrap big" @tap="onSearch" v-if="!showBtn">
+			<text class="search-text test">&#xe614;输入关键字搜索</text>
 		</view>
 		<view class="search-wrap" @tap="onSearch" v-else>
-			<text class="search-text iconfont">&#xe614;</text>
+			<text class="search-text test">&#xe614;输入关键字搜索</text>
 		</view>
-		<text class="new-btn" @tap="clickBtn" v-if="showBtn">{{btnText}}</text> -->
+		<text class="new-btn" @tap="clickBtn" v-if="showBtn">{{btnText}}</text>
 	</view>
 </template>
 
@@ -95,20 +94,5 @@
 
 	.big {
 		width: 600rpx;
-	}
-
-	.iconfont {
-		font-family: "iconfont" !important;
-		font-style: normal;
-
-		/* #ifndef APP-PLUS-NVUE */
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		/* #endif*/
-	}
-
-	@font-face {
-		font-family: iconfont;
-		src: url("/static/icon_font/iconfont.ttf");
 	}
 </style>

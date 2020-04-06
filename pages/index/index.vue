@@ -44,7 +44,7 @@
 				if(type == 'ApplyPurchase'){
 					console.log(123123)
 					uni.navigateTo({
-						url:'/pages/purchase/applyPurchase/applyPurchase'
+						url:'/pages/index1/index1'
 					})
 				}
 			}

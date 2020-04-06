@@ -2,11 +2,14 @@
 <template>
 	<view class="">
 		<fakeSearch></fakeSearch>
-		<swiperTabHead id="swiperTabHead" class="swiper-tab-head" :tabBars="tabBars" :tabIndex="tabIndex" @tabtap="tabtap"></swiperTabHead>
-		<view>
-			<scroll-view :scroll-y="true" class="list" :style="{ height: swiperheight + 'px' }">
+		<!-- <swiperTabHead id="swiperTabHead" class="swiper-tab-head" :tabBars="tabBars" :tabIndex="tabIndex" @tabtap="tabtap"></swiperTabHead> -->
+		<view class="tabs">
+			<!-- <scroll-view :scroll-y="true" class="list" :style="{ height: swiperheight + 'px' }">
 				<block v-for="(item, index1) in list" :key="index1"><applyItem :applyItem="item" /></block>
-			</scroll-view>
+			</scroll-view> -->
+			<list id="0" :dataList="list" >
+				<block v-for="(item, index1) in list" :key="index1"><applyItem :applyItem="item" /></block>
+			</list>
 		</view>
 	</view>
 </template>
@@ -16,9 +19,13 @@ import fakeSearch from '../../../components/fakeSearch/fakeSearch.vue';
 import { applyList } from '../../../libs/testDates.js';
 import swiperTabHead from '../../../components/swiperTabHead/swiperTabHead.vue';
 import applyItem from '../../../components/applyItem/applyItem.vue';
+import list from './list.nvue'
 export default {
 	components: {
-		applyItem
+		applyItem,
+		fakeSearch,
+		swiperTabHead,
+		list
 	},
 	data() {
 		return {
@@ -59,19 +66,19 @@ export default {
 		};
 	},
 	onReady() {
-		uni.getSystemInfo({
-			success: res => {
-				const query = uni.createSelectorQuery().in(this);
-				query
-					.select('#swiperTabHead')
-					.boundingClientRect(data => {
-						console.log(data);
-						let height = res.windowHeight - data.height;
-						this.swiperheight = height - 20;
-					})
-					.exec();
-			}
-		});
+		// uni.getSystemInfo({
+		// 	success: res => {
+		// 		const query = uni.createSelectorQuery().in(this);
+		// 		query
+		// 			.select('#swiperTabHead')
+		// 			.boundingClientRect(data => {
+		// 				console.log(data);
+		// 				let height = res.windowHeight - data.height;
+		// 				this.swiperheight = height - 20;
+		// 			})
+		// 			.exec();
+		// 	}
+		// });
 	},
 	methods: {
 		tabtap(index) {

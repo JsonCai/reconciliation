@@ -13,9 +13,10 @@
 </script>
 
 <style lang="less">
-
+	/* #ifndef APP-PLUS-NVUE */
 	/* 引入官方css库 */
 	@import url("./common/uni.css");
 	/*每个页面公共css */
 	@import url("./common/common.less");
+	/* #endif*/
 </style>

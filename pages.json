@@ -18,6 +18,10 @@
             "path" : "pages/purchase/applyPurchase/applyPurchase",
             "style" : {}
         }
+        ,{
+            "path" : "pages/index1/index1",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

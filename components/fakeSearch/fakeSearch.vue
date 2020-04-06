@@ -30,23 +30,19 @@
 	
 </script>
 
-<style>
+<style lang="less">
 	.fakeSearch{
-	  width: 100%;
+	  width:750rpx;
 	  height:120rpx;
-	  background: #fff;
+	  background-color: red;
 	  display: flex;
 	  align-items: center;
 	  justify-content: space-between;
-	  position: fixed;
-	  top:0;
-	  left:0;
-	  z-index: 4;
-	  padding: 0 20rpx;
 	  box-sizing: border-box;
+	  padding: 0 20rpx;
 	}
 	.new-btn{
-	  background: #f7d01c;
+	  background-color: #f7d01c;
 	  color:#fff;
 	  font-size: 28rpx;
 	  width: 140rpx;
@@ -75,7 +71,6 @@
 	}
 	.big{
 	  width: 600rpx;
-	  margin: 0 auto;
 	}
 	.iconfont {
 	  font-family: "iconfont" !important;

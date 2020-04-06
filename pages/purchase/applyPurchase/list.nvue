@@ -1,0 +1,174 @@
+<template>
+	<view class="page-news">
+		<!-- QQ multipleSlots=true bug -->
+		<!-- #ifndef MP-QQ -->
+		<uni-list class="listview" :enableBackToTop="true" :scroll-y="true" @scrolltolower="loadMore()">
+	        <uni-refresh class="refresh" @refresh="onrefresh" @pullingdown="onpullingdown" :display="refreshing ? 'show' : 'hide'">
+	            <div class="refresh-view">
+	                <image class="refresh-icon" :src="refreshIcon" :style="{width: (refreshing || pulling) ? 0: '32px'}"
+	                    :class="{'refresh-icon-active': refreshFlag}"></image>
+	                <uni-load-more v-if="refreshing" class="loading-icon" status="loading" :contentText="loadingMoreText"></uni-load-more>
+	                <text class="loading-text">{{refreshText}}</text>
+	            </div>
+	        </uni-refresh>
+	        <!-- <uni-cell v-for="(item, index) in dataList" :key="index">
+	        </uni-cell> -->
+			<slot></slot>
+	        <uni-cell v-if="isLoading || dataList.length > 4">
+	            <view class="loading-more">
+	                <text class="loading-more-text">{{loadingText}}</text>
+	            </view>
+	        </uni-cell>
+	    </uni-list>
+		<!-- #endif -->
+		<no-data class="no-data" v-if="isNoData" @retry="loadMore"></no-data>
+	</view>
+</template>
+
+<script>
+	
+	import uniList from '@/components/list/uni-list.vue';
+	import uniCell from '@/components/list/uni-cell.vue';
+	import uniRefresh from '@/components/list/uni-refresh.vue';
+	import uniLoadMore from '@/components/list/uni-load-more.vue';
+	import noData from '@/components/list/nodata.nvue';
+	// import newsItem from './news-item.nvue';
+	
+	import { applyList } from '../../../libs/testDates.js';
+	import applyItem from '@/components/applyItem/applyItem.vue';
+	
+	export default {
+		components:{
+			uniList,
+			uniCell,
+			uniRefresh,
+			uniLoadMore,
+			noData,
+			applyItem
+		},
+		props: {
+				id:String,
+				dataList:Array
+		},
+		data() {
+			return {
+				navigateFlag: false,
+				pulling: false,
+				refreshing: false,
+				refreshFlag: false,
+				refreshText: "",
+				isLoading: false,
+				loadingText: '加载中...',
+				isNoData: false,
+				pulling: false,
+				angle: 0,
+				loadingMoreText: {
+					contentdown: '',
+					contentrefresh: '',
+					contentnomore: ''
+				},
+				refreshIcon: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAB5QTFRFcHBw3Nzct7e39vb2ycnJioqK7e3tpqam29vb////D8oK7wAAAAp0Uk5T////////////ALLMLM8AAABxSURBVHja7JVBDoAgDASrjqj//7CJBi90iyYeOHTPMwmFZrHjYyyFYYUy1bwUZqtJIYVxhf1a6u0R7iUvWsCcrEtwJHp8MwMdvh2amHduiZD3rpWId9+BgPd7Cc2LIkPyqvlQvKxKBJ//Qwq/CacAAwDUv0a0YuKhzgAAAABJRU5ErkJggg=="
+			}
+		},
+		methods:{
+			loadMore(){
+				
+			},
+			onpullingdown(){
+				
+			}
+		}
+	}
+</script>
+
+<style>
+	.no-data {
+		flex: 1;
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 10;
+	}
+
+	.page-news {
+		flex: 1;
+		flex-direction: column;
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+	}
+
+	.listview {
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		flex-direction: column;
+		/* #endif */
+		/* #ifndef MP-ALIPAY */
+		flex-direction: column;
+		/* #endif */
+	}
+
+	.refresh {
+		justify-content: center;
+	}
+
+	.refresh-view {
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		width: 750rpx;
+		height: 64px;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.refresh-icon {
+		width: 32px;
+		height: 32px;
+		transition-duration: .5s;
+		transition-property: transform;
+		transform: rotate(0deg);
+		transform-origin: 15px 15px;
+	}
+
+	.refresh-icon-active {
+		transform: rotate(180deg);
+	}
+
+	.loading-icon {
+		width: 28px;
+		height: 28px;
+		margin-right: 5px;
+		color: gray;
+	}
+
+	.loading-text {
+		margin-left: 2px;
+		font-size: 16px;
+		color: #999999;
+	}
+
+	.loading-more {
+		align-items: center;
+		justify-content: center;
+		padding-top: 14px;
+		padding-bottom: 14px;
+		text-align: center;
+	}
+
+	.loading-more-text {
+		font-size: 28rpx;
+		color: #999;
+	}
+</style>

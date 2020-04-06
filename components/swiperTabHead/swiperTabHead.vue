@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
 .uni-tab-bar {
 	border-bottom: 1rpx solid #e5e5e5;
 }

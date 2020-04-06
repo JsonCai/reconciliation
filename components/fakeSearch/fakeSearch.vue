@@ -1,5 +1,6 @@
 <template>
 	<view class="external-class fakeSearch">
+		<text :style="{fontFamily:'iconfont',color:'red',fontSize:'40px'}">{{fontName}}</text>
 		<view class="search-wrap big" @tap="onSearch" v-if="!showBtn">
 			<text class="search-text iconfont">&#xe614;</text>
 		</view>
@@ -16,13 +17,16 @@
 			btnText: String,
 			showBtn: Boolean
 		},
+		data() {
+			return {
+				fontName: "\ue614"
+			}
+		},
 		created() {
-			console.log("1212312312")
 			let domModule = weex.requireModule('dom');
-			console.log(domModule)
 			domModule.addRule('fontFace', {
 				'fontFamily': "iconfont",
-				'src': "url(\'http://at.alicdn.com/t/font_1736036_2ume0tz9uwu.ttf\')"
+				'src': "url('http://at.alicdn.com/t/font_1736036_2ume0tz9uwu.ttf')"
 			})
 		},
 		methods: {

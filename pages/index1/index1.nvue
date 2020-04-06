@@ -1,5 +1,6 @@
 <template>
 	<view class="tabs">
+		<fakeSearch ></fakeSearch>
 		<scroll-view ref="tabbar1" id="tab-bar" class="tab-bar" :scroll="false" :scroll-x="true" :show-scrollbar="false"
 		 :scroll-into-view="scrollInto">
 			<view style="flex-direction: column;">
@@ -20,7 +21,7 @@
 			<swiper-item class="swiper-item" v-for="(page, index) in tabList" :key="index">
 				<!-- #ifndef MP-ALIPAY -->
 				<newsPage class="page-item" :nid="page.newsid" ref="page">
-					<template v-slot:test="item">{{item.item}}</template>
+					<template v-slot:test="{item}">{{item.item}}</template>
 				</newsPage>
 				<!-- #endif -->
 			</swiper-item>
@@ -34,6 +35,7 @@
 	// #endif
 
 	import newsPage from './news-page.nvue';
+	import fakeSearch from '@/components/fakeSearch/fakeSearch.vue'
 	
 
 	// 缓存每页最多
@@ -44,7 +46,8 @@
 
 	export default {
 		components: {
-			newsPage
+			newsPage,
+			fakeSearch
 		},
 		data() {
 			return {

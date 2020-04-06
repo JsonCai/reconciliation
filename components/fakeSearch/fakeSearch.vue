@@ -1,10 +1,10 @@
 <template>
 	<view class="external-class fakeSearch">
 		<view class="search-wrap big" @tap="onSearch" v-if="!showBtn">
-			<text class="search-text iconfont">\ue614</text>
+			<text class="search-text iconfont">&#xe614;</text>
 		</view>
 		<view class="search-wrap" @tap="onSearch" v-else>
-			<text class="search-text iconfont">\ue614</text>
+			<text class="search-text iconfont">&#xe614;</text>
 		</view>
 		<text class="new-btn" @tap="clickBtn" v-if="showBtn">{{btnText}}</text>
 	</view>
@@ -19,6 +19,7 @@
 		created() {
 			console.log("1212312312")
 			let domModule = weex.requireModule('dom');
+			console.log(domModule)
 			domModule.addRule('fontFace', {
 				'fontFamily': "iconfont",
 				'src': "url(\'http://at.alicdn.com/t/font_1736036_2ume0tz9uwu.ttf\')"
@@ -88,18 +89,18 @@
 		width: 600rpx;
 	}
 
-	.iconfont {
-		font-family: "iconfont" !important;
-		font-style: normal;
+	// .iconfont {
+	// 	font-family: "iconfont" !important;
+	// 	font-style: normal;
 
-		/* #ifndef APP-PLUS-NVUE */
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		/* #endif*/
-	}
+	// 	/* #ifndef APP-PLUS-NVUE */
+	// 	-webkit-font-smoothing: antialiased;
+	// 	-moz-osx-font-smoothing: grayscale;
+	// 	/* #endif*/
+	// }
 
-	@font-face {
-		font-family: iconfont;
-		src: url("/static/icon_font/iconfont.ttf");
-	}
+	// @font-face {
+	// 	font-family: iconfont;
+	// 	src: url("/static/icon_font/iconfont.ttf");
+	// }
 </style>

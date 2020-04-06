@@ -1,6 +1,6 @@
 <template>
 	<view class="external-class fakeSearch">
-		  <text class="test">&#xe600;</text>
+		  <text class="test">&#xe614;</text>
 		<!-- <view class="search-wrap big" @tap="onSearch" v-if="!showBtn">
 			<text class="search-text iconfont">&#xe614;</text>
 		</view>
@@ -18,12 +18,11 @@
 			showBtn: Boolean
 		},
 		created() {
-			console.log("1212312312")
-			let domModule = weex.requireModule('dom');
-			console.log(domModule)
+
+			var domModule = weex.requireModule('dom');
 			domModule.addRule('fontFace', {
-				'fontFamily': "iconfont",
-				'src': "url(\'http://at.alicdn.com/t/font_1736036_2ume0tz9uwu.ttf\')"
+			  'fontFamily': "iconfont",
+			  'src': "url('http://at.alicdn.com/t/font_1736036_2ume0tz9uwu.ttf')"
 			})
 		},
 		methods: {

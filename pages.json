@@ -14,14 +14,6 @@
             "path" : "pages/me/me",
             "style" : {}
         }
-        ,{
-            "path" : "pages/index1/index1",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/purchase/applyBoss/applyBoss",
-            "style" : {}
-        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

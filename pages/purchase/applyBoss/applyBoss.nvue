@@ -1,0 +1,85 @@
+<!-- 报销 -->
+<template>
+	<view class="">
+		<fakeSearch></fakeSearch>
+		<!-- <swiperTabHead id="swiperTabHead" class="swiper-tab-head" :tabBars="tabBars" :tabIndex="tabIndex" @tabtap="tabtap"></swiperTabHead> -->
+		<tabBarLayout ref="tabBar" :tabList="tabList" :tabIndex="tabIndex">
+			<view slot="page" style="color: #007AFF;">1111111111111111111111111111111564546545sd4f65sa4d6f54asdf46</view>
+		</tabBarLayout>
+	</view>
+</template>
+
+<script>
+	import fakeSearch from '../../../components/fakeSearch/fakeSearch.vue';
+	import tabBarLayout from '@/components/tabBarLayout/tabBarLayout.nvue'
+	export default {
+		components: {
+			fakeSearch,
+			tabBarLayout
+		},
+		data() {
+			return {
+				swiperheight: 500,
+				tabIndex: 0,
+				tabList: [{
+					id: "tab01",
+					name: '最新',
+					newsid: 0
+				}, {
+					id: "tab02",
+					name: '大公司',
+					newsid: 23
+				}, {
+					id: "tab03",
+					name: '内容',
+					newsid: 223
+				}, {
+					id: "tab04",
+					name: '消费',
+					newsid: 221
+				}, {
+					id: "tab05",
+					name: '娱乐',
+					newsid: 225
+				}, {
+					id: "tab06",
+					name: '区块链',
+					newsid: 208
+				}],
+				newslist: [{
+					},
+					{},
+					{},
+					{},
+					{}
+				]
+			};
+		},
+		onReady() {
+			// uni.getSystemInfo({
+			// 	success: res => {
+			// 		const query = uni.createSelectorQuery().in(this);
+			// 		query
+			// 			.select('#swiperTabHead')
+			// 			.boundingClientRect(data => {
+			// 				console.log(data);
+			// 				let height = res.windowHeight - data.height;
+			// 				this.swiperheight = height - 20;
+			// 			})
+			// 			.exec();
+			// 	}
+			// });
+		},
+		methods: {
+			tabtap(index) {
+				this.tabIndex = index;
+				console.log(index);
+			},
+			tabChange(index) {}
+		}
+	};
+</script>
+
+<style lang="less">
+	@import url('applyBoss.less');
+</style>

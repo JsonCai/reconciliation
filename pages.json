@@ -15,11 +15,11 @@
             "style" : {}
         }
         ,{
-            "path" : "pages/purchase/applyPurchase/applyPurchase",
+            "path" : "pages/index1/index1",
             "style" : {}
         }
         ,{
-            "path" : "pages/index1/index1",
+            "path" : "pages/purchase/applyBoss/applyBoss",
             "style" : {}
         }
     ],

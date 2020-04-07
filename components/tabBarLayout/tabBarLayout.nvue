@@ -212,17 +212,16 @@
 			// }
 		},
 		mounted() {
+			console.log("tabbarlayout.mounted")
 			this._lastTabIndex = 0;
 			this.swiperWidth = 0;
 			this.tabbarWidth = 0;
 			this.tabListSize = {};
 			this._touchTabIndex = 0;
-			this.switchTab(this.tabIndex);
-			this.$nextTick(() => {
-				setTimeout(() => {
+			// this.switchTab(this.tabIndex);
+			setTimeout(() => {
 				this.getTabbarItemsSize();
-				},100)
-			})
+			}, 100)
 			// // #ifndef MP-ALIPAY
 			// this.pageList = this.$refs.page;
 			// // #endif

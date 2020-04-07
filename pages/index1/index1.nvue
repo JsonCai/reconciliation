@@ -3,7 +3,7 @@
 		<fakeSearch ></fakeSearch>
 		<tabBarLayout ref="tabBar" :tabList="tabList" :tabIndex="tabIndex" @ontabtap="ontabtap" 
 		:indicatorLineLeft="indicatorLineLeft" :indicatorLineWidth="indicatorLineWidth">
-		<view >1111111111111111111111111111111564546545sd4f65sa4d6f54asdf46</view>
+		<view slot="page" style="color: #007AFF;">1111111111111111111111111111111564546545sd4f65sa4d6f54asdf46</view>
 		</tabBarLayout>
 		
 	</view>

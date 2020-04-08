@@ -17,7 +17,6 @@
         ,{
             "path" : "pages/BossPage/BossPage",
             "style" : {
-				"disableScroll":true 
 			}
         }
     ],

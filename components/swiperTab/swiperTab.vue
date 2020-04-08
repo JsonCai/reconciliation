@@ -1,5 +1,5 @@
 <template>
-	<view class="swiperTab">
+	<view class="swiperTab" :style="{'top':top+'rpx'}">
 		<ms-tabs :list="tabList" v-model="active"></ms-tabs>
 	</view>
 </template>
@@ -8,7 +8,11 @@
 import msTabs from '@/components/ms-tabs/ms-tabs.vue';
 export default {
 	props:{
-		tabList:Array
+		tabList:Array,
+		top:{
+			type:Number,
+			default:0
+		}
 	},
 	components: {
 		msTabs
@@ -30,5 +34,8 @@ export default {
 	.swiperTab{
 		width: 750rpx;
 		background: #ccc;
+		position: fixed;
+		left: 0;
+		z-index: 999;
 	}
 </style>

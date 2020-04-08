@@ -20,8 +20,8 @@
 
 			var domModule = weex.requireModule('dom');
 			domModule.addRule('fontFace', {
-			  'fontFamily': "iconfont",
-			  'src': "url('http://at.alicdn.com/t/font_1736036_2ume0tz9uwu.ttf')"
+				'fontFamily': "iconfont",
+				'src': "url('http://at.alicdn.com/t/font_1736036_2ume0tz9uwu.ttf')"
 			})
 		},
 		methods: {
@@ -36,15 +36,20 @@
 </script>
 
 <style lang="less">
-	 @font-face {
-	        font-family: 'iconfont';
-	        src: url('https://at.alicdn.com/t/font_865816_17gjspmmrkti.ttf') format('truetype');
-	    }
-	    .test {
-	        font-family: iconfont;
-	        margin-left: 20rpx;
-	    }
+	@font-face {
+		font-family: 'iconfont';
+		src: url('https://at.alicdn.com/t/font_865816_17gjspmmrkti.ttf') format('truetype');
+	}
+
+	.test {
+		font-family: iconfont;
+		margin-left: 20rpx;
+	}
+
 	.fakeSearch {
+		position: fixed;
+		left: 0;
+		top: --window-top;
 		width: 710rpx;
 		height: 120rpx;
 		background-color: #FFFFFF;
@@ -54,7 +59,8 @@
 		align-items: center;
 		justify-content: center;
 		padding: 0 20rpx;
-		
+		z-index: 999;
+
 	}
 
 	.new-btn {

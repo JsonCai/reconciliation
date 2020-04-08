@@ -1,0 +1,57 @@
+{
+  "pages": [
+    {
+      "path": "pages/tabs/index",
+      "style": {
+        "navigationBarTitleText": "选项卡"
+      }
+    },
+    {
+      "path": "pages/popup/index",
+      "style": {
+        "navigationBarTitleText": "弹框"
+      }
+    },
+    {
+      "path": "pages/pull-scroll/index",
+      "style": {
+        "navigationBarTitleText": "下拉刷新，上拉加载"
+      }
+    }
+  ],
+  "globalStyle": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "s-ui-demo",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#efefef"
+  },
+  "tabBar": {
+    "color": "#999",
+    "backgroundColor": "#fafafa",
+    "selectedColor": "#406BDC",
+    "borderStyle": "white",
+    "list": [
+      {
+        "text": "选项卡",
+        "pagePath": "pages/tabs/index",
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/home-active.png"
+      },
+      {
+        "text": "弹框",
+        "pagePath": "pages/popup/index",
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/home-active.png"
+      },
+      {
+        "text": "加载",
+        "pagePath": "pages/pull-scroll/index",
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/home-active.png"
+      }
+    ],
+    "position": "bottom"
+  },
+  "usingComponents": {}
+}

@@ -42,9 +42,8 @@
 		methods: {
 			handleClick(type){
 				if(type == 'ApplyPurchase'){
-					console.log(123123)
 					uni.navigateTo({
-						url:'/pages/purchase/applyBoss/applyBoss'
+						url:'/pages/BossPage/BossPage'
 					})
 				}
 			}

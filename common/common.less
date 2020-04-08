@@ -1,142 +1,138 @@
-	/* #ifndef APP-PLUS */
-	page {
-		width: 100%;
-		min-height: 100%;
-		display: flex;
-	}
-
-	/* #endif */
-.container{
+page {
+	width: 100%;
+	min-height: 100%;
+	display: flex;
+}
+.container {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	min-height: 100%;
-	padding: 20rpx;
 	box-sizing: border-box;
 	background: #f5f5fa;
 }
 
-.bg-f{
+.bg-f {
 	background: #fff;
 }
-.ml-10{
+.ml-10 {
 	margin-left: 10rpx;
 }
-.ml-20{
+.ml-20 {
 	margin-left: 20rpx;
 }
-.mt-10{
+.mt-10 {
 	margin-bottom: 10rpx;
 }
-.mt-20{
+.mt-20 {
 	margin-bottom: 20rpx;
 }
-.mt-10{
+.mt-10 {
 	margin-top: 10rpx;
 }
-.mt-20{
+.mt-20 {
 	margin-top: 20rpx;
 }
-.mr-10{
+.mr-10 {
 	margin-right: 10rpx;
 }
-.mr-20{
+.mr-20 {
 	margin-right: 20rpx;
 }
 
 .tabs {
-		flex: 1;
-		flex-direction: column;
-		overflow: hidden;
-		background-color: #ffffff;
-		/* #ifdef MP-ALIPAY || MP-BAIDU */
-		height: 100vh;
-		/* #endif */
-	}
-
-	.tab-bar {
-		width: 750rpx;
-		height: 84rpx;
-		flex-direction: row;
-		/* #ifndef APP-PLUS */
-		white-space: nowrap;
-		/* #endif */
-	}
-
-	/* #ifndef APP-NVUE */
-	.tab-bar ::-webkit-scrollbar {
-	    display: none;  
-	    width: 0 !important;  
-	    height: 0 !important;  
-	    -webkit-appearance: none;  
-	    background: transparent;  
-	}
+	flex: 1;
+	flex-direction: column;
+	overflow: hidden;
+	background-color: #ffffff;
+	/* #ifdef MP-ALIPAY || MP-BAIDU */
+	height: 100vh;
 	/* #endif */
+}
 
-	.scroll-view-indicator {
-		position: relative;
-		height: 2px;
-		background-color: transparent;
-	}
+.tab-bar {
+	width: 750rpx;
+	height: 84rpx;
+	flex-direction: row;
+	/* #ifndef APP-PLUS */
+	white-space: nowrap;
+	/* #endif */
+}
 
-	.scroll-view-underline {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		width: 0;
-		background-color: #007AFF;
-	}
+/* #ifndef APP-NVUE */
+.tab-bar ::-webkit-scrollbar {
+	display: none;
+	width: 0 !important;
+	height: 0 !important;
+	-webkit-appearance: none;
+	background: transparent;
+}
+/* #endif */
 
-	.scroll-view-animation {
-		transition-duration: 0.2s;
-		transition-property: left;
-	}
+.scroll-view-indicator {
+	position: relative;
+	height: 2px;
+	background-color: transparent;
+}
 
-	.tab-bar-line {
-		height: 1upx;
-		background-color: #cccccc;
-	}
+.scroll-view-underline {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 0;
+	background-color: #007aff;
+}
 
-	.tab-box {
-		flex: 1;
-	}
+.scroll-view-animation {
+	transition-duration: 0.2s;
+	transition-property: left;
+}
 
-	.uni-tab-item {
-		/* #ifndef APP-PLUS */
-		display: inline-block;
-		/* #endif */
-		flex-wrap: nowrap;
-		padding-left: 20px;
-		padding-right: 20px;
-	}
+.tab-bar-line {
+	height: 1upx;
+	background-color: #cccccc;
+}
 
-	.uni-tab-item-title {
-		color: #555;
-		font-size: 30rpx;
-		height: 80rpx;
-		line-height: 80rpx;
-		flex-wrap: nowrap;
-		/* #ifndef APP-PLUS */
-		white-space: nowrap;
-		/* #endif */
-	}
+.tab-box {
+	flex: 1;
+}
 
-	.uni-tab-item-title-active {
-		color: #007AFF;
-	}
+.uni-tab-item {
+	/* #ifndef APP-PLUS */
+	display: inline-block;
+	/* #endif */
+	flex-wrap: nowrap;
+	padding-left: 20px;
+	padding-right: 20px;
+}
 
-	.swiper-item {
-		flex: 1;
-		flex-direction: column;
-	}
+.uni-tab-item-title {
+	color: #555;
+	font-size: 30rpx;
+	height: 80rpx;
+	line-height: 80rpx;
+	flex-wrap: nowrap;
+	/* #ifndef APP-PLUS */
+	white-space: nowrap;
+	/* #endif */
+}
 
-	.page-item {
-		flex: 1;
-		flex-direction: row;
-		position: absolute;
-		left: 0;
-		top: 0;
-		right: 0;
-		bottom: 0;
-	}
+.uni-tab-item-title-active {
+	color: #007aff;
+}
+
+.swiper-item {
+	flex: 1;
+	flex-direction: column;
+}
+
+.page-item {
+	flex: 1;
+	flex-direction: row;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}

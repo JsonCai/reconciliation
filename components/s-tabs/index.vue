@@ -171,7 +171,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="less">
 .s-tabs {
   width: 100%;
   position: relative;

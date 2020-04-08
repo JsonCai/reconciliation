@@ -29,7 +29,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="less">
 .s-tab-wrap {
   display: inline-block;
   width: 100%;

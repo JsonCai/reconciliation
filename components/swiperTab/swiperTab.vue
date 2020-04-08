@@ -6,7 +6,6 @@
 
 <script>
 import msTabs from '@/components/ms-tabs/ms-tabs.vue';
-// import sTab from '@/components/s-tab';
 export default {
 	props:{
 		tabList:Array

@@ -34,8 +34,14 @@
 					return []
 				}
 			},
-			itemColor: String, // tab主色调
-			lineColor: String ,// 下划线主色调
+			itemColor: {
+				type:String,
+				default:'#06bebe'
+			} ,// 下划线主色调, // tab主色调
+			lineColor: {
+				type:String,
+				default:'#06bebe'
+			} ,// 下划线主色调
 			lineAnimated: { // 是否展示下划线动画
 				type: Boolean,
 				default: true
@@ -150,7 +156,7 @@
 			display: block;
 			height:6rpx;
 			position: absolute;
-			bottom: 15rpx;
+			bottom: 10rpx;
 			left: 0;
 			z-index: 1;
 			border-radius: 3rpx;

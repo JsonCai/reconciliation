@@ -16,7 +16,9 @@
         }
         ,{
             "path" : "pages/BossPage/BossPage",
-            "style" : {}
+            "style" : {
+				"disableScroll":true 
+			}
         }
     ],
 	"globalStyle": {

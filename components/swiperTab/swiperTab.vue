@@ -1,25 +1,22 @@
 <template>
 	<view class="swiperTab">
-		<s-tabs effect v-model="activeTab" @change="change"  class="custom-tabs" :nav-per-view="tabList.length">
-			<s-tab :title="item.text" v-for="item in tabList"></s-tab>
-		</s-tabs>
+		<ms-tabs :list="tabList" v-model="active"></ms-tabs>
 	</view>
 </template>
 
 <script>
-import sTabs from '@/components/s-tabs';
-import sTab from '@/components/s-tab';
+import msTabs from '@/components/ms-tabs/ms-tabs.vue';
+// import sTab from '@/components/s-tab';
 export default {
 	props:{
 		tabList:Array
 	},
 	components: {
-		sTabs,
-		sTab
+		msTabs
 	},
 	data() {
 		return {
-			activeTab: 0
+			active: 0
 		};
 	},
 	methods: {

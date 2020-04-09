@@ -47,7 +47,7 @@
 					})
 				}else if(type == 'ApplyBuyer'){
 					uni.navigateTo({
-						url:'/pages/buyer/buyer'
+						url:'/pages/buyer/apply/apply'
 					})
 				}
 			}

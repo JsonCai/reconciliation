@@ -1,33 +1,20 @@
 <template>
 	<view>
 		<fakeSearch></fakeSearch>
-		<AppTabs v-model="tabIndex" :tabs="tabs" :fixed="true" :top="120"></AppTabs>
+		<app-tabs v-model="tabIndex" :tabs="tabs" :fixed="true" :top="120"></app-tabs>
 		<!-- <switchTab :tabList="tabList" :top="120"></switchTab> -->
 		<swiper :style="{height: height}" :current="tabIndex" @change="swiperChange">
 			<!--全部 -->
-			<swiper-item>
+			<swiper-item v-for="(index,item) in tabs" :key="index">
 				<mescroll-item :i="0" :index="tabIndex" :tabs="tabs"></mescroll-item>
-			</swiper-item>
-			
-			<!-- 奶粉 -->
-			<swiper-item>
-				
-			</swiper-item>
-			
-			<!-- 面膜 -->
-			<swiper-item>
-				
-			</swiper-item>
-			
-			<!-- 图书 -->
-			<swiper-item>
 			</swiper-item>
 		</swiper>
 	</view>
 </template>
 
 <script>
-import MescrollItem from "./mescroll-swiper-item.vue";
+
+import MescrollItem from "./apply-item.vue";
 import pageMixin from '@/common/pageMixin'
 import AppTabs from "@/components/appTabs/app-tabs.vue";
 export default {
@@ -38,7 +25,7 @@ export default {
 	},
 	data() {
 		return {
-			
+			height: "400px", // 需要固定swiper的高度
 			tabs: [{
 				id: "tab01",
 				name: '全部',
@@ -59,16 +46,11 @@ export default {
 				id: "tab05",
 				name: '被收款',
 				newsid: 225
-			}],
-			
+			}]
 		};
 	}
 };
 </script>
 
 <style>
-.swiper{
-	position: relative;
-	top: 240rpx;
-}
 </style>

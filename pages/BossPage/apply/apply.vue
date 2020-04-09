@@ -14,15 +14,13 @@
 
 <script>
 
-import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
 import MescrollItem from "./apply-item.vue";
-import mTabs from "@/components/ms-tabs/ms-tabs.vue";
+import pageMixin from '@/common/pageMixin'
 import AppTabs from "@/components/appTabs/app-tabs.vue";
 export default {
-	components: {
-		fakeSearch,
+	mixins: [pageMixin],
+	components:{
 		MescrollItem,
-		mTabs,
 		AppTabs
 	},
 	data() {
@@ -48,28 +46,11 @@ export default {
 				id: "tab05",
 				name: '被收款',
 				newsid: 225
-			}],
-			tabIndex: 0, // 当前tab的下标
-			addList: [], //新增微博
-			dataList: [], // 数据列表
-			top: 0, //提示,到顶部的距离
-			
+			}]
 		};
-	},
-	methods: {
-		swiperChange(e){
-			this.tabIndex = e.detail.current
-		}
-	},
-	onLoad(){
-		this.height = uni.getSystemInfoSync().windowHeight + 'px'
 	}
 };
 </script>
 
 <style>
-.swiper{
-	position: relative;
-	top: 240rpx;
-}
 </style>

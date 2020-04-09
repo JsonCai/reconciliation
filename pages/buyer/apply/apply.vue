@@ -1,14 +1,15 @@
 <template>
 	<view>
-		<fakeSearch></fakeSearch>
-		<app-tabs v-model="tabIndex" :tabs="tabs" :fixed="true" :top="120"></app-tabs>
+		<fakeSearch v-if="!isSearch"></fakeSearch>
+		<app-tabs v-model="tabIndex" :tabs="tabs" :fixed="true" :top="120" v-if="!isSearch"></app-tabs>
 		<!-- <switchTab :tabList="tabList" :top="120"></switchTab> -->
-		<swiper :style="{height: height}" :current="tabIndex" @change="swiperChange">
+		<swiper :style="{height: height}" :current="tabIndex" @change="swiperChange" v-if="!isSearch">
 			<!--全部 -->
 			<swiper-item v-for="(item,index) in tabs" :key="item.id">
 				<mescroll-item :i="0" :index="tabIndex" :tabs="tabs"></mescroll-item>
 			</swiper-item>
 		</swiper>
+		<realSearch v-if="isSearch"/>
 	</view>
 </template>
 
@@ -17,14 +18,17 @@
 import MescrollItem from "./apply-item.vue";
 import pageMixin from '@/common/pageMixin'
 import AppTabs from "@/components/appTabs/app-tabs.vue";
+import realSearch from "@/components/realSearch/realSearch.vue";
 export default {
 	mixins: [pageMixin],
 	components:{
 		MescrollItem,
-		AppTabs
+		AppTabs,
+		realSearch
 	},
 	data() {
 		return {
+			isSearch:true,
 			height: "400px", // 需要固定swiper的高度
 			tabs: [{
 				id: "tab01",

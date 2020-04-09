@@ -1,5 +1,5 @@
 <template>
-	<view class="list-item" @tap="clickitem(applyItem)" @longpress="onLongpress(applyItem)">
+	<view class="list-item" @tap="clickitem(applyItem)">
 	      <view class="main_item_content ">
 	        <view class="tag">
 	          <text>{{applyItem.state | formatState}}</text>

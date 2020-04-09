@@ -5,21 +5,23 @@
 			"style": {
 				"navigationBarTitleText": "首页"
 			}
-		}
-        ,{
-            "path" : "pages/msg/msg",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/me/me",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/BossPage/BossPage",
-            "style" : {
+		}, {
+			"path": "pages/msg/msg",
+			"style": {}
+		}, {
+			"path": "pages/me/me",
+			"style": {}
+		}, {
+			"path": "pages/BossPage/apply/apply",
+			"style": {
+				"disableScroll": true, // 禁止滚动, 解决scroll-view在Android小程序卡顿的问题
+				// "enablePullDownRefresh" : false, // 不开启下拉刷新, 默认就是false
+				"app-plus": {
+					"bounce": "none" // 取消iOS回弹,避免和下拉刷新冲突 (小程序无法取消)
+				}
 			}
-        }
-    ],
+		}
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",
 		"navigationBarTitleText": "uni-app",
@@ -27,25 +29,25 @@
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
-	    "color": "#7A7E83",
-	    "selectedColor": "#06bebe",
-	    "borderStyle": "black",
-	    "backgroundColor": "#ffffff",
-	    "list": [{
-	        "pagePath": "pages/index/index",
-	        "iconPath": "static/images/home.png",
-	        "selectedIconPath": "static/images/home@sel.png",
-	        "text": "首页"
-	    }, {
-	        "pagePath": "pages/msg/msg",
-	        "iconPath": "static/images/msg.png",
-	        "selectedIconPath": "static/images/msg@sel.png",
-	        "text": "消息"
-	    },{
-	        "pagePath": "pages/me/me",
-	        "iconPath": "static/images/me.png",
-	        "selectedIconPath": "static/images/me@sel.png",
-	        "text": "我的"
-	    }]
+		"color": "#7A7E83",
+		"selectedColor": "#06bebe",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/images/home.png",
+			"selectedIconPath": "static/images/home@sel.png",
+			"text": "首页"
+		}, {
+			"pagePath": "pages/msg/msg",
+			"iconPath": "static/images/msg.png",
+			"selectedIconPath": "static/images/msg@sel.png",
+			"text": "消息"
+		}, {
+			"pagePath": "pages/me/me",
+			"iconPath": "static/images/me.png",
+			"selectedIconPath": "static/images/me@sel.png",
+			"text": "我的"
+		}]
 	}
 }

@@ -1,6 +1,6 @@
 <template>
 	<view class="tabBlock" v-if="list.length > 0">
-		<scroll-view scroll-x="true" scroll-with-animation :scroll-left="tabsScrollLeft" @scroll="scroll">
+		<scroll-view scroll-x="true" scroll-with-animation :scroll-left="tabsScrollLeft" @scroll="scroll" :show-scrollbar="false">
 			<view class="tab" id="tab_list">
 				<view v-for="(item, index) in list"
 					  :key="index"
@@ -130,13 +130,14 @@
 
 <style lang="scss">
 	.tabBlock {
-		position: relative;
 		background: #fff;
+		z-index: 999;
+		width:100%;
 		.tab {
 			position: relative;
 			display: flex;
 			font-size: 28rpx;
-			padding-bottom: 15rpx;
+			padding: 20rpx 0;
 			white-space: nowrap;
 			&__item {
 				flex: 1;

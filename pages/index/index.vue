@@ -3,7 +3,7 @@
 		<view class="item-list">
 			<indexNavItem  text="报销" roleName="老板" v-if="showApplyBoss"/>
 			<indexNavItem @handleClick="handleClick" text="财务" roleName="老板" v-if="showFinanceBoss"/>
-			<indexNavItem @handleClick="handleClick('ApplyPurchase')" text="报销" roleName="采购" v-if="showApplyPurchase"/>
+			<indexNavItem @handleClick="handleClick('ApplyBoss')" text="报销" roleName="采购" v-if="showApplyPurchase"/>
 			<indexNavItem @handleClick="handleClick" text="营收" roleName="营收" v-if="showRevenueRevenuer"/>
 			<indexNavItem @handleClick="handleClick" text="报销" roleName="出纳" v-if="showApplyCashier"/>
 			<indexNavItem @handleClick="handleClick" text="营收" roleName="出纳" v-if="showApplyCashier"/>
@@ -41,9 +41,9 @@
 		},
 		methods: {
 			handleClick(type){
-				if(type == 'ApplyPurchase'){
+				if(type == 'ApplyBoss'){
 					uni.navigateTo({
-						url:'/pages/BossPage/BossPage'
+						url:'/pages/BossPage/apply/apply'
 					})
 				}
 			}

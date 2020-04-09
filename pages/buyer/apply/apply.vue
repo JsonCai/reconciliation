@@ -5,7 +5,7 @@
 		<!-- <switchTab :tabList="tabList" :top="120"></switchTab> -->
 		<swiper :style="{height: height}" :current="tabIndex" @change="swiperChange">
 			<!--全部 -->
-			<swiper-item v-for="(index,item) in tabs" :key="index">
+			<swiper-item v-for="(item,index) in tabs" :key="item.id">
 				<mescroll-item :i="0" :index="tabIndex" :tabs="tabs"></mescroll-item>
 			</swiper-item>
 		</swiper>

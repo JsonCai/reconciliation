@@ -1,14 +1,14 @@
 <template>
 	<view class="container">
 		<view class="item-list">
-			<indexNavItem  @handleClick="handleClick('ApplyBoss')" text="报销" roleName="老板" v-if="showApplyBoss"/>
+			<indexNavItem  @handleClick="handleClick('BossPage')" text="报销" roleName="老板" v-if="showApplyBoss"/>
 			<indexNavItem @handleClick="handleClick" text="财务" roleName="老板" v-if="showFinanceBoss"/>
-			<indexNavItem @handleClick="handleClick('ApplyBuyer')" text="报销" roleName="采购" v-if="showApplyBuyer"/>
+			<indexNavItem @handleClick="handleClick('buyer')" text="报销" roleName="采购" v-if="showApplyBuyer"/>
 			<indexNavItem @handleClick="handleClick" text="营收" roleName="营收" v-if="showRevenueRevenuer"/>
-			<indexNavItem @handleClick="handleClick" text="报销" roleName="出纳" v-if="showApplyCashier"/>
+			<indexNavItem @handleClick="handleClick('revenue')" text="报销" roleName="出纳" v-if="showApplyCashier"/>
 			<indexNavItem @handleClick="handleClick" text="营收" roleName="出纳" v-if="showApplyCashier"/>
 			<indexNavItem @handleClick="handleClick" text="财务" roleName="出纳" v-if="showFinanceCashier"/>
-			<indexNavItem @handleClick="handleClick" text="报销" roleName="会计" v-if="showApplyAccountant"/>
+			<indexNavItem @handleClick="handleClick('accountant')" text="报销" roleName="会计" v-if="showApplyAccountant"/>
 			<indexNavItem @handleClick="handleClick" text="营收" roleName="会计" v-if="showRevenueAccountant"/>
 			<indexNavItem @handleClick="handleClick" text="报表" roleName="会计" v-if="showStatementAccountant"/>
 		</view>
@@ -41,15 +41,9 @@
 		},
 		methods: {
 			handleClick(type){
-				if(type == 'ApplyBoss'){
-					uni.navigateTo({
-						url:'/pages/BossPage/apply/apply'
-					})
-				}else if(type == 'ApplyBuyer'){
-					uni.navigateTo({
-						url:'/pages/buyer/apply/apply'
-					})
-				}
+				uni.navigateTo({
+					url:'/pages/'+type+'/apply/apply'
+				})
 			}
 		}
 	}

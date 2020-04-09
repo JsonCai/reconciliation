@@ -74,7 +74,7 @@ tabs支持的数据格式： ['全部', '待付款'] 或 [{name:'全部'}, {name
 		position: absolute;
 		bottom: 0;
 		width: 40rpx;
-		height: 4rpx;
+		height: 6rpx;
 		transform: translateX(-50%);
 		border-radius: 4rpx;
 		transition: left .3s;

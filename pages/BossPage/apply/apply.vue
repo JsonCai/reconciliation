@@ -5,22 +5,8 @@
 		<!-- <switchTab :tabList="tabList" :top="120"></switchTab> -->
 		<swiper :style="{height: height}" :current="tabIndex" @change="swiperChange">
 			<!--全部 -->
-			<swiper-item>
+			<swiper-item v-for="(index,item) in tabs" :key="index">
 				<mescroll-item :i="0" :index="tabIndex" :tabs="tabs"></mescroll-item>
-			</swiper-item>
-			
-			<!-- 奶粉 -->
-			<swiper-item>
-				
-			</swiper-item>
-			
-			<!-- 面膜 -->
-			<swiper-item>
-				
-			</swiper-item>
-			
-			<!-- 图书 -->
-			<swiper-item>
 			</swiper-item>
 		</swiper>
 	</view>
@@ -29,7 +15,7 @@
 <script>
 
 import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
-import MescrollItem from "./mescroll-swiper-item.vue";
+import MescrollItem from "./apply-item.vue";
 import mTabs from "@/components/ms-tabs/ms-tabs.vue";
 import AppTabs from "@/components/appTabs/app-tabs.vue";
 export default {

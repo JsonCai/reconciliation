@@ -1,9 +1,9 @@
 <template>
 	<view class="container">
 		<view class="item-list">
-			<indexNavItem  text="报销" roleName="老板" v-if="showApplyBoss"/>
+			<indexNavItem  @handleClick="handleClick('ApplyBoss')" text="报销" roleName="老板" v-if="showApplyBoss"/>
 			<indexNavItem @handleClick="handleClick" text="财务" roleName="老板" v-if="showFinanceBoss"/>
-			<indexNavItem @handleClick="handleClick('ApplyBoss')" text="报销" roleName="采购" v-if="showApplyPurchase"/>
+			<indexNavItem @handleClick="handleClick('ApplyBuyer')" text="报销" roleName="采购" v-if="showApplyBuyer"/>
 			<indexNavItem @handleClick="handleClick" text="营收" roleName="营收" v-if="showRevenueRevenuer"/>
 			<indexNavItem @handleClick="handleClick" text="报销" roleName="出纳" v-if="showApplyCashier"/>
 			<indexNavItem @handleClick="handleClick" text="营收" roleName="出纳" v-if="showApplyCashier"/>
@@ -24,7 +24,7 @@
 			return {
 				showApplyBoss:true,
 				showFinanceBoss:true,
-				showApplyPurchase:true,
+				showApplyBuyer:true,
 				showApplyRevenue:true,
 				showCashierApply:true,
 				showApplyCashier:true,
@@ -44,6 +44,10 @@
 				if(type == 'ApplyBoss'){
 					uni.navigateTo({
 						url:'/pages/BossPage/apply/apply'
+					})
+				}else if(type == 'ApplyBuyer'){
+					uni.navigateTo({
+						url:'/pages/buyer/buyer'
 					})
 				}
 			}

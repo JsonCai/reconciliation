@@ -1,10 +1,12 @@
 <template>
 	<view class="external-class fakeSearch">
 		<view class="search-wrap big" @tap="onSearch" v-if="!showBtn">
-			<text class="search-text test">&#xe614;输入关键字搜索</text>
+			<text class="test">&#xe614;</text>
+			<text class="search-text">输入关键字搜索</text>
 		</view>
 		<view class="search-wrap" @tap="onSearch" v-else>
-			<text class="search-text test">&#xe614;输入关键字搜索</text>
+			<text class="test">&#xe614;</text>
+			<text class="search-text">输入关键字搜索</text>
 		</view>
 		<text class="new-btn" @tap="clickBtn" v-if="showBtn">{{btnText}}</text>
 	</view>
@@ -15,14 +17,6 @@
 		props: {
 			btnText: String,
 			showBtn: Boolean
-		},
-		created() {
-
-			var domModule = weex.requireModule('dom');
-			domModule.addRule('fontFace', {
-				'fontFamily': "iconfont",
-				'src': "url('http://at.alicdn.com/t/font_1736036_2ume0tz9uwu.ttf')"
-			})
 		},
 		methods: {
 			clickBtn() {
@@ -38,12 +32,14 @@
 <style lang="less">
 	@font-face {
 		font-family: 'iconfont';
-		src: url('https://at.alicdn.com/t/font_865816_17gjspmmrkti.ttf') format('truetype');
+		src: url('@/static/icon_font/iconfont.ttf') format('truetype');
 	}
 
 	.test {
 		font-family: iconfont;
 		margin-left: 20rpx;
+		font-size: 40rpx;
+		color: #999;
 	}
 
 	.fakeSearch {
@@ -95,7 +91,7 @@
 
 	.search-text {
 		color: #999;
-		margin-left: 20rpx;
+		margin-left: 10rpx;
 		font-size: 30rpx;
 	}
 

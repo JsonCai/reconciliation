@@ -4,7 +4,7 @@ tab组件:
 tabs支持的数据格式： ['全部', '待付款'] 或 [{name:'全部'}, {name:'待付款'}]
 -->
 <template>
-	<view v-if="tabs && tabs.length" class="app-tabs" :class="{'tabs-fixed': fixed}">
+	<view v-if="tabs && tabs.length" class="app-tabs" :class="{'tabs-fixed': fixed}" :style="{'top':top+'rpx'}">
 		<view class="tabs-item">
 			<view class="tab-item" v-for="(tab, i) in tabs" :class="{'active': value===i}" :key="i" @click="tabClick(i)">
 				{{getTabName(tab)}}
@@ -24,7 +24,11 @@ tabs支持的数据格式： ['全部', '待付款'] 或 [{name:'全部'}, {name
 					return 0
 				}
 			},
-			fixed: Boolean // 是否悬浮,默认false
+			fixed: Boolean, // 是否悬浮,默认false
+			top:{
+				type:Number,
+				default:0
+			}
 		},
 		computed: {
 			lineLift() {

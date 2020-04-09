@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<!-- <fakeSearch></fakeSearch> -->
-		<app-tabs v-model="tabIndex" :tabs="tabs" :fixed="true"></app-tabs>
+		<fakeSearch></fakeSearch>
+		<app-tabs v-model="tabIndex" :tabs="tabs" :fixed="true" :top="120"></app-tabs>
 		<!-- <switchTab :tabList="tabList" :top="120"></switchTab> -->
 		<swiper :style="{height: height}" :current="tabIndex" @change="swiperChange">
 			<!--全部 -->
@@ -44,28 +44,24 @@ export default {
 			height: "400px", // 需要固定swiper的高度
 			tabs: [{
 				id: "tab01",
-				name: '最新',
+				name: '全部',
 				newsid: 0
 			}, {
 				id: "tab02",
-				name: '大公司',
+				name: '未提交',
 				newsid: 23
 			}, {
 				id: "tab03",
-				name: '内容',
+				name: '已提交',
 				newsid: 223
 			}, {
 				id: "tab04",
-				name: '消费',
+				name: '被拒收',
 				newsid: 221
 			}, {
 				id: "tab05",
-				name: '娱乐',
+				name: '被收款',
 				newsid: 225
-			}, {
-				id: "tab06",
-				name: '区块链',
-				newsid: 208
 			}],
 			tabIndex: 0, // 当前tab的下标
 			addList: [], //新增微博

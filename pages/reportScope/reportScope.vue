@@ -2,61 +2,82 @@
 	<view>
 		<text class="time-label">时间区间</text>
 		<view class="v-time-range">
-			<text class="time-range">{{startTime}} &#xe74b;</text>
+			<text class="time-range" @tap="onStartTimeTap(0,startTime)">
+				<text v-if="startTime==''" style="font-size: 30rpx;color: #cccccc;">选择开始时间</text>
+				{{startTime | formatDate}}&ensp;&#xe74b;				
+			</text>
 			<text style="padding: 0 20rpx;color: #666666;">-</text>
-			<text class="time-range">{{endTime}} &#xe74b;</text>
+			<text class="time-range" @tap="onStartTimeTap(1,endTime)">
+				<text v-if="endTime==''" style="font-size: 30rpx;color: #cccccc;">选择结束时间</text>
+				{{endTime | formatDate}}&ensp;&#xe74b;
+			</text>
+		</view>
+		<view class="v-btn">
+			<text class="t-btn btn-speedy">月份选择</text>
+			<text class="t-btn btn-report">生成报表</text>
 		</view>
 
-		<view class="v-time-picker">
-			<!-- 时间选择器 -->
-			<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
-				<view class="uni-input">{{date}}</view>
-			</picker>
-		</view>
+		<timePicker :requestCode="timeCode" :year="dialogTime.year" :month="dialogTime.month" :day="dialogTime.day" :show="showTimePicker"
+		 @onConfirm="timePickConfirm" @onCancel="showTimePicker = false"></timePicker>
+
 	</view>
 </template>
 
 <script>
+	import timePicker from '@/components/timePicker/timePicker.vue';
 	export default {
+		components: {
+			timePicker
+		},
+
 		data() {
-			const currentDate = this.getDate({
-				format: true
-			})
 			return {
+				timeCode: 0,
 				startTime: "",
 				endTime: "",
-				date: currentDate
+				showTimePicker: false,
+				dialogTime: {
+					year: 0,
+					month: 0,
+					day: 0
+				}
 			}
 		},
-		computed: {
-			startDate() {
-				return this.getDate('start');
-			},
-			endDate() {
-				return this.getDate('end');
+		filters: {
+			formatDate(time) {
+				if (time == "") {
+					return ""
+				}
+
+				var text = time.year + "-" + (time.month < 9 ? "0" + (time.month + 1) : (time.month + 1)) +
+					"-" + (time.day < 10 ? "0" + time.day : time.day)
+
+				return text
 			}
+		},
+		onLoad() {
+			const date = new Date()
+			this.dialogTime.year = date.getFullYear();
+			this.dialogTime.month = date.getMonth();
+			this.dialogTime.day = date.getDate();
 		},
 		methods: {
-			bindChange: function(e) {
-				const val = e.detail.value
-				this.year = this.years[val[0]]
-				this.month = this.months[val[1]]
-				this.day = this.days[val[2]]
-			},
-			getDate(type) {
-				const date = new Date();
-				let year = date.getFullYear();
-				let month = date.getMonth() + 1;
-				let day = date.getDate();
-
-				if (type === 'start') {
-					year = year - 60;
-				} else if (type === 'end') {
-					year = year + 2;
+			onStartTimeTap(code, time) {
+				this.timeCode = code
+				if (time != "") {
+					this.dialogTime.year = time.year;
+					this.dialogTime.month = time.month;
+					this.dialogTime.day = time.day;
 				}
-				month = month > 9 ? month : '0' + month;;
-				day = day > 9 ? day : '0' + day;
-				return `${year}-${month}-${day}`;
+				this.showTimePicker = true;
+			},
+			timePickConfirm(time) {
+				this.showTimePicker = false;
+				if (time.code == 0) {
+					this.startTime = time;
+				} else {
+					this.endTime = time;
+				}
 			}
 		}
 	}

@@ -13,6 +13,5 @@
 </script>
 
 <style lang="less">
-	@import url("./common/uni.css");
-	@import url("./common/common.less");
+	 @import url("./common/common.less");
 </style>

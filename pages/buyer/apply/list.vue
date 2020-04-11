@@ -37,49 +37,46 @@ export default {
 		};
 	},
 	props: {
-		tabs: Array // tab菜单,此处用于取关键词
+		tabs: Array, // tab菜单,此处用于取关键词
+		i: Number,
+		type: String,
+		index:''
 	},
 	data() {
 		return {
-			dataList: [],
-			requestParams: {
-				columnId: this.tabs[this.i].id,
-				minId: 0,
-				pageSize: 10,
-				column: 'id,post_id,title,author_name,cover,published_at,comments_count'
-			}
+			dataList: []
 		};
+	},
+	computed: {
+		requestParams() {
+			if (this.type == 'single') {
+				return {};
+			} else {
+				return {
+					columnId: this.tabs[this.i].id,
+					minId: 0,
+					pageSize: 10,
+					column: 'id,post_id,title,author_name,cover,published_at,comments_count'
+				};
+			}
+		}
 	},
 	methods: {
 		/*下拉刷新的回调 */
 		downCallback() {
-			console.log(123123123);
-			// 这里加载你想下拉刷新的数据, 比如刷新轮播数据
-			// loadSwiper();
-			// 下拉刷新的回调,默认重置上拉加载列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
-			this.mescroll.resetUpScroll()
+			if(this.index == this.i){
+				this.mescroll.resetUpScroll(false);
+			}
 		},
 		/*上拉加载的回调: 其中page.num:当前页 从1开始, page.size:每页数据条数,默认10 */
 		upCallback(page) {
-			console.log(22222);
 			//联网加载数据
-			// apiSearch(page.num, page.size, keyword).then(curPageData=>{
-			// 	//联网成功的回调,隐藏下拉刷新和上拉加载的状态;
-			// 	this.mescroll.endSuccess(curPageData.length);
-			// 	//设置列表数据
-			// 	if(page.num == 1) this.goods = []; //如果是第一页需手动制空列表
-			// 	this.goods=this.goods.concat(curPageData); //追加新数据
-			// }).catch(()=>{
-			// 	//联网失败, 结束加载
-			// 	this.mescroll.endErr();
-			// })
 			uni.request({
 				// url: this.$host + 'api/news',
 				url: 'https://unidemo.dcloud.net.cn/api/news',
 				data: this.requestParams,
 				success: result => {
 					this.mescroll.endSuccess(result.data.length);
-						
 					const data = result.data;
 					const data_list = data.map(news => {
 						return {
@@ -94,8 +91,8 @@ export default {
 							post_id: news.post_id
 						};
 					});
-					if(page.num == 1) this.dataList = []; //如果是第一页需手动制空列表
-					this.dataList=this.dataList.concat(data_list); //追加新数据
+					if (page.num == 1) this.dataList = []; //如果是第一页需手动制空列表
+					this.dataList = this.dataList.concat(data_list); //追加新数据
 				},
 				fail: err => {
 					console.log(err);

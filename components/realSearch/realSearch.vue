@@ -7,11 +7,10 @@
 				@confirm="onConfirm" placeholder-class='in-bar'
 				confirm-type="search"
 				 placeholder='输入关键字搜索' class='bar' />
-	            <text class="inner-canel">&#xe635;</text>
+	            <text class="inner-canel" @tap="cancelKeyword">&#xe635;</text>
 	        </view>
 	        <view @tap="onCancel" class='cancel'>取消</view>
 	    </view>
-	    <view v-if="searching" class="list-wrap" :style="{height: height}"></view>
 	</view>
 </template>
 
@@ -25,9 +24,15 @@
 			}
 		},
 		methods:{
-			onCancel(){},
+			cancelKeyword(){
+				this.keyword = ''
+				this.$emit('cancelKeyword')
+			},
+			onCancel(){
+				this.$emit('onCancel')
+			},
 			onConfirm(){
-				console.log('触发了')
+				this.$emit('onConfirm',keyword)
 			},
 		},
 		mounted(){

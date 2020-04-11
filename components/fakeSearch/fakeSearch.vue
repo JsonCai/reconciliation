@@ -1,14 +1,9 @@
 <template>
-	<view class="external-class fakeSearch">
-		<view class="search-wrap big" @tap="onSearch" v-if="!showBtn">
+	<view class="external-class fakeSearch"  @tap="onSearch">
+		<view class="search-wrap big" >
 			<text class="test">&#xe614;</text>
 			<text class="search-text">输入关键字搜索</text>
 		</view>
-		<view class="search-wrap" @tap="onSearch" v-else>
-			<text class="test">&#xe614;</text>
-			<text class="search-text">输入关键字搜索</text>
-		</view>
-		<text class="new-btn" @tap="clickBtn" v-if="showBtn">{{btnText}}</text>
 	</view>
 </template>
 
@@ -19,11 +14,8 @@
 			showBtn: Boolean
 		},
 		methods: {
-			clickBtn() {
-				this.$emit('clickBtn', {})
-			},
-			onSearch() {
-				this.$emit('onSearch', {})
+			onSearch(){
+				this.$emit('onSearch')
 			}
 		}
 	}

@@ -2,7 +2,7 @@
 	<view class="card-wrap">
 
 		<view class="tab-title">
-			<text class="tab">区间财务</text>
+			<text class="tab" @tap="reportScope">区间财务</text>
 			<view style="width: 1px;height: 40rpx;background-color: #ededed;"></view>
 			<text class="tab">年度财务</text>
 		</view>
@@ -63,6 +63,11 @@
 					return result.join('') + "." + float.toString().split('.')[1];
 				}
 				return result.join('');
+			},
+			reportScope(){
+				uni.navigateTo({
+					url:"../../reportScope/reportScope"
+				})
 			}
 		}
 	}

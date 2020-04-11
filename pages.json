@@ -59,7 +59,16 @@
 		}
 	    ,{
             "path" : "pages/revenue/finance/finance",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "财务状况"
+			}
+        }
+       
+        ,{
+            "path" : "pages/reportScope/reportScope",
+            "style" : {
+				"navigationBarTitleText": "区间财务"
+			}
         }
     ],
 	"globalStyle": {

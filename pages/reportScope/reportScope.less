@@ -1,0 +1,56 @@
+@font-face {
+	font-family: 'iconfont';
+	src: url('@/static/icon_font/iconfont.ttf') format('truetype');
+}
+.time-label{
+	color: #666666;
+	margin: 30rpx;
+	font-size: 36rpx;
+	line-height: 80rpx;
+}
+
+.v-time-range {
+	width: 750rpx;
+	display: flex;
+	align-items: center;
+	padding: 0 30rpx;
+	box-sizing: border-box;
+
+	.time-range {
+		flex: 1;
+		border-radius: 10rpx;
+		height: 80rpx;
+		padding: 0 15rpx;
+		text-align: right;
+		line-height: 80rpx;
+		background-color: #F5F5F5;
+		font-family: iconfont;
+		font-size: 36 rpx;
+		color: #666666;
+	}
+}
+
+.v-time-picker{
+	width: 100%;
+	height: 100%;
+	.time-picker-title{
+		
+		line-height: 100rpx;
+		align-items: center;
+	}
+	.mpvue-picker-view {
+		position: absolute;
+		bottom: 0;
+		width: 750rpx;
+		height: 500rpx;
+		background-color: rgba(255, 255, 255, 1);
+	
+		.item {
+		  text-align: center;
+		  text-overflow: ellipsis;
+		  line-height: 90rpx;
+		  font-size: 36rpx;
+		  color: #1a1a1a;
+		}
+	}
+}

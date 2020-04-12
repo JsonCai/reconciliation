@@ -1,25 +1,13 @@
-// page {
-// 	width: 100%;
-// 	min-height: 100%;
-// 	display: flex;
-// }
-// .container {
-// 	width: 100%;
-// 	display: flex;
-// 	flex-direction: column;
-// 	align-items: center;
-// 	min-height: 100%;
-// 	box-sizing: border-box;
-// 	background: #f5f5fa;
-// }
-page{
-	font-size:30rpx;
+
+page {
+	font-size: 30rpx;
+	height: 100%;
 }
 ::-webkit-scrollbar {
-		width: 0;
-		height: 0;
-		background-color: transparent;
-	} 
+	width: 0;
+	height: 0;
+	background-color: transparent;
+}
 .bg-f {
 	background: #fff;
 }
@@ -47,7 +35,9 @@ page{
 .mr-20 {
 	margin-right: 20rpx;
 }
-
+.fc-9 {
+	color: #999;
+}
 .tabs {
 	flex: 1;
 	flex-direction: column;
@@ -142,4 +132,15 @@ page{
 	top: 0;
 	right: 0;
 	bottom: 0;
+}
+@font-face {
+	font-family: 'iconfont';
+	src: url('../static/icon_font/iconfont.ttf') format('truetype');
+}
+
+.font-icon {
+	font-family: iconfont;
+	margin-left: 20rpx;
+	font-size: 40rpx;
+	color: #999;
 }

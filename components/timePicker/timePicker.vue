@@ -121,6 +121,7 @@
 			display: flex;
 			width: 100%;
 			height: 100rpx;
+			flex:0 0 100rpx;
 			background-color: #FFFFFF;
 			border-bottom: solid #ededed 1rpx;
 

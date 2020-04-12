@@ -61,7 +61,7 @@
 	}
 </script>
 
-<style>
+<style lang="less">
 	.v-time-picker {
 		display: flex;
 		flex-direction: column;

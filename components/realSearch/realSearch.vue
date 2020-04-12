@@ -32,6 +32,7 @@
 				this.$emit('onCancel')
 			},
 			onConfirm(){
+				uni.hideKeyboard();
 				this.$emit('onConfirm',keyword)
 			},
 		},

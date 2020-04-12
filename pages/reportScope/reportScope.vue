@@ -14,7 +14,32 @@
 		</view>
 		<view class="v-btn">
 			<text class="t-btn btn-speedy" @tap="showMonthPicker = true">月份选择</text>
-			<text class="t-btn btn-report">生成报表</text>
+			<text class="t-btn btn-report" @tap="onGetReport">生成报表</text>
+		</view>
+
+		<view class="report-label" v-if="isShowReport">
+			<text class="report-text">报表区间</text>
+			<text class="report-text">{{realTime.startTime | formatDate}}&ensp;至&ensp;{{realTime.endTime |formatDate}}</text>
+		</view>
+		<view class="report-label" v-if="isShowReport">
+			<text class="report-text">利润：</text>
+			<text class="report-text">¥{{reportDetail.profit}}</text>
+		</view>
+		<view class="report-label" v-if="isShowReport">
+			<text class="report-text">现金：</text>
+			<text class="report-text">¥{{reportDetail.crash}}</text>
+		</view>
+		<view class="report-label" v-if="isShowReport">
+			<text class="report-text">应收款：</text>
+			<text class="report-text">¥{{reportDetail.accountReceivable}}<text class="arrow-right">&#xe662;</text></text>
+		</view>
+		<view class="report-label" v-if="isShowReport">
+			<text class="report-text">实收款：</text>
+			<text class="report-text">¥{{reportDetail.fundsReceived}}<text class="arrow-right">&#xe662;</text></text>
+		</view>
+		<view class="report-label" v-if="isShowReport">
+			<text class="report-text">支出：</text>
+			<text class="report-text">¥{{reportDetail.expenditure}}<text class="arrow-right">&#xe662;</text></text>
 		</view>
 
 		<timePicker :requestCode="timeCode" :year="dialogTime.year" :month="dialogTime.month" :day="dialogTime.day" :show="showTimePicker"
@@ -43,7 +68,19 @@
 					year: 0,
 					month: 0,
 					day: 0
-				}
+				},
+				realTime: {
+					startTime: "",
+					endTime: ""
+				},
+				reportDetail: {
+					profit: 2000, // 利润
+					crash: 2312333, // 现金
+					accountReceivable: 123123123, // 应收款
+					fundsReceived: 123142342345345, // 实收款
+					expenditure: 1231245235634563 // 支出
+				},
+				isShowReport: false
 			}
 		},
 		filters: {
@@ -83,7 +120,8 @@
 				}
 			},
 			monthPickConfirm(time) {
-				const date = new Date(new Date().getFullYear(), time.month, 0)
+				this.showMonthPicker = false
+				const date = new Date(new Date().getFullYear(), time.month + 1, 0)
 				this.startTime = {
 					year: date.getFullYear(),
 					month: time.month,
@@ -92,8 +130,14 @@
 				this.endTime = {
 					year: date.getFullYear(),
 					month: time.month,
-					day: date.getDay()
+					day: date.getDate()
 				};
+				console.log(this.endTime)
+			},
+			onGetReport() {
+				this.isShowReport = true
+				this.realTime.startTime = this.startTime;
+				this.realTime.endTime = this.endTime;
 			}
 		}
 	}

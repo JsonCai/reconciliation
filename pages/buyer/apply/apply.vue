@@ -20,6 +20,7 @@ import MescrollItem from './list.vue';
 import pageMixin from '@/common/pageMixin';
 import AppTabs from '@/components/appTabs/app-tabs.vue';
 import realSearch from '@/components/realSearch/realSearch.vue';
+import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
 
 export default {
 	mixins: [pageMixin, MescrollMixin],
@@ -27,7 +28,8 @@ export default {
 		MescrollItem,
 		AppTabs,
 		realSearch,
-		MescrollBody
+		MescrollBody,
+		fakeSearch
 	},
 	data() {
 		return {

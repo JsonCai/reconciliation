@@ -1,9 +1,6 @@
-import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
 
 export default {
 	components: {
-		fakeSearch
-
 	},
 	data(){
 		return {

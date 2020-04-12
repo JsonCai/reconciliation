@@ -17,11 +17,14 @@
 import MescrollItem from "./apply-item.vue";
 import pageMixin from '@/common/pageMixin'
 import AppTabs from "@/components/appTabs/app-tabs.vue";
+import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
+
 export default {
 	mixins: [pageMixin],
 	components:{
 		MescrollItem,
-		AppTabs
+		AppTabs,
+		fakeSearch
 	},
 	data() {
 		return {

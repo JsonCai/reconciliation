@@ -56,21 +56,25 @@
 			"style": {
 				"navigationBarTitleText": "财务状况"
 			}
-		}
-	    ,{
-            "path" : "pages/revenue/finance/finance",
-            "style" : {
+		}, {
+			"path": "pages/revenue/finance/finance",
+			"style": {
 				"navigationBarTitleText": "财务状况"
 			}
-        }
-       
-        ,{
-            "path" : "pages/reportScope/reportScope",
-            "style" : {
+		}
+
+		, {
+			"path": "pages/reportScope/reportScope",
+			"style": {
 				"navigationBarTitleText": "区间财务"
 			}
-        }
-    ],
+		}, {
+			"path": "pages/applyFrom/applyFrom",
+			"style": {
+				"navigationBarTitleText": "发起报销"
+			}
+		}
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",
 		"navigationBarTitleText": "uni-app",

@@ -89,6 +89,9 @@
 				console.log('up')
 			},
 			applyFrom() {
+				
+				
+				
 				uni.navigateTo({
 					url:"../../applyFrom/applyFrom"
 				})

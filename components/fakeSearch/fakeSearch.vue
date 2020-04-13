@@ -1,7 +1,7 @@
 <template>
 	<view class="external-class fakeSearch"  @tap="onSearch">
 		<view class="search-wrap big" >
-			<text class="test">&#xe614;</text>
+			<text class="font-icon">&#xe614;</text>
 			<text class="search-text">输入关键字搜索</text>
 		</view>
 	</view>
@@ -22,18 +22,6 @@
 </script>
 
 <style lang="less">
-	@font-face {
-		font-family: 'iconfont';
-		src: url('@/static/icon_font/iconfont.ttf') format('truetype');
-	}
-
-	.test {
-		font-family: iconfont;
-		margin-left: 20rpx;
-		font-size: 40rpx;
-		color: #999;
-	}
-
 	.fakeSearch {
 		position: fixed;
 		left: 0;
@@ -48,9 +36,7 @@
 		justify-content: center;
 		padding: 0 20rpx;
 		z-index: 999;
-
 	}
-
 	.new-btn {
 		background-color: #f7d01c;
 		color: #fff;

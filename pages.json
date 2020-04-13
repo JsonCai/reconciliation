@@ -7,7 +7,9 @@
 			}
 		}, {
 			"path": "pages/msg/msg",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "消息"
+			}
 		}, {
 			"path": "pages/me/me",
 			"style": {}

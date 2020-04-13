@@ -55,6 +55,12 @@
 				indicatorStyle: `height: ${Math.round(uni.getSystemInfoSync().screenWidth/(750/100))}px;`
 			}
 		},
+		mounted() {
+			const date = new Date()
+			this.value[0] = date.getFullYear();
+			this.value[1] = date.getMonth();
+			this.value[2] = date.getDate();
+		},
 		methods: {
 			bindChange(e) {
 				const val = e.detail.value;

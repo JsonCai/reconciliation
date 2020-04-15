@@ -76,7 +76,11 @@
 				"navigationBarTitleText": "发起报销"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/msgList/msgList",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",
 		"navigationBarTitleText": "uni-app",

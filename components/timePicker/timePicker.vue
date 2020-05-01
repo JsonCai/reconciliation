@@ -26,9 +26,7 @@
 		props: {
 			requestCode: Number, // 选择时间的请求code
 			show: Boolean,
-			year: Number,
-			month: Number,
-			day: Number
+			date: String
 		},
 		data() {
 			const date = new Date()
@@ -67,14 +65,12 @@
 				this.value = val;
 				const daySize = new Date(val[0] + 1990, val[1] + 1, 0).getDate();
 				this.currentDays = this.days.slice(0, daySize);
-				console.log(val);
 			},
 			onConfirm() {
 				this.$emit("onConfirm", {
 					code: this.requestCode,
-					year: this.value[0] + 1990,
-					month: this.value[1],
-					day: this.value[2] + 1
+					date: (this.value[0] + 1990) + "-" + (this.value[1] < 9 ? "0" + (this.value[1] + 1) : (this.value[1] + 1)) + "-" +
+						(this.value[2] < 10 ? "0" + (this.value[2] + 1) : this.value[2] + 1)
 				})
 			},
 			onCancel() {
@@ -82,27 +78,14 @@
 			}
 		},
 		watch: {
-			year: {
+			date: {
 				handler(newVal, oldVal) {
-					this.value[0] = newVal;
-					const daySize = new Date(this.year, this.month, 0).getDate();
-					this.currentDays = this.days.slice(0, daySize);
-				},
-				immediate: true,
-				deep: true
-			},
-			month: {
-				handler(newVal, oldVal) {
-					this.value[1] = newVal;
-					const daySize = new Date(this.year, this.month, 0).getDate();
-					this.currentDays = this.days.slice(0, daySize);
-				},
-				immediate: true,
-				deep: true
-			},
-			day: {
-				handler(newVal, oldVal) {
-					this.value[2] = newVal - 1;
+					if (newVal) {
+						let dateList = newVal.split('-')
+						if (dateList.length && dateList.length >= 3) {
+							this.value = dateList
+						}
+					}
 				},
 				immediate: true,
 				deep: true
@@ -127,7 +110,7 @@
 			display: flex;
 			width: 100%;
 			height: 100rpx;
-			flex:0 0 100rpx;
+			flex: 0 0 100rpx;
 			background-color: #FFFFFF;
 			border-bottom: solid #ededed 1rpx;
 

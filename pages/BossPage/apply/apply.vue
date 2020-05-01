@@ -19,6 +19,8 @@ import pageMixin from '@/common/pageMixin'
 import AppTabs from "@/components/appTabs/app-tabs.vue";
 import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
 
+import {bossTabs} from '../../../config/config.js'
+
 export default {
 	mixins: [pageMixin],
 	components:{
@@ -29,28 +31,11 @@ export default {
 	data() {
 		return {
 			height: "400px", // 需要固定swiper的高度
-			tabs: [{
-				id: "tab01",
-				name: '全部',
-				newsid: 0
-			}, {
-				id: "tab02",
-				name: '未提交',
-				newsid: 23
-			}, {
-				id: "tab03",
-				name: '已提交',
-				newsid: 223
-			}, {
-				id: "tab04",
-				name: '被拒收',
-				newsid: 221
-			}, {
-				id: "tab05",
-				name: '被收款',
-				newsid: 225
-			}]
+			tabs: bossTabs
 		};
+	},
+	onLoad() {
+		console.log(bossTabs)
 	}
 };
 </script>

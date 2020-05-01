@@ -4,6 +4,7 @@ import {
 
 const http = {
 	post: (url,data) => {
+		console.log(baseUrl+url)
 		return new Promise((resolve,reject) => {
 			uni.request({
 				url:  baseUrl + url,
@@ -22,11 +23,12 @@ const http = {
 		})
 	},
 	get:(url,data)=>{
+		console.log(baseUrl+url)
 		return new Promise((resolve,reject) => {
 			uni.request({
 				url:  baseUrl + url,
 				methods:'GET',
-				data
+				data,
 				header: {
 					
 				},

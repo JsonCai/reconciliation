@@ -1,3 +1,1 @@
-export default {
-	baseUrl:''
-}
+export  const baseUrl = 'https://fzg.fzzxwl.com:31886/tenant-admin'

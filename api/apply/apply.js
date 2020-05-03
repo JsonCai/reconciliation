@@ -45,3 +45,16 @@ export function applyExpense(data){
 	console.log(JSON.stringify(data))
 	return http.post('/expense-accounts/apply-expense',data)
 }
+// 审批报销单据
+export function approveExpense(data){
+	data.applyPersonId = applyPersonId
+	data.tenantId = tenantId
+	console.log(JSON.stringify(data))
+	return http.put('/expense-accounts/approval-expense-account',data)
+}
+// 报销单据打款
+export function paymentExpence(data){
+	data.paymentPersonId = applyPersonId
+	console.log(JSON.stringify(data))
+	return http.post('/expense-accounts/payment-expense-account',data)
+}

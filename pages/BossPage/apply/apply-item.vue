@@ -84,7 +84,7 @@
 			//点击空布局按钮的回调
 			emptyClick() {
 				uni.navigateTo({
-					url:'../applyDetail/applyDetail?id='+'84327f67-2007-42b3-9a41-25def767fa94'
+					url:'../../revenue/remit/remit?id='+'84327f67-2007-42b3-9a41-25def767fa94'
 				})
 				uni.showToast({
 					title: '点击了按钮,具体逻辑自行实现'
@@ -97,11 +97,12 @@
 				return (s4() + s4() + '-' + s4() + '-4' + s4().substr(0, 3) + '-' + s4() + '-' + s4() + s4() + s4()).toUpperCase();
 			},
 			getApplyFormData() {
+				let offset = this.dataList.length
 				return {
 					expenseAccountTitleMatch: "",
 					expenseAccountStatus: "",
-					offset: "0",
-					limit: "0"
+					offset: offset,
+					limit: 20
 				}
 			},
 			itemClick(item){

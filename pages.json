@@ -88,6 +88,18 @@
             "path" : "pages/buyer/applyDetail/applyDetail",
             "style" : {}
         }
+        ,{
+            "path" : "pages/BossPage/approve/approve",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/revenue/remit/remit",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/revenue/applyDetail/applyDetail",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

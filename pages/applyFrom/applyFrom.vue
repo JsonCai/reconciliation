@@ -36,7 +36,7 @@
 				<imgList :list="detailForm.imgList" :isDisabled="isDisabled" @changeImgList="changeImgList" />
 			</view>
 			<view class="btn-wrap">
-				<view class='btn save-btn'>暂存</view>
+				<view class='btn save-btn' @tap="onSuspendTap">暂存</view>
 				<view class='btn confirm-btn' @tap="onSubmitTap">提交</view>
 			</view>
 		</view>

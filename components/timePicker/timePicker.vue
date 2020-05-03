@@ -105,7 +105,6 @@
 		top: 0;
 		left: 0;
 		background-color: rgba(0, 0, 0, 0.7);
-
 		.v-title {
 			display: flex;
 			width: 100%;
@@ -113,7 +112,6 @@
 			flex: 0 0 100rpx;
 			background-color: #FFFFFF;
 			border-bottom: solid #ededed 1rpx;
-
 			.sel-btn {
 				width: 15%;
 				font-size: 30rpx;
@@ -121,7 +119,6 @@
 				text-align: center;
 				line-height: 100rpx;
 			}
-
 			.time-picker-title {
 				flex: 1;
 				font-size: 40rpx;
@@ -129,12 +126,10 @@
 				line-height: 100rpx;
 			}
 		}
-
 		.mpvue-picker-view {
 			width: 750rpx;
 			height: 470rpx;
 			background-color: rgba(255, 255, 255, 1);
-
 			.item {
 				text-align: center;
 				text-overflow: ellipsis;

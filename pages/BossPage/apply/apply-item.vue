@@ -7,7 +7,7 @@
 	 :up="upOption" @up="upCallback" @emptyclick="emptyClick">
 		<!-- 数据列表 -->
 		<block v-for="item in dataList" :key="item.id">
-			<applyItem :applyItem="item"></applyItem>
+			<applyItem :applyItem="item" @tap="itemClick(item)"></applyItem>
 		</block>
 	</mescroll-uni>
 </template>
@@ -73,8 +73,8 @@
 						if (!page) {
 							this.dataList = []
 						}
-						this.dataList.concat(res.data.expenseAccounts)
-						this.mescroll.endSuccess(res.data.expenseAccounts.length);
+						this.dataList.concat(res.data.data.expenseAccounts)
+						this.mescroll.endSuccess(res.data.data.expenseAccounts.length);
 
 					})
 					.catch(err => {
@@ -83,6 +83,9 @@
 			},
 			//点击空布局按钮的回调
 			emptyClick() {
+				uni.navigateTo({
+					url:'../applyDetail/applyDetail?id='+'84327f67-2007-42b3-9a41-25def767fa94'
+				})
 				uni.showToast({
 					title: '点击了按钮,具体逻辑自行实现'
 				});
@@ -100,6 +103,11 @@
 					offset: "0",
 					limit: "0"
 				}
+			},
+			itemClick(item){
+				uni.navigateTo({
+					url:'../applyDetail/applyDetail'
+				})
 			}
 		},
 		mounted() {

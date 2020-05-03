@@ -80,6 +80,14 @@
             "path" : "pages/msgList/msgList",
             "style" : {}
         }
+        ,{
+            "path" : "pages/BossPage/applyDetail/applyDetail",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/buyer/applyDetail/applyDetail",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

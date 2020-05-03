@@ -12,7 +12,7 @@
 			<view class="item-wrap">
 				<text>分类:</text>
 				<picker :value="categoryIndex" :disabled="isDisabled" range-key="label" :range="categoryList" @change="onCatagory">
-					<view class="picker"><text class="fc-9">请选择分类</text></view>
+					<view class="picker"><text class="fc-9">{{category?category:'请选择分类'}}</text></view>
 				</picker>
 			</view>
 			<view class="item-wrap">
@@ -51,7 +51,9 @@
 	import timePicker from '@/components/timePicker/timePicker';
 	import imgList from '@/components/imgList/imgList.vue'
 	import {
-		createApplyForm
+		createApplyForm,
+		applyExpense,
+		updateApplyForm
 	} from '../../api/apply/apply.js'
 	export default {
 		components: {
@@ -67,7 +69,8 @@
 					imgList: []
 				},
 				categoryList,
-				categoryIndex: 0
+				categoryIndex: 0,
+				category: ""
 			};
 		},
 		methods: {
@@ -79,10 +82,7 @@
 				this.timeCode = code;
 				this.showTimePicker = true;
 			},
-			changeName(val) {
-				console.log(val);
-				this.$set(this.detailForm, 'expenseAccountTitle', val);
-			},
+			changeName(val) {},
 			timePickConfirm(time) {
 				this.showTimePicker = false;
 				if (time.code == 1) {
@@ -90,17 +90,78 @@
 				}
 			},
 			onCatagory(value) {
-				console.log(value)
-				this.costCategoryId = value.id
+				const category = this.categoryList[this.categoryIndex]
+				this.category = category.label
+				console.log(this.category)
+				this.detailForm.costCategoryId = category.value.toString()
+			},
+			onSuspendTap() {
+				if (this.isFormFill()) {
+					uni.showLoading({
+						title: '正在暂存'
+					});
+					this.submitApplyForm()
+						.then(res => {
+							console.log(res)
+							uni.showToast({
+								icon: 'none',
+								title: "暂存成功"
+							})
+							uni.navigateBack()
+						})
+						.catch(err => {
+							uni.hideLoading();
+							console.log(err)
+							uni.showToast({
+								icon: 'none',
+								title: "请求失败"
+							})
+						})
+				}
 			},
 			onSubmitTap() {
-				createApplyForm(this.detailForm)
-					.then(res => {
-						console.log(res)
-					})
-					.catch(err => {
-						console.log(err)
-					})
+				if (this.isFormFill()) {
+					uni.showLoading({
+						title: '正在提交'
+					});
+					this.submitApplyForm()
+						.then(res => {
+							console.log(res)
+							this.detailForm.expenseAccountId = res.data.expenseAccount.expenseAccountId
+							return applyExpense({
+								expenseAccountId: this.detailForm.expenseAccountId
+							})
+						})
+						.then(res => {
+							uni.hideLoading();
+							console.log(res)
+							uni.showToast({
+								icon: 'none',
+								title: "提交成功"
+							})
+							uni.navigateBack()
+						})
+						.catch(err => {
+							uni.hideLoading();
+							console.log(err)
+							uni.showToast({
+								icon: 'none',
+								title: "请求失败"
+							})
+						})
+				}
+			},
+			// 返回报销单id（提交->申请报销）
+			submitApplyForm() {
+				this.detailForm.amount = Number(this.detailForm.amount)
+				if (this.detailForm.expenseAccountId) {
+					return updateApplyForm(this.detailForm.expenseAccountId, this.detailForm)
+				} else {
+					return createApplyForm(this.detailForm)
+				}
+			},
+			isFormFill() {
+				return true
 			}
 		},
 		created() {

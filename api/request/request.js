@@ -2,19 +2,27 @@ import {
 	baseUrl
 } from '../../config/config'
 
+function onHttpSuccess(res,resolve,reject){
+	if(res.data.code == 0){
+		resolve(res.data)
+	}else{
+		reject(res)
+	}
+}
+
 const http = {
 	post: (url,data) => {
 		console.log(baseUrl+url)
 		return new Promise((resolve,reject) => {
 			uni.request({
 				url:  baseUrl + url,
-				methods:'POST',
+				method:'POST',
 				data,
 				header: {
 					
 				},
 				success: (res) => {
-				    resolve(res)
+				    onHttpSuccess(res,resolve,reject)
 				},
 				fail:(err)=>{
 					reject(err)
@@ -27,7 +35,7 @@ const http = {
 		return new Promise((resolve,reject) => {
 			uni.request({
 				url:  baseUrl + url,
-				methods:'GET',
+				method:'GET',
 				data,
 				header: {
 					
@@ -45,7 +53,7 @@ const http = {
 		return new Promise((resolve,reject) => {
 			uni.request({
 				url:  baseUrl + url,
-				methods:'PUT',
+				method:'PUT',
 				data,
 				header: {
 					
@@ -63,7 +71,7 @@ const http = {
 		return new Promise((resolve,reject) => {
 			uni.request({
 				url:  baseUrl + url,
-				methods:'DELETE',
+				method:'DELETE',
 				data,
 				header: {
 					

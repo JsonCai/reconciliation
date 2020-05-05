@@ -3,8 +3,8 @@
 		<fakeSearch></fakeSearch>
 		<app-tabs v-model="tabIndex" :tabs="tabs" :fixed="true" :top="120"></app-tabs>
 		<view class="list-wrap">
-			<block v-for="(item,index) in tabs">
-				<applyList :tab="item" v-if="index == tabIndex"/>
+			<block v-for="(item,index) in tabs" :key="index">
+				<applyList :tab="item" :ref="'list'+index" v-if="index == tabIndex"/>
 			</block>
 		</view>
 	</view>
@@ -19,7 +19,7 @@
 		bossTabs
 	} from '../../../config/config.js'
 
-	
+
 	export default {
 
 		components: {
@@ -33,11 +33,13 @@
 				tabs: bossTabs,
 			};
 		},
-		onLoad() {
-			console.log(bossTabs)
+		onReachBottom(){
+			console.log(this.tabIndex)
+			let gv='list'+this.tabIndex;
+			this.$refs[gv][0].loadMore()
 		},
 		methods: {
-			
+
 		}
 
 	};

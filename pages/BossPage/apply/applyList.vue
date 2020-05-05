@@ -1,5 +1,9 @@
 <template>
-	<mescroll-body ref="mescrollRef" @init="mescrollInit" top="200" bottom="100" @down="downCallback" @up="upCallback">
+	<mescroll-body ref="mescrollRef"
+	 @init="mescrollInit" top="240" 
+	 bottom="10" @down="downCallback"
+	 :up="upOption"
+	  @up="upCallback">
 		<view class="list" v-for="listItem in dataList">
 			<applyItem :applyItem="listItem" @tap="itemClick(item)" fromType='boss'></applyItem>
 		</view>
@@ -22,7 +26,13 @@
 		},
 		data() {
 			return {
-				dataList: []
+				dataList: [],
+				upOption:{
+					page: {
+												num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
+												size: 5 // 每页数据的数量,默认10
+											},
+				}
 
 			};
 		},
@@ -30,6 +40,9 @@
 			tab: Object // tab菜单,此处用于取关键词
 		},
 		methods: {
+			loadMore(){
+				 this.mescroll && this.mescroll.onReachBottom()
+			},
 			getApplyFormData(page) {
 				let offset = page.size * (page.num - 1)
 				const params = {
@@ -48,8 +61,10 @@
 			upCallback(page) {
 				searchApplyFormList(this.getApplyFormData(page))
 					.then(res => {
-						console.log(res.data.expenseAccounts)
-						this.mescroll.endSuccess(page.size);
+						console.log(page)
+						console.log(res.data.expenseAccounts.length)
+						console.log(page.size)
+						this.mescroll.endSuccess(res.data.expenseAccounts.length,true);
 						if (page.num == 1) {
 							this.dataList = []
 						}

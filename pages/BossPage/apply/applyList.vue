@@ -7,7 +7,7 @@
 	 :up="upOption" @up="upCallback" @emptyclick="emptyClick">
 		<!-- 数据列表 -->
 		<block v-for="item in dataList" :key="item.expenseAccountId">
-			<applyItem :applyItem="item" @tap="itemClick(item)"></applyItem>
+			<applyItem :applyItem="item" @tap="itemClick(item)" fromType='boss'></applyItem>
 		</block>
 	</mescroll-uni>
 </template>
@@ -16,9 +16,6 @@
 	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 	import MescrollMoreItemMixin from '@/components/mescroll-uni/mixins/mescroll-more-item.js';
 	import applyItem from '@/components/applyItem/applyItem.vue';
-	import {
-		friendlyDate
-	} from '@/common/util.js';
 
 	import {
 		getApplyForm,
@@ -46,12 +43,6 @@
 					}
 				},
 
-				requestParams: {
-					columnId: this.tabs[this.i].id,
-					minId: 0,
-					pageSize: 10,
-					column: 'id,post_id,title,author_name,cover,published_at,comments_count'
-				}
 			};
 		},
 		props: {
@@ -60,7 +51,7 @@
 		methods: {
 			/*下拉刷新的回调 */
 			downCallback() {
-				console.log(123123123);
+
 				// 这里加载你想下拉刷新的数据, 比如刷新轮播数据
 				// loadSwiper();
 				// 下拉刷新的回调,默认重置上拉加载列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
@@ -68,14 +59,17 @@
 			},
 			/*上拉加载的回调: 其中page.num:当前页 从1开始, page.size:每页数据条数,默认10 */
 			upCallback(page) {
-				searchApplyFormList(this.getApplyFormData())
+				searchApplyFormList(this.getApplyFormData(page))
 					.then(res => {
-						console.log(res.data.expenseAccounts)
-						if (!page) {
+						console.log(page.size)
+						console.log(res.data.expenseAccounts.length)
+						this.mescroll.endSuccess(res.data.expenseAccounts.length);
+						if (page.num == 1) {
 							this.dataList = []
 						}
 						this.dataList = this.dataList.concat(res.data.expenseAccounts)
-						this.mescroll.endSuccess(res.data.expenseAccounts.length);
+						console.log(this.dataList)
+						//this.mescroll.endSuccess(res.data.expenseAccounts.length);
 					})
 					.catch(err => {
 						console.log(err)
@@ -96,11 +90,11 @@
 				};
 				return (s4() + s4() + '-' + s4() + '-4' + s4().substr(0, 3) + '-' + s4() + '-' + s4() + s4() + s4()).toUpperCase();
 			},
-			getApplyFormData() {
-				let offset = this.dataList.length
+			getApplyFormData(page) {
+				let offset = page.size * page.num
 				return {
-					offset: offset,
-					limit: 20
+					offset,
+					limit: page.size
 				}
 			},
 			itemClick(item){

@@ -42,7 +42,7 @@
 		methods: {
 			applyClick(type){
 				uni.navigateTo({
-					url:'/pages/'+type+'/apply/apply'
+					url:'/pages/'+type+'/apply/applyPage'
 				})
 			},
 			financeClick(type){

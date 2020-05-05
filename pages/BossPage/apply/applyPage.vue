@@ -2,43 +2,56 @@
 	<view>
 		<fakeSearch></fakeSearch>
 		<app-tabs v-model="tabIndex" :tabs="tabs" :fixed="true" :top="120"></app-tabs>
-		<!-- <switchTab :tabList="tabList" :top="120"></switchTab> -->
-		<swiper :style="{height: height}" :current="tabIndex" @change="swiperChange">
-			<!--全部 -->
-			<swiper-item v-for="(item,index) in tabs" :key="item.id">
-				<applyList :i="0" :index="tabIndex" :tabs="tabs"></applyList>
-			</swiper-item>
-		</swiper>
+		<view class="list-wrap">
+			<block v-for="(item,index) in tabs">
+				<applyList :tab="item" v-if="index == tabIndex"/>
+			</block>
+		</view>
 	</view>
 </template>
 
 <script>
+	import applyList from "./applyList.vue";
+	import AppTabs from "@/components/appTabs/app-tabs.vue";
+	import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
 
-import applyList from "./applyList.vue";
-import pageMixin from '@/common/pageMixin'
-import AppTabs from "@/components/appTabs/app-tabs.vue";
-import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
+	import {
+		bossTabs
+	} from '../../../config/config.js'
 
-import {bossTabs} from '../../../config/config.js'
+	
+	export default {
 
-export default {
-	mixins: [pageMixin],
-	components:{
-		applyList,
-		AppTabs,
-		fakeSearch
-	},
-	data() {
-		return {
-			height: "400px", // 需要固定swiper的高度
-			tabs: bossTabs
-		};
-	},
-	onLoad() {
-		console.log(bossTabs)
-	}
-};
+		components: {
+			applyList,
+			AppTabs,
+			fakeSearch,
+		},
+		data() {
+			return {
+				tabIndex: 0,
+				tabs: bossTabs,
+			};
+		},
+		onLoad() {
+			console.log(bossTabs)
+		},
+		methods: {
+			
+		}
+
+	};
 </script>
 
 <style>
+	.scroll-Y {
+		width: 100%;
+		height: 2000rpx;
+
+	}
+
+	.aaa {
+		height: 400px;
+		border-bottom: 1rpx solid red;
+	}
 </style>

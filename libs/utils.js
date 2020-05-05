@@ -43,3 +43,11 @@ export  function deepClone(data) {
   }
   return obj;
 }
+export function resetDateFormat(date){
+	if(date.split(' ').length>1){
+		return date
+	}
+	if(date.split('-').length>2){
+		return date+" 00:00:00"
+	}
+}

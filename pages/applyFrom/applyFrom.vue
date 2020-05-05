@@ -27,12 +27,8 @@
 					<text class="font-icon">&#xe662;</text>
 				</view>
 			</view>
-			<view class="item-wrap">
-				<text>结束日期:</text>
-				<text>2020-03-04</text>
-			</view>
 			<view class="img-wrap fc-6">
-				<text class="fc-30 fc-6">凭据：</text>
+				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.imgList" :isDisabled="isDisabled" @changeImgList="changeImgList" />
 			</view>
 			<view class="btn-wrap">
@@ -55,6 +51,10 @@
 		applyExpense,
 		updateApplyForm
 	} from '../../api/apply/apply.js'
+	import {
+		deepClone,
+		resetDateFormat
+	} from '@/libs/utils.js'
 	export default {
 		components: {
 			timePicker,
@@ -153,11 +153,13 @@
 			},
 			// 返回报销单id（提交->申请报销）
 			submitApplyForm() {
-				this.detailForm.amount = Number(this.detailForm.amount)
+				let form = deepClone(this.detailForm)
+				form.amount = Number(this.detailForm.amount)
+				form.expenseTime = resetDateFormat(form.expenseTime)
 				if (this.detailForm.expenseAccountId) {
-					return updateApplyForm(this.detailForm.expenseAccountId, this.detailForm)
+					return updateApplyForm(form.expenseAccountId, form)
 				} else {
-					return createApplyForm(this.detailForm)
+					return createApplyForm(form)
 				}
 			},
 			isFormFill() {

@@ -73,34 +73,44 @@
 		}, {
 			"path": "pages/applyFrom/applyFrom",
 			"style": {
-				"navigationBarTitleText": "发起报销"
+				"navigationBarTitleText": "发起报销",
+				"backgroundColor": "#555555"
+			}
+		}, {
+			"path": "pages/msgList/msgList",
+			"style": {}
+		}, {
+			"path": "pages/BossPage/applyDetail/applyDetail",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"backgroundColor": "#555555"
+			}
+		}, {
+			"path": "pages/buyer/applyDetail/applyDetail",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"backgroundColor": "#555555"
+			}
+		}, {
+			"path": "pages/BossPage/approve/approve",
+			"style": {
+				"navigationBarTitleText": "审核报销",
+				"backgroundColor": "#555555"
+			}
+		}, {
+			"path": "pages/revenue/remit/remit",
+			"style": {
+				"navigationBarTitleText": "打款",
+				"backgroundColor": "#555555"
+			}
+		}, {
+			"path": "pages/revenue/applyDetail/applyDetail",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"backgroundColor": "#555555"
 			}
 		}
-	    ,{
-            "path" : "pages/msgList/msgList",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/BossPage/applyDetail/applyDetail",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/buyer/applyDetail/applyDetail",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/BossPage/approve/approve",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/revenue/remit/remit",
-            "style" : {}
-        }
-        ,{
-            "path" : "pages/revenue/applyDetail/applyDetail",
-            "style" : {}
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",
 		"navigationBarTitleText": "uni-app",

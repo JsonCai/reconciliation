@@ -6,7 +6,7 @@
 	<mescroll-uni ref="mescrollRef" @init="mescrollInit" height="100%" top="230" :down="downOption" @down="downCallback"
 	 :up="upOption" @up="upCallback" @emptyclick="emptyClick">
 		<!-- 数据列表 -->
-		<block v-for="item in dataList" :key="item.id">
+		<block v-for="item in dataList" :key="item.expenseAccountId">
 			<applyItem :applyItem="item" @tap="itemClick(item)"></applyItem>
 		</block>
 	</mescroll-uni>
@@ -15,13 +15,14 @@
 <script>
 	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
 	import MescrollMoreItemMixin from '@/components/mescroll-uni/mixins/mescroll-more-item.js';
-	import applyItem from '@/components/mescroll-uni/mescroll-mixins.js';
+	import applyItem from '@/components/applyItem/applyItem.vue';
 	import {
 		friendlyDate
 	} from '@/common/util.js';
 
 	import {
-		getApplyForm
+		getApplyForm,
+		searchApplyFormList
 	} from '../../../api/apply/apply.js'
 
 	export default {
@@ -67,15 +68,14 @@
 			},
 			/*上拉加载的回调: 其中page.num:当前页 从1开始, page.size:每页数据条数,默认10 */
 			upCallback(page) {
-				getApplyForm(this.getApplyFormData())
+				searchApplyFormList(this.getApplyFormData())
 					.then(res => {
-						console.log(res)
+						console.log(res.data.expenseAccounts)
 						if (!page) {
 							this.dataList = []
 						}
-						this.dataList.concat(res.data.data.expenseAccounts)
-						this.mescroll.endSuccess(res.data.data.expenseAccounts.length);
-
+						this.dataList = this.dataList.concat(res.data.expenseAccounts)
+						this.mescroll.endSuccess(res.data.expenseAccounts.length);
 					})
 					.catch(err => {
 						console.log(err)
@@ -99,8 +99,6 @@
 			getApplyFormData() {
 				let offset = this.dataList.length
 				return {
-					expenseAccountTitleMatch: "",
-					expenseAccountStatus: "",
 					offset: offset,
 					limit: 20
 				}

@@ -58,3 +58,10 @@ export function paymentExpence(data){
 	console.log(JSON.stringify(data))
 	return http.post('/expense-accounts/payment-expense-account',data)
 }
+// 获取报销单据列表
+export function searchApplyFormList(data){
+	data.applyPersonId = applyPersonId
+	data.tenantId = tenantId
+	console.log(JSON.stringify(data))
+	return http.post('/expense-accounts/search',data)
+}

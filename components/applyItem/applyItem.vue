@@ -53,7 +53,6 @@
 
 			},
 			fmtTime(val) {
-				console.log(val)
 				return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val))
 			}
 		},

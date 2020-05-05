@@ -3,12 +3,12 @@ export const baseUrl = 'https://fzg.fzzxwl.com:31886'
 const tabAll = {
 	id: "tab01",
 	name: '全部',
-	newsid: 0
+	expenseAccountStatus: 0
 }
 const tabUnSumit = {
 	id: "tab02",
 	name: '未提交',
-	newsid: 1
+	expenseAccountStatus: 1
 }
 const tabSumit = {
 	id: "tab03",
@@ -28,7 +28,7 @@ const tabGathring = {
 const tabUnpass = {
 	id: "tab06",
 	name: '未通过',
-	newsid: 6
+	expenseAccountStatus: 3
 }
 const tabSuccess = {
 	id: "tab07",
@@ -48,17 +48,17 @@ const tabRemited = {
 const tabWaitApprove = {
 	id: "tab10",
 	name: '待审批',
-	newsid: 10
+	expenseAccountStatus: 2
 }
 const tabRefuse = {
 	id: "tab11",
 	name: '已拒绝',
-	newsid: 11
+	expenseAccountStatus: 3
 }
 const tabPass = {
 	id: "tab12",
 	name: '已通过',
-	newsid: 12
+	expenseAccountStatus: 4
 }
 
 

@@ -15,8 +15,8 @@
 		<view v-show="isSearch">
 			<realSearch v-show="isSearch" @onConfirm="onConfirm" @onCancel="onCancel" />
 			<!-- <mescroll-item  v-if="isSearch" type="single"></mescroll-item> -->
-			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="100" bottom="100" :down="downOption" :up="upOption" @down="downCallback"
-			 @up="upCallback">
+			<!-- <mescroll-body ref="mescrollRef" @init="mescrollInit" top="100" bottom="100" :down="  " :up="upOption" @down="downCallback"
+			 @up="upCallback"> -->
 				<!-- 新增的微博 -->
 			</mescroll-body>
 		</view>

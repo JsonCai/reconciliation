@@ -1,105 +1,67 @@
 <template>
-	<!-- 
-	swiper中的transfrom会使fixed失效,此时用height="100%"固定高度; 
-	swiper中无法触发mescroll-mixins.js的onPageScroll和onReachBottom方法,只能用mescroll-uni,不能用mescroll-body
-	-->
-	<mescroll-uni ref="mescrollRef" @init="mescrollInit" height="100%" top="230" :down="downOption" @down="downCallback"
-	 :up="upOption" @up="upCallback" @emptyclick="emptyClick">
-		<!-- 数据列表 -->
-		<block v-for="item in dataList" :key="item.expenseAccountId">
-			<applyItem :applyItem="item" @tap="itemClick(item)" fromType='boss'></applyItem>
-		</block>
-	</mescroll-uni>
+	<mescroll-body ref="mescrollRef" @init="mescrollInit" top="200" bottom="100" @down="downCallback" @up="upCallback">
+		<view class="list" v-for="listItem in dataList">
+			<applyItem :applyItem="listItem" @tap="itemClick(item)" fromType='boss'></applyItem>
+		</view>
+	</mescroll-body>
 </template>
 
 <script>
-	import MescrollMixin from '@/components/mescroll-uni/mescroll-mixins.js';
-	import MescrollMoreItemMixin from '@/components/mescroll-uni/mixins/mescroll-more-item.js';
+	import MescrollBody from "@/components/mescroll-diy/beibei/mescroll-body.vue";
+	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	import applyItem from '@/components/applyItem/applyItem.vue';
-
 	import {
 		getApplyForm,
 		searchApplyFormList
 	} from '../../../api/apply/apply.js'
 
 	export default {
-		mixins: [MescrollMixin, MescrollMoreItemMixin], // 注意此处还需使用MescrollMoreItemMixin (必须写在MescrollMixin后面)
+		mixins: [MescrollMixin],
+		components: {
+			MescrollBody
+		},
 		data() {
 			return {
-				dataList: [],
-				downOption: {
-					auto: false // 不自动加载 (mixin已处理第一个tab触发downCallback)
-				},
-				upOption: {
-					auto: false, // 不自动加载
-					// page: {
-					// 	num: 0, // 当前页码,默认0,回调之前会加1,即callback(page)会从1开始
-					// 	size: 10 // 每页数据的数量
-					// },
-					noMoreSize: 4, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
-					empty: {
-						tip: '~ 空空如也 ~', // 提示
-						btnText: '去看看'
-					}
-				},
+				dataList: []
 
 			};
 		},
 		props: {
-			tabs: Array // tab菜单,此处用于取关键词
+			tab: Object // tab菜单,此处用于取关键词
 		},
 		methods: {
+			getApplyFormData(page) {
+				let offset = page.size * (page.num - 1)
+				const params = {
+					offset,
+					limit: page.size
+					// expenseAccountStatus:this.tabs[this.tabIndex].expenseAccountStatus
+				}
+				console.log(params)
+				return params
+			},
 			/*下拉刷新的回调 */
 			downCallback() {
-
-				// 这里加载你想下拉刷新的数据, 比如刷新轮播数据
-				// loadSwiper();
-				// 下拉刷新的回调,默认重置上拉加载列表为第一页 (自动执行 page.num=1, 再触发upCallback方法 )
 				this.mescroll.resetUpScroll()
 			},
 			/*上拉加载的回调: 其中page.num:当前页 从1开始, page.size:每页数据条数,默认10 */
 			upCallback(page) {
 				searchApplyFormList(this.getApplyFormData(page))
 					.then(res => {
-						console.log(page.size)
-						console.log(res.data.expenseAccounts.length)
-						this.mescroll.endSuccess(res.data.expenseAccounts.length);
+						console.log(res.data.expenseAccounts)
+						this.mescroll.endSuccess(page.size);
 						if (page.num == 1) {
 							this.dataList = []
 						}
 						this.dataList = this.dataList.concat(res.data.expenseAccounts)
-						console.log(this.dataList)
-						//this.mescroll.endSuccess(res.data.expenseAccounts.length);
 					})
 					.catch(err => {
 						console.log(err)
 					})
 			},
-			//点击空布局按钮的回调
-			emptyClick() {
+			itemClick(item) {
 				uni.navigateTo({
-					url:'../../revenue/remit/remit?id='+'84327f67-2007-42b3-9a41-25def767fa94'
-				})
-				uni.showToast({
-					title: '点击了按钮,具体逻辑自行实现'
-				});
-			},
-			newGuid() {
-				let s4 = function() {
-					return ((65536 * (1 + Math.random())) | 0).toString(16).substring(1);
-				};
-				return (s4() + s4() + '-' + s4() + '-4' + s4().substr(0, 3) + '-' + s4() + '-' + s4() + s4() + s4()).toUpperCase();
-			},
-			getApplyFormData(page) {
-				let offset = page.size * page.num
-				return {
-					offset,
-					limit: page.size
-				}
-			},
-			itemClick(item){
-				uni.navigateTo({
-					url:'../applyDetail/applyDetail'
+					url: '../applyDetail/applyDetail'
 				})
 			}
 		},

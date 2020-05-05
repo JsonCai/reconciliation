@@ -1,0 +1,28 @@
+<template>
+	<view>
+		<view style="height: 80rpx;width: 750rpx;background-color: #09BB07;"></view>
+		<tabLayoutNvue></tabLayoutNvue>
+		<swiper class="tab-box" ref="swiper1" :current="tabIndex" :duration="300" @change="onswiperchange" @transition="onswiperscroll"
+		 @animationfinish="animationfinish" @onAnimationEnd="animationfinish">
+			<swiper-item class="swiper-item" v-for="(page, index) in tabList" :key="index">
+				
+			</swiper-item>
+		</swiper>
+	</view>
+</template>
+
+<script>
+	import tabLayoutNvue from '../../components/tabLayoutNvue/tabLayoutNvue.nvue'
+	
+	export default {
+		data() {
+			return {
+				
+			};
+		}
+	}
+</script>
+
+<style lang="less">
+
+</style>

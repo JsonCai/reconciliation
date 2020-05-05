@@ -45,7 +45,7 @@
 	import timePicker from '@/components/timePicker/timePicker';
 	import imgList from '@/components/imgList/imgList.vue'
 	import {
-		createApplyForm,
+		createRevenueAccounts,
 		applyExpense,
 		updateApplyForm
 	} from '../../api/apply/apply.js'

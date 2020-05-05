@@ -114,6 +114,10 @@
             "path" : "pages/revenceForm/revenceForm",
             "style" : {}
         }
+        ,{
+            "path" : "pages/applyNvue/applyNvue",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

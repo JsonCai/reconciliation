@@ -110,7 +110,11 @@
 				"backgroundColor": "#555555"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/revenceForm/revenceForm",
+            "style" : {}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",
 		"navigationBarTitleText": "uni-app",

@@ -6,7 +6,7 @@
 		<swiper :style="{height: height}" :current="tabIndex" @change="swiperChange">
 			<!--全部 -->
 			<swiper-item v-for="(item,index) in tabs" :key="item.id">
-				<mescroll-item :i="0" :index="tabIndex" :tabs="tabs"></mescroll-item>
+				<applyList :i="0" :index="tabIndex" :tabs="tabs"></applyList>
 			</swiper-item>
 		</swiper>
 	</view>
@@ -14,7 +14,7 @@
 
 <script>
 
-import MescrollItem from "./apply-item.vue";
+import applyList from "./applyList.vue";
 import pageMixin from '@/common/pageMixin'
 import AppTabs from "@/components/appTabs/app-tabs.vue";
 import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
@@ -24,7 +24,7 @@ import {bossTabs} from '../../../config/config.js'
 export default {
 	mixins: [pageMixin],
 	components:{
-		MescrollItem,
+		applyList,
 		AppTabs,
 		fakeSearch
 	},

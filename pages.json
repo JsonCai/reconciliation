@@ -14,7 +14,7 @@
 			"path": "pages/me/me",
 			"style": {}
 		}, {
-			"path": "pages/BossPage/apply/apply",
+			"path": "pages/BossPage/apply/applyPage",
 			"style": {
 				"navigationBarTitleText": "报销",
 				"disableScroll": true, // 禁止滚动, 解决scroll-view在Android小程序卡顿的问题

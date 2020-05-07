@@ -64,7 +64,6 @@
 				"navigationBarTitleText": "财务状况"
 			}
 		}
-
 		, {
 			"path": "pages/reportScope/reportScope",
 			"style": {
@@ -73,8 +72,7 @@
 		}, {
 			"path": "pages/applyFrom/applyFrom",
 			"style": {
-				"navigationBarTitleText": "发起报销",
-				"backgroundColor": "#555555"
+				"navigationBarTitleText": "发起报销"
 			}
 		}, {
 			"path": "pages/msgList/msgList",
@@ -82,32 +80,27 @@
 		}, {
 			"path": "pages/BossPage/applyDetail/applyDetail",
 			"style": {
-				"navigationBarTitleText": "详情",
-				"backgroundColor": "#555555"
+				"navigationBarTitleText": "详情"
 			}
 		}, {
 			"path": "pages/buyer/applyDetail/applyDetail",
 			"style": {
-				"navigationBarTitleText": "详情",
-				"backgroundColor": "#555555"
+				"navigationBarTitleText": "详情"
 			}
 		}, {
 			"path": "pages/BossPage/approve/approve",
 			"style": {
-				"navigationBarTitleText": "审核报销",
-				"backgroundColor": "#555555"
+				"navigationBarTitleText": "审核报销"
 			}
 		}, {
 			"path": "pages/revenue/remit/remit",
 			"style": {
-				"navigationBarTitleText": "打款",
-				"backgroundColor": "#555555"
+				"navigationBarTitleText": "打款"
 			}
 		}, {
-			"path": "pages/revenue/applyDetail/applyDetail",
+			"path": "pages/teller/applyDetail/applyDetail",
 			"style": {
-				"navigationBarTitleText": "详情",
-				"backgroundColor": "#555555"
+				"navigationBarTitleText": "详情"
 			}
 		}
 	    ,{

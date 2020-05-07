@@ -4,9 +4,10 @@
 		<app-tabs v-model="tabIndex" :tabs="tabs" :fixed="true" :top="120"></app-tabs>
 		<view class="list-wrap">
 			<block v-for="(item,index) in tabs" :key="index">
-				<applyList :tab="item" :ref="'list'+index" v-if="index == tabIndex"/>
+				<applyList :tab="item" :ref="'list'+index" v-if="index == tabIndex" />
 			</block>
 		</view>
+		<view class="btn-add" @tap="revenueFrom">&#xe604;</view>
 	</view>
 </template>
 
@@ -33,13 +34,17 @@
 				tabs: bossTabs,
 			};
 		},
-		onReachBottom(){
+		onReachBottom() {
 			console.log(this.tabIndex)
-			let gv='list'+this.tabIndex;
+			let gv = 'list' + this.tabIndex;
 			this.$refs[gv][0].loadMore()
 		},
 		methods: {
-
+			revenueFrom() {
+				uni.navigateTo({
+					url:'../../revenueForm/revenueForm'
+				})
+			}
 		}
 
 	};

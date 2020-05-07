@@ -23,6 +23,7 @@ const MescrollMixin = {
 	},
 	// 注册滚动到底部的事件,用于上拉加载 (此方法为页面生命周期,无法在子组件中触发, 仅在mescroll-body生效)
 	onReachBottom() {
+		console.log('我触底了')
 		this.mescroll && this.mescroll.onReachBottom();
 	},
 	methods: {

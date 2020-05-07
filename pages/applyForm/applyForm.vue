@@ -17,7 +17,7 @@
 			</view>
 			<view class="item-wrap">
 				<text>申报金额:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.amount" />
+				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.amount" @input="changePrice"/>
 			</view>
 			<view class="item-wrap">
 				<text>申报日期:</text>
@@ -74,6 +74,9 @@
 			};
 		},
 		methods: {
+			changePrice(ev){
+				console.log(event.detail )
+			},
 			changeImgList(list) {
 				console.log(list)
 				this.detailForm.imgList = list

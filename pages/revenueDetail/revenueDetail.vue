@@ -30,7 +30,7 @@
 				<imgList :list="detailForm.revenueVoucherUrls" :isDisabled="true" />
 			</view>
 			<view class="title item-wrap" v-if="detailForm.approvals">
-				<image src="../../../static/images/progress.png" class="icon-wallet mr-20"></image>
+				<image src="../../static/images/progress.png" class="icon-wallet mr-20"></image>
 				<text class="title-text">收款历史</text>
 			</view>
 			<view class="item-cross-line" v-if="detailForm.receiptActions&&detailForm.receiptActions.length" v-for="(item,index) in detailForm.receiptActions"

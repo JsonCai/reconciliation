@@ -115,10 +115,6 @@
             "style" : {}
         }
         ,{
-            "path" : "pages/applyNvue/applyNvue",
-            "style" : {}
-        }
-        ,{
             "path" : "pages/revenueDetail/revenueDetail",
             "style" : {}
         }

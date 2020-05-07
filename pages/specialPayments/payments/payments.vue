@@ -2,7 +2,7 @@
 	<view class="container bg-f5">
 		<view class="content-wrap">
 			<view class="title item-wrap">
-				<image src="../../static/images/apply.png" class="icon-wallet mr-20"></image>
+				<image src="../../../static/images/apply.png" class="icon-wallet mr-20"></image>
 				<text class="title-text">订单信息</text>
 			</view>
 			<view class="item-wrap">
@@ -135,7 +135,7 @@
 </script>
 
 <style lang="less" scoped>
-	@import url('../../common/detailForm.less');
+	@import url('@/common/detailForm.less');
 	.btn-wrap{
 		justify-content: center;
 		.btn{

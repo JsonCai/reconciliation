@@ -97,3 +97,16 @@ export const tellerTabs = [
 // 	revenueTabs,
 // 	tellerTabs
 // }
+
+// 返回审核状态数据 （1.未提交2.已提交3.被拒收4.被收款）
+export function getRevenueStateStr(stateCode){
+	if(stateCode == 1){
+		return "未提交"
+	}else if(stateCode == 2){
+		return "已提交"
+	}else if(stateCode == 3){
+		return "被拒收"
+	}else if(stateCode == 4){
+		return "被收款"
+	}
+}

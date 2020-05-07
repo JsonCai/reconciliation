@@ -7,31 +7,32 @@
 			</view>
 			<view class="item-wrap">
 				<text>名称:</text>
-				<input class="input-text" placeholder="请输入名称" placeholder-class="place" v-model="detailForm.revenueAccountTitle" />
+				<input class="input-text" placeholder="请输入名称" placeholder-class="place" v-model="detailForm.specialAccountTitle" />
 			</view>
 			<view class="item-wrap">
-				<text>应收款:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.accountReceivable" />
+				<text>分类:</text>
+				<picker :value="categoryIndex" :disabled="isDisabled" range-key="label" :range="categoryList" @change="onCatagory">
+					<view class="picker"><text class="fc-9">{{category?category:'请选择分类'}}</text></view>
+				</picker>
 			</view>
 			<view class="item-wrap">
-				<text>实收款:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.fundsReceived" />
+				<text>金额:</text>
+				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.amount" />
 			</view>
 			<view class="item-wrap">
-				<text>营收日期:</text>
+				<text>日期:</text>
 				<view class="inner-wrap" @tap="onStartTimeTap(1)">
-					<text v-if="!detailForm.revenueTime" class="fc-9">请选择营收日期</text>
-					<text v-else>{{ detailForm.revenueTime}}</text>
+					<text v-if="!detailForm.accountTime" class="fc-9">请选择申报日期</text>
+					<text v-else>{{ detailForm.accountTime}}</text>
 					<text class="font-icon">&#xe662;</text>
 				</view>
 			</view>
 			<view class="img-wrap fc-6">
 				<text class="fc-6">凭据：</text>
-				<imgList :list="detailForm.imgList" :isDisabled="isDisabled" @changeImgList="changeImgList" />
+				<imgList :list="detailForm.voucherUrls" :isDisabled="isDisabled" @changeImgList="changeImgList" />
 			</view>
 			<view class="btn-wrap">
-				<view class='btn save-btn' @tap="onSuspendTap">暂存</view>
-				<view class='btn confirm-btn' @tap="onSubmitTap">提交</view>
+				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
 			</view>
 		</view>
 		<timePicker :requestCode="timeCode" :show="showTimePicker" @onConfirm="timePickConfirm" @onCancel="showTimePicker = false"></timePicker>
@@ -45,10 +46,9 @@
 	import timePicker from '@/components/timePicker/timePicker';
 	import imgList from '@/components/imgList/imgList.vue'
 	import {
-		createRevenueAccounts,
-		applyRevenue,
-		updateRevenueForm
-	} from '../../api/apply/apply.js'
+		createSpecialAccounts,
+		updateSpecialForm
+	} from '../../../api/specailPayments/specialPayments.js'
 	import {
 		deepClone,
 		resetDateFormat
@@ -64,7 +64,7 @@
 				timeCode: 0,
 				isDisabled: false,
 				detailForm: {
-					imgList: []
+					voucherUrls: []
 				},
 				categoryList,
 				categoryIndex: 0,
@@ -74,7 +74,7 @@
 		methods: {
 			changeImgList(list) {
 				console.log(list)
-				this.detailForm.imgList = list
+				this.detailForm.voucherUrls = list
 			},
 			onStartTimeTap(code) {
 				this.timeCode = code;
@@ -84,40 +84,16 @@
 			timePickConfirm(time) {
 				this.showTimePicker = false;
 				if (time.code == 1) {
-					this.$set(this.detailForm, 'revenueTime', time.date);
+					this.$set(this.detailForm, 'accountTime', time.date);
 				}
 			},
 			onCatagory(value) {
 				const category = this.categoryList[this.categoryIndex]
 				this.category = category.label
 				console.log(this.category)
-				this.detailForm.costCategoryId = category.value.toString()
+				this.detailForm.specialAccountType = category.value.toString()
 			},
-			onSuspendTap() {
-				if (this.isFormFill()) {
-					uni.showLoading({
-						title: '正在暂存'
-					});
-					this.submitApplyForm()
-						.then(res => {
-							console.log(res)
-							uni.showToast({
-								icon: 'none',
-								title: "暂存成功"
-							})
-							uni.navigateBack()
-						})
-						.catch(err => {
-							uni.hideLoading();
-							console.log(err)
-							uni.showToast({
-								icon: 'none',
-								title: "请求失败"
-							})
-						})
-				}
-			},
-			onSubmitTap() {
+			onPassTap() {
 				if (this.isFormFill()) {
 					uni.showLoading({
 						title: '正在提交'
@@ -125,18 +101,6 @@
 					this.submitApplyForm()
 						.then(res => {
 							console.log(res)
-							this.detailForm.revenueAccountId = res.data.expenseAccount.revenueAccountId
-							return applyRevenue({
-								revenueAccountId: this.detailForm.revenueAccountId
-							})
-						})
-						.then(res => {
-							uni.hideLoading();
-							console.log(res)
-							uni.showToast({
-								icon: 'none',
-								title: "提交成功"
-							})
 							uni.navigateBack()
 						})
 						.catch(err => {
@@ -152,13 +116,12 @@
 			// 返回报销单id（提交->申请报销）
 			submitApplyForm() {
 				let form = deepClone(this.detailForm)
-				form.accountReceivable = Number(this.detailForm.accountReceivable)
-				form.fundsReceived = Number(this.detailForm.fundsReceived)
-				form.revenueTime = resetDateFormat(form.revenueTime)
-				if (this.detailForm.revenueAccountId) {
-					return updateRevenueForm(form.revenueAccountId, form)
+				form.amount = Number(this.detailForm.amount)
+				form.accountTime = resetDateFormat(form.accountTime)
+				if (this.detailForm.expenseAccountId) {
+					return updateSpecialForm(form.expenseAccountId, form)
 				} else {
-					return createRevenueAccounts(form)
+					return createSpecialAccounts(form)
 				}
 			},
 			isFormFill() {
@@ -173,4 +136,12 @@
 
 <style lang="less" scoped>
 	@import url('../../common/detailForm.less');
+	.btn-wrap{
+		justify-content: center;
+		.btn{
+			width: 60%;
+		}
+		margin-top: 100rpx;
+		margin-bottom: 50rpx;
+	}
 </style>

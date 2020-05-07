@@ -118,6 +118,22 @@
             "path" : "pages/applyNvue/applyNvue",
             "style" : {}
         }
+        ,{
+            "path" : "pages/revenueDetail/revenueDetail",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/revenue/revenueDetail/revenueDetail",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/specialPayments/paymentList/paymentList",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/specialPayments/payments/payments",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

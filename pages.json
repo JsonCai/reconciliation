@@ -127,6 +127,10 @@
             "path" : "pages/teller/apply/applyPage",
             "style" : {}
         }
+        ,{
+            "path" : "pages/revenue/revenue/revenuePage",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

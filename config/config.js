@@ -13,7 +13,7 @@ const tabUnSumit = {
 const tabSumit = {
 	id: "tab03",
 	name: '已提交',
-	newsid: 3
+	expenseAccountStatus: 3
 }
 const tabReject = {
 	id: "tab04",
@@ -23,7 +23,7 @@ const tabReject = {
 const tabGathring = {
 	id: "tab05",
 	name: '被收款',
-	newsid: 5
+	expenseAccountStatus:4
 }
 const tabUnpass = {
 	id: "tab06",

@@ -11,11 +11,11 @@
 			</view>
 			<view class="item-wrap">
 				<text>应收款:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.accountReceivable" />
+				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.accountReceivable" type="digit"/>
 			</view>
 			<view class="item-wrap">
 				<text>实收款:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.fundsReceived" />
+				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.fundsReceived" type="digit"/>
 			</view>
 			<view class="item-wrap">
 				<text>营收日期:</text>
@@ -48,7 +48,7 @@
 		createRevenueAccounts,
 		applyRevenue,
 		updateRevenueForm
-	} from '../../api/apply/apply.js'
+	} from '../../api/revenue/revenue.js'
 	import {
 		deepClone,
 		resetDateFormat

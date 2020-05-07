@@ -5,8 +5,7 @@
 			<indexNavItem @handleClick="financeClick('BossPage')" text="财务" roleName="老板" v-if="showFinanceBoss"/>
 			<indexNavItem @handleClick="applyClick('buyer')" text="报销" roleName="采购" v-if="showApplyBuyer"/>
 			<indexNavItem @handleClick="handleClick" text="营收" roleName="营收" v-if="showRevenueRevenuer"/>
-			<indexNavItem @handleClick="applyClick('revenue')" text="报销" roleName="出纳" v-if="showApplyCashier"/>
-			<indexNavItem @handleClick="handleClick" text="营收" roleName="出纳" v-if="showApplyCashier"/>
+			<indexNavItem @handleClick="applyClick('teller')" text="报销" roleName="出纳" v-if="showApplyCashier"/>
 			<indexNavItem @handleClick="financeClick('revenue')" text="财务" roleName="出纳" v-if="showFinanceCashier"/>
 			<indexNavItem @handleClick="applyClick('accountant')" text="报销" roleName="会计" v-if="showApplyAccountant"/>
 			<indexNavItem @handleClick="handleClick" text="营收" roleName="会计" v-if="showRevenueAccountant"/>

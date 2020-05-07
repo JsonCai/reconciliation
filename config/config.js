@@ -3,7 +3,7 @@ export const baseUrl = 'https://fzg.fzzxwl.com:31886'
 const tabAll = {
 	id: "tab01",
 	name: '全部',
-	expenseAccountStatus: null
+	expenseAccountStatus: 0
 }
 const tabUnSumit = {
 	id: "tab02",
@@ -13,7 +13,7 @@ const tabUnSumit = {
 const tabSumit = {
 	id: "tab03",
 	name: '已提交',
-	expenseAccountStatus: 2
+	newsid: 3
 }
 const tabReject = {
 	id: "tab04",
@@ -33,7 +33,7 @@ const tabUnpass = {
 const tabSuccess = {
 	id: "tab07",
 	name: '已成功',
-	expenseAccountStatus: 5
+	newsid: 7
 }
 const tabWaitRemit = {
 	id: "tab08",
@@ -90,7 +90,11 @@ export const tellerTabs = [
 	tabWaitRemit,
 	tabRemited
 ]
-
+export const kjTabs = [
+	tabAll,
+	tabWaitRemit,
+	tabRemited
+]
 // export default {
 // 	bossTabs,
 // 	buyerTabs,

@@ -7,18 +7,21 @@
 				<applyList :tab="item" :ref="'list'+index" v-if="index == tabIndex"/>
 			</block>
 		</view>
-		<view class="btn-add" @tap="applyFrom">&#xe604;</view>
 	</view>
 </template>
+
 <script>
 	import applyList from "./applyList.vue";
 	import AppTabs from "@/components/appTabs/app-tabs.vue";
 	import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
 
 	import {
-		buyerTabs
+		tellerTabs
 	} from '../../../config/config.js'
+
+
 	export default {
+
 		components: {
 			applyList,
 			AppTabs,
@@ -27,14 +30,18 @@
 		data() {
 			return {
 				tabIndex: 0,
-				tabs: buyerTabs,
+				tabs: tellerTabs
 			};
 		},
 		onReachBottom(){
 			console.log(this.tabIndex)
 			let gv='list'+this.tabIndex;
 			this.$refs[gv][0].loadMore()
+		},
+		methods: {
+
 		}
+
 	};
 </script>
 

@@ -9,19 +9,15 @@
 		</view>
 	</view>
 </template>
-
 <script>
 	import applyList from "./applyList.vue";
 	import AppTabs from "@/components/appTabs/app-tabs.vue";
 	import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
 
 	import {
-		bossTabs
+		buyerTabs
 	} from '../../../config/config.js'
-
-
 	export default {
-
 		components: {
 			applyList,
 			AppTabs,
@@ -30,18 +26,14 @@
 		data() {
 			return {
 				tabIndex: 0,
-				tabs: bossTabs,
+				tabs: buyerTabs,
 			};
 		},
 		onReachBottom(){
 			console.log(this.tabIndex)
 			let gv='list'+this.tabIndex;
 			this.$refs[gv][0].loadMore()
-		},
-		methods: {
-
 		}
-
 	};
 </script>
 

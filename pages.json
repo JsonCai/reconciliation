@@ -70,7 +70,7 @@
 				"navigationBarTitleText": "区间财务"
 			}
 		}, {
-			"path": "pages/applyFrom/applyFrom",
+			"path": "pages/applyFrom/applyForm",
 			"style": {
 				"navigationBarTitleText": "发起报销"
 			}

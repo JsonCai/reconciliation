@@ -14,9 +14,8 @@
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	import applyItem from '@/components/applyItem/applyItem.vue';
 	import {
-		getApplyForm,
-		searchApplyFormList
-	} from '../../../api/apply/apply.js'
+		searchRevenueList
+	} from '../../../api/revenue/revenue.js'
 
 	export default {
 		mixins: [MescrollMixin],
@@ -51,7 +50,7 @@
 			},
 			/*上拉加载的回调: 其中page.num:当前页 从1开始, page.size:每页数据条数,默认10 */
 			upCallback(page) {
-				searchApplyFormList(this.getApplyFormData(page))
+				searchRevenueList(this.getApplyFormData(page))
 					.then(res => {
 						this.mescroll.endSuccess(res.data.expenseAccounts.length);
 						if (page.num == 1) {

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-	import applyList from "./applyList.vue";
+	import applyList from "./revenueList.vue";
 	import AppTabs from "@/components/appTabs/app-tabs.vue";
 	import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
 

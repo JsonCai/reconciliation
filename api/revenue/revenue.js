@@ -8,7 +8,7 @@ export function createRevenueAccounts(data){
 	data.revenuePersonId = applyPersonId
 	data.tenantId = tenantId
 	console.log(JSON.stringify(data))
-	return http.post('/expense-accounts',data)
+	return http.post('/revenue-accounts',data)
 }
 // 更新营收单
 export function updateRevenueForm(id,data){
@@ -26,4 +26,11 @@ export function applyRevenue(data){
 // 获取营收详情
 export function revenueDetail(id){
 	return http.get('/revenue-accounts/'+id)
+}
+// 获取营收单据列表
+export function searchRevenueList(data){
+	data.applyPersonId = applyPersonId
+	data.tenantId = tenantId
+	console.log(JSON.stringify(data))
+	return http.post('/revenue-accounts/search',data)
 }

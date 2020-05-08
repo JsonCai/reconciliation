@@ -34,6 +34,13 @@
 			console.log(this.tabIndex)
 			let gv='list'+this.tabIndex;
 			this.$refs[gv][0].loadMore()
+		},
+		methods:{
+			applyFrom(){
+				uni.navigateTo({
+					url:'../../applyForm/applyForm'
+				})
+			}
 		}
 	};
 </script>

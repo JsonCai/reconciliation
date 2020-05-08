@@ -125,7 +125,7 @@
 					this.submitApplyForm()
 						.then(res => {
 							console.log(res)
-							this.detailForm.revenueAccountId = res.data.expenseAccount.revenueAccountId
+							this.detailForm.revenueAccountId = res.data.revenueAccount.revenueAccountId
 							return applyRevenue({
 								revenueAccountId: this.detailForm.revenueAccountId
 							})

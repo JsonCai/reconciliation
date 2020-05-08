@@ -14,34 +14,19 @@
 			"path": "pages/me/me",
 			"style": {}
 		}, {
-			"path": "pages/BossPage/apply/applyPage"
-			// "style": {
-			// 	"navigationBarTitleText": "报销",
-			// 	"disableScroll": false, // 禁止滚动, 解决scroll-view在Android小程序卡顿的问题
-			// 	// "enablePullDownRefresh" : false, // 不开启下拉刷新, 默认就是false
-			// 	"app-plus": {
-			// 		"bounce": "none" // 取消iOS回弹,避免和下拉刷新冲突 (小程序无法取消)
-			// 	}
-			// }
+			"path": "pages/BossPage/apply/applyPage",
+			"style": {
+				"navigationBarTitleText": "报销"
+			}
 		}, {
 			"path": "pages/buyer/apply/applyPage",
 			"style": {
 				"navigationBarTitleText": "报销"
-				// "disableScroll": true, // 禁止滚动, 解决scroll-view在Android小程序卡顿的问题
-				// // "enablePullDownRefresh" : false, // 不开启下拉刷新, 默认就是false
-				// "app-plus": {
-				// 	"bounce": "none" // 取消iOS回弹,避免和下拉刷新冲突 (小程序无法取消)
-				// }
 			}
 		}, {
 			"path": "pages/accountant/apply/applyPage",
 			"style": {
 				"navigationBarTitleText": "报销"
-				// "disableScroll": true, // 禁止滚动, 解决scroll-view在Android小程序卡顿的问题
-				// // "enablePullDownRefresh" : false, // 不开启下拉刷新, 默认就是false
-				// "app-plus": {
-				// 	"bounce": "none" // 取消iOS回弹,避免和下拉刷新冲突 (小程序无法取消)
-				// }
 			}
 		}, {
 			"path": "pages/BossPage/finance/finance",
@@ -60,7 +45,7 @@
 				"navigationBarTitleText": "区间财务"
 			}
 		}, {
-			"path": "pages/applyFrom/applyForm",
+			"path": "pages/applyForm/applyForm",
 			"style": {
 				"navigationBarTitleText": "发起报销"
 			}
@@ -95,31 +80,45 @@
 		}
 	    ,{
             "path" : "pages/revenueForm/revenueForm",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "发起营收"
+			}
         }
         ,{
             "path" : "pages/revenueDetail/revenueDetail",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "详情"
+			}
         }
         ,{
             "path" : "pages/revenue/revenueDetail/revenueDetail",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "详情"
+			}
         }
         ,{
             "path" : "pages/specialPayments/paymentList/paymentList",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "特殊收支"
+			}
         }
         ,{
             "path" : "pages/specialPayments/payments/payments",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "新增收支"
+			}
         }
         ,{
             "path" : "pages/teller/apply/applyPage",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "报销"
+			}
         }
         ,{
             "path" : "pages/revenue/revenue/revenuePage",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "营收"
+			}
         }
     ],
 	"globalStyle": {

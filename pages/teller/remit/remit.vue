@@ -140,12 +140,5 @@
 
 <style lang="less" scoped>
 	@import url('../../../common/detailForm.less');
-	.btn-wrap{
-		justify-content: center;
-		.btn{
-			width: 60%;
-		}
-		margin-top: 100rpx;
-		margin-bottom: 50rpx;
-	}
+	
 </style>

@@ -3,7 +3,7 @@ export const baseUrl = 'https://fzg.fzzxwl.com:31886'
 const tabAll = {
 	id: "tab01",
 	name: '全部',
-	expenseAccountStatus: 0
+	expenseAccountStatus: null
 }
 const tabUnSumit = {
 	id: "tab02",

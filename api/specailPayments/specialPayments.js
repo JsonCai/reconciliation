@@ -21,4 +21,9 @@ export function SpecialDetail(id){
 	return http.get('/special-accounts/'+id)
 }
 // 获取特殊收支列表
-export function getSpecialList(){}
+export function searchSpecialList(data){
+	data.revenuePersonId = applyPersonId
+	data.tenantId = tenantId
+	console.log(JSON.stringify(data))
+	return http.post('/special-accounts/search',data)
+}

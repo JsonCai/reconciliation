@@ -52,11 +52,12 @@
 			upCallback(page) {
 				searchRevenueList(this.getApplyFormData(page))
 					.then(res => {
-						this.mescroll.endSuccess(res.data.expenseAccounts.length);
+						console.log(res)
+						this.mescroll.endSuccess(res.data.revenueAccounts.length);
 						if (page.num == 1) {
 							this.dataList = []
 						}
-						this.dataList = this.dataList.concat(res.data.expenseAccounts)
+						this.dataList = this.dataList.concat(res.data.revenueAccounts)
 					})
 					.catch(err => {
 						console.log(err)

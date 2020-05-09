@@ -12,13 +12,13 @@ export function createRevenueAccounts(data){
 }
 // 更新营收单
 export function updateRevenueForm(id,data){
-	data.applyPersonId = applyPersonId
+	data.revenuePersonId = applyPersonId
 	data.tenantId = tenantId
 	return http.put('/revenue-accounts/'+id,data)
 }
 // 申请营收
 export function applyRevenue(data){
-	data.applyPersonId = applyPersonId
+	data.revenuePersonId = applyPersonId
 	data.tenantId = tenantId
 	console.log(JSON.stringify(data))
 	return http.post('/revenue-accounts/submit',data)
@@ -29,7 +29,7 @@ export function revenueDetail(id){
 }
 // 获取营收单据列表
 export function searchRevenueList(data){
-	data.applyPersonId = applyPersonId
+	data.revenuePersonId = applyPersonId
 	data.tenantId = tenantId
 	console.log(JSON.stringify(data))
 	return http.post('/revenue-accounts/search',data)

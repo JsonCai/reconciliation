@@ -27,7 +27,7 @@
 					return this.financeSrc
 				}else if(this.text == '营收'){
 					return this.revenueSrc
-				}else if(this.text == '营收'){
+				}else if(this.text == '特殊收支'){
 					return this.revenueSrc
 				}else if(this.text == '报表'){
 					return this.statementSrc

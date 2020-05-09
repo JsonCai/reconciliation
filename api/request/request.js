@@ -7,7 +7,7 @@ import {
 } from '../login/login.js'
 
 function onHttpSuccess(res, resolve, reject) {
-	if (res.code == 403) {
+	if (res.statusCode == 403) {
 		uni.navigateTo({
 			url: '/pages/me/me.vue'
 		})

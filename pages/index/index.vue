@@ -7,6 +7,7 @@
 			<indexNavItem @handleClick="revenueClick('revenue')" text="营收" roleName="营收" v-if="showRevenueRevenuer"/>
 			<indexNavItem @handleClick="applyClick('teller')" text="报销" roleName="出纳" v-if="showApplyCashier"/>
 			<indexNavItem @handleClick="financeClick('revenue')" text="财务" roleName="出纳" v-if="showFinanceCashier"/>
+			<indexNavItem @handleClick="specialPayments" text="特殊收支" roleName="出纳" v-if="showFinanceCashier"/>
 			<indexNavItem @handleClick="applyClick('accountant')" text="报销" roleName="会计" v-if="showApplyAccountant"/>
 			<indexNavItem @handleClick="handleClick" text="营收" roleName="会计" v-if="showRevenueAccountant"/>
 			<indexNavItem @handleClick="handleClick" text="报表" roleName="会计" v-if="showStatementAccountant"/>
@@ -52,6 +53,11 @@
 			revenueClick(type){
 				uni.navigateTo({
 					url:'../revenue/revenue/revenuePage'
+				})
+			},
+			specialPayments(){
+				uni.navigateTo({
+					url:'../specialPayments/paymentList/paymentList'
 				})
 			},
 			handleClick(type){

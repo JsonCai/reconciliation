@@ -69,6 +69,9 @@
 						}
 					}
 				});
+			},
+			clickitem(item){
+				this.$emit('clickItem',item)
 			}
 		}
 	}

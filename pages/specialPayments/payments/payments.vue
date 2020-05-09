@@ -11,8 +11,8 @@
 			</view>
 			<view class="item-wrap">
 				<text>分类:</text>
-				<picker :value="categoryIndex" :disabled="isDisabled" range-key="label" :range="categoryList" @change="onCatagory">
-					<view class="picker"><text class="fc-9">{{category?category:'请选择分类'}}</text></view>
+				<picker :value="specialTypeIndex" :disabled="isDisabled" range-key="name" :range="specialType" @change="onCatagory">
+					<view class="picker"><text class="fc-9">{{specialTypeName?specialTypeName:'请选择分类'}}</text></view>
 				</picker>
 			</view>
 			<view class="item-wrap">
@@ -40,9 +40,10 @@
 </template>
 
 <script>
-	import {
-		categoryList
-	} from '@/libs/testDates';
+	import{
+		specialType
+	} from '../../../config/config.js'
+	
 	import timePicker from '@/components/timePicker/timePicker';
 	import imgList from '@/components/imgList/imgList.vue'
 	import {
@@ -66,9 +67,9 @@
 				detailForm: {
 					voucherUrls: []
 				},
-				categoryList,
-				categoryIndex: 0,
-				category: ""
+				specialType,
+				specialTypeIndex: 0,
+				specialTypeName: ""
 			};
 		},
 		methods: {
@@ -88,10 +89,9 @@
 				}
 			},
 			onCatagory(value) {
-				const category = this.categoryList[this.categoryIndex]
-				this.category = category.label
-				console.log(this.category)
-				this.detailForm.specialAccountType = category.value.toString()
+				const specialType = this.specialType[this.specialTypeIndex]
+				this.specialTypeName = specialType.name
+				this.detailForm.specialAccountType = specialType.type
 			},
 			onPassTap() {
 				if (this.isFormFill()) {
@@ -127,9 +127,6 @@
 			isFormFill() {
 				return true
 			}
-		},
-		created() {
-			console.log(categoryList);
 		}
 	};
 </script>

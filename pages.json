@@ -120,6 +120,10 @@
 				"navigationBarTitleText": "营收"
 			}
         }
+        ,{
+            "path" : "pages/BossPage/searchPage/searchPage",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

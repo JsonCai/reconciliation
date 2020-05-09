@@ -33,7 +33,7 @@
 			},
 			onConfirm(){
 				uni.hideKeyboard();
-				this.$emit('onConfirm',keyword)
+				this.$emit('onConfirm',this.keyword)
 			},
 		},
 		mounted(){

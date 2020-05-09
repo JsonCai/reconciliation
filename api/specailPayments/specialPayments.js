@@ -5,14 +5,14 @@ let applyPersonId = '930ee9c2-aee2-4e51-a170-fdf323fbce82'
 
 // 创建特殊收支单
 export function createSpecialAccounts(data){
-	data.revenuePersonId = applyPersonId
+	data.handlePersonId = applyPersonId
 	data.tenantId = tenantId
 	console.log(JSON.stringify(data))
 	return http.post('/special-accounts',data)
 }
 // 更新特殊收支单
 export function updateSpecialForm(id,data){
-	data.applyPersonId = applyPersonId
+	data.handlePersonId = applyPersonId
 	data.tenantId = tenantId
 	return http.put('/special-accounts/'+id,data)
 }
@@ -22,7 +22,7 @@ export function SpecialDetail(id){
 }
 // 获取特殊收支列表
 export function searchSpecialList(data){
-	data.revenuePersonId = applyPersonId
+	data.handlePersonId = applyPersonId
 	data.tenantId = tenantId
 	console.log(JSON.stringify(data))
 	return http.post('/special-accounts/search',data)

@@ -114,3 +114,15 @@ export function getRevenueStateStr(stateCode){
 		return "被收款"
 	}
 }
+
+// 返回特殊收支类型列表
+export const specialType = [
+	{
+		name:'其他收入',
+		type:1
+	},
+	{
+		name:'其他支出',
+		type:2
+	}
+]

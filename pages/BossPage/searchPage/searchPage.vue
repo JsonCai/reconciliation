@@ -1,72 +1,70 @@
 <template>
 	<view>
-		<fakeSearch></fakeSearch>
-		<view class="list-wrap">
+		<realSearch @cancelKeyword="cancelKeyword" @onCancel="onCancel" @onConfirm="onConfirm"></realSearch>
+		<view class="list-wrap" v-if="isShow">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList">
 					<applyItem :applyItem="listItem" @tap="itemClick(item)" fromType='boss'></applyItem>
 				</view>
 			</mescroll-body>
 		</view>
-		<view class="btn-add" @tap="applyFrom">&#xe604;</view>
 	</view>
 </template>
+
 <script>
-	import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
+	import realSearch from '@/components/realSearch/realSearch.vue'
 	import MescrollBody from "@/components/mescroll-diy/beibei/mescroll-body.vue";
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	import applyItem from '@/components/applyItem/applyItem.vue';
-	
 	import {
-		searchSpecialList
-	} from '../../../api/specailPayments/specialPayments.js'
-	
+		getApplyForm,
+		searchApplyFormList
+	} from '../../../api/apply/apply.js'
 	export default {
 		mixins: [MescrollMixin],
 		components: {
-			fakeSearch,
-			MescrollBody
+			realSearch,
+			MescrollBody,
+			applyItem
 		},
 		data() {
 			return {
+				dataList: [],
+				isShow: false,
+				searchKey: ""
 			};
 		},
 		onReachBottom() {
-			console.log(this.tabIndex)
-			this.$refs.list.loadMore()
+			this.loadMore()
 		},
 		methods: {
-			applyFrom() {
-				uni.navigateTo({
-					url: '../payments/payments'
-				})
-			},
 			loadMore() {
 				this.mescroll && this.mescroll.onReachBottom()
 			},
 			getApplyFormData(page) {
 				let offset = page.size * (page.num - 1)
 				const params = {
+					expenseAccountTitleMatch: this.searchKey,
 					offset,
-					limit: page.size
+					limit: page.size,
 				}
 				console.log(params)
 				return params
 			},
 			/*下拉刷新的回调 */
 			downCallback() {
+				console.log(this.mescroll)
 				this.mescroll.resetUpScroll()
 			},
 			/*上拉加载的回调: 其中page.num:当前页 从1开始, page.size:每页数据条数,默认10 */
 			upCallback(page) {
-				searchSpecialList(this.getApplyFormData(page))
+				searchApplyFormList(this.getApplyFormData(page))
 					.then(res => {
-						console.log(res)
-						this.mescroll.endSuccess(res.data.specialAccounts.length);
+						this.mescroll.endSuccess(res.data.expenseAccounts.length);
 						if (page.num == 1) {
 							this.dataList = []
 						}
-						this.dataList = this.dataList.concat(res.data.specialAccounts)
+						this.dataList = this.dataList.concat(res.data.expenseAccounts)
 					})
 					.catch(err => {
 						console.log(err)
@@ -74,12 +72,24 @@
 			},
 			itemClick(item) {
 				uni.navigateTo({
-					url: '../applyDetail/applyDetail'
+					url: '../applyDetail/applyDetail?id=' + item.expenseAccountId
 				})
+			},
+			cancelKeyword() {
+				this.isShow = false
+			},
+			onCancel() {
+				uni.navigateBack()
+			},
+			onConfirm(key) {
+				this.searchKey = key
+				this.isShow = true
+				this.downCallback()
 			}
 		}
-	};
+	}
 </script>
 
 <style>
+
 </style>

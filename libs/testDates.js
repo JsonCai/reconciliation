@@ -117,15 +117,15 @@ export const monthList = ['一月', '二月', '三月', '四月', '五月', '，
 
 export const categoryList=[
   {
-    value:"07a7fde9-b24f-4bd1-a334-ceed40e14a49",
+    value:"758c4de2-f0ee-46b4-b766-c6fed5d066d5",
     label:'清洁用品'
   },
   {
-    value: "07a7fde9-b24f-4bd1-a334-ceed40e14a49",
+    value: "758c4de2-f0ee-46b4-b766-c6fed5d066d5",
     label: '床上用品'
   },
   {
-    value: "07a7fde9-b24f-4bd1-a334-ceed40e14a49",
+    value: "758c4de2-f0ee-46b4-b766-c6fed5d066d5",
     label: '化妆品'
   }
 ]

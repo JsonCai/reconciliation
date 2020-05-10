@@ -1,8 +1,5 @@
 <template>
-	<mescroll-body ref="mescrollRef"
-	 @init="mescrollInit" top="240" 
-	 bottom="10" @down="downCallback"
-	  @up="upCallback">
+	<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
 		<view class="list" v-for="listItem in dataList">
 			<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='boss'></applyItem>
 		</view>
@@ -32,15 +29,15 @@
 			tab: Object // tab菜单,此处用于取关键词
 		},
 		methods: {
-			loadMore(){
-				 this.mescroll && this.mescroll.onReachBottom()
+			loadMore() {
+				this.mescroll && this.mescroll.onReachBottom()
 			},
 			getApplyFormData(page) {
 				let offset = page.size * (page.num - 1)
 				const params = {
 					offset,
 					limit: page.size,
-					expenseAccountStatus:this.tab.expenseAccountStatus
+					expenseAccountStatus: this.tab.expenseAccountStatus
 				}
 				console.log(params)
 				return params
@@ -64,9 +61,15 @@
 					})
 			},
 			itemClick(item) {
-				uni.navigateTo({
-					url: '../applyDetail/applyDetail?id='+item.expenseAccountId
-				})
+				if (item.expenseAccountStatus == 3 || item.expenseAccountStatus == 1) {
+					uni.navigateTo({
+						url: '../../applyForm/applyForm?id=' + item.expenseAccountId
+					})
+				} else {
+					uni.navigateTo({
+						url: '../applyDetail/applyDetail?id=' + item.expenseAccountId
+					})
+				}
 			}
 		},
 		mounted() {

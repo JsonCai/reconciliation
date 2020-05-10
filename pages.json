@@ -124,6 +124,10 @@
             "path" : "pages/BossPage/searchPage/searchPage",
             "style" : {}
         }
+        ,{
+            "path" : "pages/buyer/searchPage/searchPage",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

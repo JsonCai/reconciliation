@@ -4,7 +4,7 @@
 		<view class="list-wrap" v-if="isShow">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="120" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList">
-					<applyItem :applyItem="listItem" @tap="itemClick(item)" fromType='boss'></applyItem>
+					<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='boss'></applyItem>
 				</view>
 			</mescroll-body>
 		</view>
@@ -71,9 +71,15 @@
 					})
 			},
 			itemClick(item) {
-				uni.navigateTo({
-					url: '../applyDetail/applyDetail?id=' + item.expenseAccountId
-				})
+				if (item.expenseAccountStatus == 3 || item.expenseAccountStatus == 1) {
+					uni.navigateTo({
+						url: '../../applyForm/applyForm?id=' + item.expenseAccountId
+					})
+				} else {
+					uni.navigateTo({
+						url: '../applyDetail/applyDetail?id=' + item.expenseAccountId
+					})
+				}
 			},
 			cancelKeyword() {
 				this.isShow = false

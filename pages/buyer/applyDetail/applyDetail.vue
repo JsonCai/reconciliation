@@ -31,11 +31,11 @@
 			</view>
 			<view class="item-wrap">
 				<text>结束日期:</text>
-				<text>{{detailForm.applyTime | fmtDate}}</text>
+				<text>{{detailForm.endTime | fmtDate}}</text>
 			</view>
 			<view class="item-wrap">
 				<text>状态:</text>
-				<text>{{detailForm.applyTime | fmtDate}}</text>
+				<text>{{detailForm.expenseAccountStatus | fmtState}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.applyPerson">
 				<text>申请人:</text>

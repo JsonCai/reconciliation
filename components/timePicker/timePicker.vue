@@ -70,7 +70,7 @@
 				this.$emit("onConfirm", {
 					code: this.requestCode,
 					date: (this.value[0] + 1990) + "-" + (this.value[1] < 9 ? "0" + (this.value[1] + 1) : (this.value[1] + 1)) + "-" +
-						(this.value[2] < 10 ? "0" + (this.value[2] + 1) : this.value[2] + 1)
+						(this.value[2] < 9 ? "0" + (this.value[2] + 1) : this.value[2] + 1)
 				})
 			},
 			onCancel() {

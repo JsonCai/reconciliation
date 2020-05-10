@@ -15,7 +15,7 @@
 			</view>
 			<view class="item-wrap">
 				<text>金额:</text>
-				<text>{{detailForm.amount}}元</text>
+				<text>￥{{detailForm.amount}}</text>
 			</view>
 			<view class="item-wrap">
 				<text>报销日期:</text>
@@ -78,7 +78,8 @@
 		dateFtt
 	} from '@/libs/utils'
 	import {
-		applyDetail
+		applyDetail,
+		approveExpense
 	} from '@/api/apply/apply.js'
 	export default {
 		components: {
@@ -93,7 +94,32 @@
 			}
 		},
 		methods: {
-			onPassTap(){},
+			onValidate(){
+				if(!this.applyParams.approvalType){
+					uni.showToast({
+						 title: '请选择是否通过',
+						 icon:'none'
+					})
+					return false
+				}
+				if(this.applyParams.approvalType == '1' && !this.applyParams.approvalOpinion){
+					uni.showToast({
+						 title: '请填写拒绝原因',
+						 icon:'none'
+					})
+					return false
+				}
+				return true
+			},
+			onPassTap(){
+				if(this.onValidate()){
+					console.log(this.applyParams)
+					approveExpense(this.applyParams).then(res => {
+						console.log(res)
+					}).catch(err => console.log(err))
+				}
+				
+			},
 			changeReason(ev){
 				this.$set(this.applyParams,'approvalOpinion',ev.target.value)
 			},
@@ -110,7 +136,9 @@
 			}
 		},
 		onLoad(option) {
-			console.log(option)
+			if(option.id){
+				this.applyParams.expenseAccountId = option.id
+			}
 			applyDetail(option.id)
 				.then(res => {
 					console.log(res)

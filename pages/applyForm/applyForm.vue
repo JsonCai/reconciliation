@@ -127,6 +127,7 @@
 					uni.showLoading({
 						title: '正在提交'
 					});
+					console.log()
 					this.submitApplyForm()
 						.then(res => {
 							console.log(res)
@@ -159,6 +160,7 @@
 				let form = deepClone(this.detailForm)
 				form.amount = Number(this.detailForm.amount)
 				form.expenseTime = resetDateFormat(form.expenseTime)
+				console.log(form)
 				if (this.detailForm.expenseAccountId) {
 					return updateApplyForm(form.expenseAccountId, form)
 				} else {

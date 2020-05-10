@@ -2,7 +2,7 @@
 	<view>
 		<realSearch @cancelKeyword="cancelKeyword" @onCancel="onCancel" @onConfirm="onConfirm"></realSearch>
 		<view class="list-wrap" v-if="isShow">
-			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
+			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="120" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList">
 					<applyItem :applyItem="listItem" @tap="itemClick(item)" fromType='boss'></applyItem>
 				</view>
@@ -86,6 +86,9 @@
 				this.isShow = true
 				this.downCallback()
 			}
+		},
+		onBackPress() {
+			uni.hideKeyboard()
 		}
 	}
 </script>

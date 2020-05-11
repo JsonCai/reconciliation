@@ -40,7 +40,7 @@
 				const params = {
 					offset,
 					limit: page.size,
-					expenseAccountStatus:this.tab.expenseAccountStatus
+					expenseAccountStatus: 5
 				}
 				console.log(params)
 				return params

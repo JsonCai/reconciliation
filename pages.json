@@ -136,6 +136,10 @@
             "path" : "pages/teller/searchPage/searchPage",
             "style" : {}
         }
+        ,{
+            "path" : "pages/revenue/searchPage/searchPage",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

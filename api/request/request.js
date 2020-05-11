@@ -50,7 +50,7 @@ const http = {
 					Authorization: getAuthorization()
 				},
 				success: (res) => {
-					resolve(res)
+					onHttpSuccess(res, resolve, reject)
 				},
 				fail: (err) => {
 					reject(err)
@@ -68,7 +68,7 @@ const http = {
 					Authorization: getAuthorization()
 				},
 				success: (res) => {
-					resolve(res)
+					onHttpSuccess(res, resolve, reject)
 				},
 				fail: (err) => {
 					reject(err)
@@ -86,7 +86,7 @@ const http = {
 					Authorization: getAuthorization()
 				},
 				success: (res) => {
-					resolve(res)
+					onHttpSuccess(res, resolve, reject)
 				},
 				fail: (err) => {
 					reject(err)

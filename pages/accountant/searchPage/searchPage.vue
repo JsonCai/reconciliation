@@ -47,6 +47,7 @@
 					expenseAccountTitleMatch: this.searchKey,
 					offset,
 					limit: page.size,
+					expenseAccountStatus: 5
 				}
 				console.log(params)
 				return params
@@ -72,7 +73,7 @@
 			},
 			itemClick(item) {
 				uni.navigateTo({
-					url: '../applyDetail/applyDetail?id=' + item.expenseAccountId
+					url: '../../teller/applyDetail/applyDetail?id=' + item.expenseAccountId
 				})
 			},
 			cancelKeyword() {

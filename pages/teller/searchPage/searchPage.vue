@@ -71,15 +71,9 @@
 					})
 			},
 			itemClick(item) {
-				if (item.expenseAccountStatus == 3 || item.expenseAccountStatus == 1) {
-					uni.navigateTo({
-						url: '../../applyForm/applyForm?id=' + item.expenseAccountId
-					})
-				} else {
-					uni.navigateTo({
-						url: '../applyDetail/applyDetail?id=' + item.expenseAccountId
-					})
-				}
+				uni.navigateTo({
+					url: '../applyDetail/applyDetail?id=' + item.expenseAccountId
+				})
 			},
 			cancelKeyword() {
 				this.isShow = false

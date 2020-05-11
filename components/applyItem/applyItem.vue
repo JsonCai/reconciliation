@@ -18,7 +18,7 @@
 						<text>报销金额：</text>
 						<text class="fc-r">￥{{applyItem.amount}}</text>
 					</view>
-					<text class="apply-time fc-6">{{applyItem.applyTime | fmtTime}}</text>
+					<text class="apply-time fc-6">{{applyItem.createTime | fmtTime}}</text>
 				</view>
 			</view>
 			<image class="arrow" :src="arrowSrc"></image>
@@ -48,12 +48,17 @@
 						return '已拒绝'
 					} else if (val == '4') {
 						return '已通过'
+					}else if (val == '1') {
+						return '未提交'
 					}
 				}
 
 			},
 			fmtTime(val) {
-				return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val))
+				console.log(val)
+				if(val){
+					return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val))
+				}
 			}
 		},
 		methods: {

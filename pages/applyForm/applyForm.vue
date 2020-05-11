@@ -5,29 +5,30 @@
 				<image src="../../static/images/apply.png" class="icon-wallet mr-20"></image>
 				<text class="title-text">订单信息</text>
 			</view>
-			<view class="item-wrap">
-				<text>名称:</text>
-				<input class="input-text" placeholder="请输入名称" placeholder-class="place" v-model="detailForm.expenseAccountTitle" />
+			<view class="item-wrap require1">
+				<text class="item-label">名称:</text>
+				<input class="input-text" placeholder="请输入名称" placeholder-class="place" v-model.trim="detailForm.expenseAccountTitle" />
 			</view>
-			<view class="item-wrap">
+			<view class="item-wrap require1">
 				<text>分类:</text>
 				<picker :value="categoryIndex" :disabled="isDisabled" range-key="label" :range="categoryList" @change="onCatagory">
 					<view class="picker"><text class="fc-9">{{category?category:'请选择分类'}}</text></view>
 				</picker>
 			</view>
-			<view class="item-wrap">
+			<view class="item-wrap require1">
 				<text>申报金额:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.amount" @input="changePrice"/>
+				<input class="input-text" placeholder="请输入申报金额" 
+				type="digit"
+				placeholder-class="place" v-model="detailForm.amount" @blur="changePrice"/>
 			</view>
-			<view class="item-wrap">
+			<view class="item-wrap require1">
 				<text>申报日期:</text>
 				<view class="inner-wrap" @tap="onStartTimeTap(1)">
 					<text v-if="!detailForm.expenseTime" class="fc-9">请选择申报日期</text>
 					<text v-else>{{ detailForm.expenseTime}}</text>
-					<text class="font-icon">&#xe662;</text>
 				</view>
 			</view>
-			<view class="img-wrap fc-6">
+			<view class="img-wrap fc-6 mt-20">
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.imgList" :isDisabled="isDisabled" @changeImgList="changeImgList" />
 			</view>
@@ -49,7 +50,8 @@
 	import {
 		createApplyForm,
 		applyExpense,
-		updateApplyForm
+		updateApplyForm,
+		applyDetail
 	} from '../../api/apply/apply.js'
 	import {
 		deepClone,
@@ -75,7 +77,8 @@
 		},
 		methods: {
 			changePrice(ev){
-				console.log(event.detail )
+				const v = Number(ev.detail.value)
+				this.$set(this.detailForm,'amount',v.toFixed(2))
 			},
 			changeImgList(list) {
 				console.log(list)
@@ -99,7 +102,7 @@
 				this.detailForm.costCategoryId = category.value.toString()
 			},
 			onSuspendTap() {
-				if (this.isFormFill()) {
+				if (this.onValidate()) {
 					uni.showLoading({
 						title: '正在暂存'
 					});
@@ -123,11 +126,11 @@
 				}
 			},
 			onSubmitTap() {
-				if (this.isFormFill()) {
+				console.log(123)
+				if (this.onValidate()) {
 					uni.showLoading({
 						title: '正在提交'
 					});
-					console.log()
 					this.submitApplyForm()
 						.then(res => {
 							console.log(res)
@@ -167,12 +170,44 @@
 					return createApplyForm(form)
 				}
 			},
-			isFormFill() {
+			onValidate(){
+				if(!this.detailForm.expenseAccountTitle){
+					uni.showToast({
+						 title: '请输入报销单名称',
+						 icon:'none'
+					})
+					return false
+				}
+				if(!this.detailForm.costCategoryId ){
+					uni.showToast({
+						 title: '请填选择分类',
+						 icon:'none'
+					})
+					return false
+				}
+				if(!this.detailForm.amount ){
+					uni.showToast({
+						 title: '请填写申报金额',
+						 icon:'none'
+					})
+					return false
+				}
+				if(!this.detailForm.expenseTime ){
+					uni.showToast({
+						 title: '请填选报销时间',
+						 icon:'none'
+					})
+					return false
+				}
 				return true
-			}
+			},
 		},
-		created() {
-			console.log(categoryList);
+		onLoad(options) {
+			if(options.id){
+				applyDetail(options.id).then(res => {
+					console.log(res)
+				})
+			}
 		}
 	};
 </script>

@@ -16,6 +16,8 @@ export function getAuthorization() {
 	}
 	return Authorization
 }
+
+
 export function login(data) {
 	return http.post('/employees/wechat-login', data)
 }

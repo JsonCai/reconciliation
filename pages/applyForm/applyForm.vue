@@ -11,8 +11,13 @@
 			</view>
 			<view class="item-wrap require1">
 				<text>分类:</text>
-				<picker :value="categoryIndex" :disabled="isDisabled" range-key="label" :range="categoryList" @change="onCatagory">
-					<view class="picker"><text class="fc-9">{{category?category:'请选择分类'}}</text></view>
+				<picker :value="categoryIndex" :disabled="isDisabled" 
+				mode = 'selector'
+				range-key="label" :range="categoryList" @change="onCatagory">
+					<view class="picker">
+						<text  v-if="category">{{category}}</text>
+						<text class="fc-9" v-else>请选择分类</text>
+					</view>
 				</picker>
 			</view>
 			<view class="item-wrap require1">
@@ -55,7 +60,8 @@
 	} from '../../api/apply/apply.js'
 	import {
 		deepClone,
-		resetDateFormat
+		resetDateFormat,
+		dateFtt
 	} from '@/libs/utils.js'
 	export default {
 		components: {
@@ -76,6 +82,7 @@
 			};
 		},
 		methods: {
+			
 			changePrice(ev){
 				const v = Number(ev.detail.value)
 				this.$set(this.detailForm,'amount',v.toFixed(2))
@@ -96,10 +103,10 @@
 				}
 			},
 			onCatagory(value) {
-				const category = this.categoryList[this.categoryIndex]
+				const idex = value.detail.value
+				const category = this.categoryList[idex]
 				this.category = category.label
-				console.log(this.category)
-				this.detailForm.costCategoryId = category.value.toString()
+				this.detailForm.costCategoryId = category.value
 			},
 			onSuspendTap() {
 				if (this.onValidate()) {
@@ -146,7 +153,10 @@
 								icon: 'none',
 								title: "提交成功"
 							})
-							uni.navigateBack()
+							setTimeout(()=>{
+								uni.navigateBack()
+							},500)
+							
 						})
 						.catch(err => {
 							uni.hideLoading();
@@ -205,7 +215,17 @@
 		onLoad(options) {
 			if(options.id){
 				applyDetail(options.id).then(res => {
-					console.log(res)
+					this.detailForm = res.data.expenseAccount
+					console.log(this.detailForm)
+					if(this.detailForm.expenseTime){
+					this.detailForm.expenseTime = this.detailForm.expenseTime.split(' ')[0]
+					}
+				}).catch(err => {
+					uni.showToast({
+						 title: res.msg,
+						 icon:'none'
+					})
+					uni.navigateBack()
 				})
 			}
 		}

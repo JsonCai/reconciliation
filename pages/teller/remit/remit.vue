@@ -71,7 +71,9 @@
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
 			</view>
 		</view>
-		<timePicker :requestCode="timeCode" :show="showTimePicker" @onConfirm="timePickConfirm" @onCancel="showTimePicker = false"></timePicker>
+		<timePicker :requestCode="timeCode" 
+		:show="showTimePicker" @onConfirm="timePickConfirm" 
+		@onCancel="showTimePicker = false"></timePicker>
 	</view>
 </template>
 

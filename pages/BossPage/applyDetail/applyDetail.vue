@@ -33,10 +33,6 @@
 				<text>申请人:</text>
 				<text>{{detailForm.applyPerson.employeeName}}</text>
 			</view>
-		<!-- 	<view class="title item-wrap" v-if="detailForm.approvals">
-				<image src="../../../static/images/progress.png" class="icon-wallet mr-20"></image>
-				<text class="title-text">审批历史</text>
-			</view> -->
 			<view class="item-wrap" v-if="detailForm.expenseAccountStatus.value == 2 " >
 				<text>是否通过:</text>
 				<radio-group @change="radioChange">
@@ -52,9 +48,9 @@
 					</view>
 				</radio-group>
 			</view>
-			<view class="item-wrap" v-if="detailForm.expenseAccountStatus.value == 2 && applyParams.approvalType == '1'">
-				<text>拒绝原因</text>
-				<input placeholder="请输入拒绝原因" class="input-text" @input="changeReason" v-model="applyParams.approvalOpinion"/>
+			<view class="item-wrap" v-if="detailForm.expenseAccountStatus.value == 2">
+				<text>审批意见</text>
+				<input placeholder="审批意见" class="input-text" @input="changeReason" v-model="applyParams.approvalOpinion"/>
 			</view>
 			<view class="big-btn-wrap">
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
@@ -102,9 +98,9 @@
 					})
 					return false
 				}
-				if(this.applyParams.approvalType == '1' && !this.applyParams.approvalOpinion){
+				if(!this.applyParams.approvalOpinion){
 					uni.showToast({
-						 title: '请填写拒绝原因',
+						 title: '请填写审批意见',
 						 icon:'none'
 					})
 					return false
@@ -125,7 +121,7 @@
 			},
 			radioChange(ev) {
 				console.log(ev.target.value)
-				this.$set(this.applyParams,'approvalType',ev.target.value)
+				this.$set(this.applyParams,'approvalType',Number(ev.target.value))
 			}
 		},
 		filters: {
@@ -141,8 +137,8 @@
 			}
 			applyDetail(option.id)
 				.then(res => {
-					console.log(res)
-					this.$set(this, "detailForm", res.data.data.expenseAccount)
+					if(res.code == '0'){}
+					this.detailForm = res.data.expenseAccount
 				})
 				.catch(err => {
 					console.log(err)

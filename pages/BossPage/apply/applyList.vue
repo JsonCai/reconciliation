@@ -4,7 +4,7 @@
 	 bottom="10" @down="downCallback"
 	  @up="upCallback">
 		<view class="list" v-for="listItem in dataList">
-			<applyItem :applyItem="listItem" @tap="itemClick(item)" fromType='boss'></applyItem>
+			<applyItem :applyItem="listItem" @clickItem="clickItem" fromType='boss'></applyItem>
 		</view>
 	</mescroll-body>
 </template>
@@ -63,9 +63,9 @@
 						console.log(err)
 					})
 			},
-			itemClick(item) {
+			clickItem(item) {
 				uni.navigateTo({
-					url: '../applyDetail/applyDetail'
+					url: '../applyDetail/applyDetail?id='+ item.expenseAccountId
 				})
 			}
 		},

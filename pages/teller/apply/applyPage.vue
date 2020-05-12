@@ -16,7 +16,7 @@
 	import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
 
 	import {
-		bossTabs
+		tellerTabs
 	} from '../../../config/config.js'
 
 
@@ -30,7 +30,7 @@
 		data() {
 			return {
 				tabIndex: 0,
-				tabs: bossTabs,
+				tabs: tellerTabs,
 			};
 		},
 		onReachBottom(){

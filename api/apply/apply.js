@@ -47,10 +47,10 @@ export function applyExpense(data){
 }
 // 审批报销单据
 export function approveExpense(data){
-	data.applyPersonId = applyPersonId
+	data.approvalPersonId = applyPersonId
 	data.tenantId = tenantId
 	console.log(JSON.stringify(data))
-	return http.put('/expense-accounts/approval-expense-account',data)
+	return http.post('/expense-accounts/approval-expense-account',data)
 }
 // 报销单据打款
 export function paymentExpence(data){

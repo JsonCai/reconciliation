@@ -122,26 +122,38 @@
         }
         ,{
             "path" : "pages/BossPage/searchPage/searchPage",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "搜索"
+			}
         }
         ,{
             "path" : "pages/buyer/searchPage/searchPage",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "搜索"
+			}
         }
         ,{
             "path" : "pages/accountant/searchPage/searchPage",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "搜索"
+			}
         }
         ,{
             "path" : "pages/teller/searchPage/searchPage",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "搜索"
+			}
         }
         ,{
             "path" : "pages/revenue/searchPage/searchPage",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "搜索"
+			}
         },{
 			"path":"pages/teller/revenue/revenuePage",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "营收"
+			}
 		}
 		
     ],

@@ -18,7 +18,7 @@ const tabSumit = {
 const tabReject = {
 	id: "tab04",
 	name: '被拒收',
-	newsid: 4
+	expenseAccountStatus: 3
 }
 const tabGathring = {
 	id: "tab05",
@@ -60,7 +60,21 @@ const tabPass = {
 	name: '已通过',
 	expenseAccountStatus: 4
 }
-
+const tabWaitRecepit = {
+	id: "tab13",
+	name: '待收款',
+	expenseAccountStatus: 2
+}
+const tabRecepited = {
+	id: "tab14",
+	name: '已收款',
+	expenseAccountStatus: 4
+}
+const tabRejected = {
+	id: "tab15",
+	name: '已拒收',
+	expenseAccountStatus: 3
+}
 
 export const bossTabs = [
 	tabAll,
@@ -94,6 +108,12 @@ export const kjTabs = [
 	tabAll,
 	tabWaitRemit,
 	tabRemited
+]
+export const tellerRevenueTab=[
+	tabAll,
+	tabWaitRecepit,
+	tabRecepited,
+	tabRejected
 ]
 // export default {
 // 	bossTabs,

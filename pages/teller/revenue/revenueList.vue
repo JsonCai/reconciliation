@@ -37,7 +37,7 @@
 				const params = {
 					offset,
 					limit: page.size,
-					expenseAccountStatus: this.tab.expenseAccountStatus
+					revenueAccountStatus: this.tab.expenseAccountStatus
 				}
 				console.log(params)
 				return params
@@ -62,15 +62,9 @@
 					})
 			},
 			itemClick(item) {
-				if (item.revenueAccountStatus == 1 || item.revenueAccountStatus == 3) {
-					uni.navigateTo({
-						url: '../../revenueForm/revenueForm?id=' + item.revenueAccountId
-					})
-				} else {
-					uni.navigateTo({
-						url: '../revenueDetail/revenueDetail?id=' + item.revenueAccountId
-					})
-				}
+				uni.navigateTo({
+					url: '../../revenueDetail/revenueDetail?id=' + item.revenueAccountId
+				})
 			}
 		},
 		mounted() {

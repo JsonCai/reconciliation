@@ -37,7 +37,7 @@
 				const params = {
 					offset,
 					limit: page.size,
-					expenseAccountStatus: this.tab.expenseAccountStatus
+					revenueAccountStatus: this.tab.expenseAccountStatus
 				}
 				console.log(params)
 				return params
@@ -72,9 +72,6 @@
 					})
 				}
 			}
-		},
-		mounted() {
-
 		}
 	};
 </script>

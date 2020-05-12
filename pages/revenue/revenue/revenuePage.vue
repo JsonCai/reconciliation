@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<fakeSearch></fakeSearch>
+		<fakeSearch @onSearch="onSearch"></fakeSearch>
 		<app-tabs v-model="tabIndex" :tabs="tabs" :fixed="true" :top="120"></app-tabs>
 		<view class="list-wrap">
 			<block v-for="(item,index) in tabs" :key="index">
@@ -43,6 +43,11 @@
 			revenueFrom(){
 				uni.navigateTo({
 					url:'../../revenueForm/revenueForm'
+				})
+			},
+			onSearch(){
+				uni.navigateTo({
+					url:'../searchPage/searchPage'
 				})
 			}
 		}

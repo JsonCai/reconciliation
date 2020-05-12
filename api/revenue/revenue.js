@@ -34,3 +34,10 @@ export function searchRevenueList(data){
 	console.log(JSON.stringify(data))
 	return http.post('/revenue-accounts/search',data)
 }
+// 接收营收单据
+export function receiveRevenueAccounts(data){
+	data.receiptPersonId = applyPersonId
+	data.tenantId = tenantId
+	console.log(JSON.stringify(data))
+	return http.post('/revenue-accounts/receipt',data)
+}

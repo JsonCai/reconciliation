@@ -30,21 +30,21 @@
 				<imgList :list="detailForm.revenueVoucherUrls" :isDisabled="true" />
 			</view>
 			
-			<view class="item-wrap">
+			<view class="item-wrap" v-if="detailForm.submitTime">
 				<text>提交日期:</text>
 				<text>{{detailForm.submitTime}}</text>
 			</view>
-			<view class="item-wrap">
+			<view class="item-wrap" v-if="detailForm.endTime">
 				<text>结束日期:</text>
 				<text>{{detailForm.endTime}}</text>
 			</view>
-			<view class="item-wrap">
+			<view class="item-wrap" v-if="detailForm.revenuePerson">
 				<text>营业员:</text>
-				<text>{{detailForm.receiptPerson.employeeName}}</text>
+				<text>{{detailForm.revenuePerson.employeeName}}</text>
 			</view>
-			<view class="item-wrap">
+			<view class="item-wrap" v-if="detailForm.revenueAccountStatus">
 				<text>状态:</text>
-				<text>{{detailForm.revenueAccountStatus|revenueState}}</text>
+				<text>{{detailForm.revenueAccountStatus.value|revenueState}}</text>
 			</view>
 		</view>
 	</view>
@@ -61,8 +61,16 @@
 			imgList
 		},
 		filters: {
-			revenueState(state){
-				return getRevenueStateStr(state)
+			revenueState(stateCode){
+				if(stateCode == 1){
+					return "未提交"
+				}else if(stateCode == 2){
+					return "已提交"
+				}else if(stateCode == 3){
+					return "被拒收"
+				}else if(stateCode == 4){
+					return "被收款"
+				}
 			}
 		},
 		data() {
@@ -78,7 +86,7 @@
 			revenueDetail(option.id)
 				.then(res => {
 					console.log(res)
-					this.$set(this, "detailForm", res.data.data.revenueAccount)
+					this.$set(this, "detailForm", res.data.revenueAccount)
 				})
 				.catch(err => {
 					console.log(err)

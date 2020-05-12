@@ -4,7 +4,7 @@
 	 bottom="10" @down="downCallback"
 	  @up="upCallback">
 		<view class="list" v-for="listItem in dataList">
-			<applyItem :applyItem="listItem" @tap="itemClick(item)" fromType='boss'></applyItem>
+			<revenueItem :revenueItem="listItem" @clickItem="itemClick" fromType='revenue'></revenueItem>
 		</view>
 	</mescroll-body>
 </template>
@@ -12,7 +12,7 @@
 <script>
 	import MescrollBody from "@/components/mescroll-diy/beibei/mescroll-body.vue";
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
-	import applyItem from '@/components/applyItem/applyItem.vue';
+	import revenueItem from '@/components/revenueItem/revenueItem.vue';
 	import {
 		searchRevenueList
 	} from '../../../api/revenue/revenue.js'
@@ -20,6 +20,7 @@
 	export default {
 		mixins: [MescrollMixin],
 		components: {
+			revenueItem,
 			MescrollBody
 		},
 		data() {
@@ -65,7 +66,7 @@
 			},
 			itemClick(item) {
 				uni.navigateTo({
-					url: '../applyDetail/applyDetail'
+					url: '../revenueDetail/revenueDetail?id='+item.revenueAccountId
 				})
 			}
 		},

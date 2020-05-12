@@ -1,7 +1,7 @@
 import http from '../request/request'
 
-let tenantId = '4ed3e7ff-89b3-4308-87dc-a583d076510d'
-let applyPersonId = '930ee9c2-aee2-4e51-a170-fdf323fbce82'
+let tenantId = '23945197-a5df-44bf-842f-106b42f80355'
+let applyPersonId = 'fe5e209b-ad9d-419e-aeda-f92b09d2823d'
 
 // 创建营收单
 export function createRevenueAccounts(data){

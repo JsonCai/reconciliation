@@ -1,13 +1,13 @@
 <template>
-	<view class="list-item" @tap="clickitem(applyItem)">
+	<view class="list-item" @tap="clickitem(revenueItem)">
 		<view class="main_item_content ">
 			<view class="tag">
-				<text>{{revenueItem.expenseAccountStatus | formatState(fromType)}}</text>
+				<text>{{revenueItem.revenueAccountStatus | formatState(fromType)}}</text>
 			</view>
 			<view class="main-wrap">
 				<view class="item-wrap ">
 					<text>名称：</text>
-					<text>{{revenueItem.expenseAccountTitle}}</text>
+					<text>{{revenueItem.revenueAccountTitle}}</text>
 				</view>
 				<view class="item-wrap price-wrap">
 					<view>
@@ -41,15 +41,15 @@
 		},
 		filters: {
 			formatState(val, type) {
-				if (type == 'boss') {
-					if (val == '2') {
-						return '待审批'
+				if (type == 'revenue') {
+					if (val == '1') {
+						return '未提交'
 					} else if (val == '2') {
 						return '已提交'
 					} else if (val == '3') {
-						return '已拒绝'
+						return '被拒收'
 					} else if (val == '4') {
-						return '已通过'
+						return '被收款'
 					}
 				}
 
@@ -71,6 +71,10 @@
 						}
 					}
 				});
+			},
+			clickitem(item){
+				console.log(item)
+				this.$emit('clickItem',item)
 			}
 		}
 	}

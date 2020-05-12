@@ -19,10 +19,8 @@
 			</view>
 			<view class="item-wrap">
 				<text>营收日期:</text>
-				<view class="inner-wrap" @tap="onStartTimeTap(1)">
-					<text v-if="!detailForm.revenueTime" class="fc-9">请选择营收日期</text>
-					<text v-else>{{ detailForm.revenueTime}}</text>
-					<text class="font-icon">&#xe662;</text>
+				<view class="inner-wrap">
+					<text>{{ detailForm.revenueTime|fmtDate}}</text>
 				</view>
 			</view>
 			<view class="img-wrap fc-6" v-if="detailForm.revenueVoucherUrls">
@@ -32,7 +30,7 @@
 			
 			<view class="item-wrap" v-if="detailForm.submitTime">
 				<text>提交日期:</text>
-				<text>{{detailForm.submitTime}}</text>
+				<text>{{detailForm.submitTime|fmtDate}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.endTime">
 				<text>结束日期:</text>
@@ -61,6 +59,12 @@
 			imgList
 		},
 		filters: {
+			fmtDate(val) {
+				if (val) {
+					return val.split(' ')[0]
+				}
+				return ''
+			},
 			revenueState(stateCode){
 				if(stateCode == 1){
 					return "未提交"

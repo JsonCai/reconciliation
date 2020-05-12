@@ -11,11 +11,12 @@
 			</view>
 			<view class="item-wrap">
 				<text>应收款:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.accountReceivable" type="digit"/>
+				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.accountReceivable"
+				 type="digit" />
 			</view>
 			<view class="item-wrap">
 				<text>实收款:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.fundsReceived" type="digit"/>
+				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.fundsReceived" type="digit" />
 			</view>
 			<view class="item-wrap">
 				<text>营收日期:</text>
@@ -47,7 +48,8 @@
 	import {
 		createRevenueAccounts,
 		applyRevenue,
-		updateRevenueForm
+		updateRevenueForm,
+		revenueDetail
 	} from '../../api/revenue/revenue.js'
 	import {
 		deepClone,
@@ -165,8 +167,20 @@
 				return true
 			}
 		},
-		created() {
-			console.log(categoryList);
+		onLoad(option) {
+			if (option.id) {
+				revenueDetail(option.id)
+					.then(res => {
+						console.log(res)
+						this.detailForm = res.data.revenueAccount
+						if (this.detailForm.revenueTime) {
+							this.detailForm.revenueTime = this.detailForm.revenueTime.split(' ')[0]
+						}
+					})
+					.catch(err => {
+						uni.navigateBack()
+					})
+			}
 		}
 	};
 </script>

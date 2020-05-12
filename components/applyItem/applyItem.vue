@@ -51,6 +51,30 @@
 					}else if (val == '1') {
 						return '未提交'
 					}
+				}else if (type == 'buyer') {
+					if (val == '1') {
+						return '未提交'
+					} else if (val == '2') {
+						return '已提交'
+					} else if (val == '3') {
+						return '未通过'
+					} else if (val == '4') {
+						return '已通过'
+					}else if (val == '5') {
+						return '已打款'
+					}
+				}else if (type == 'revenue') {
+					if (val == '1') {
+						return '未提交'
+					} else if (val == '2') {
+						return '已提交'
+					} else if (val == '3') {
+						return '已拒绝'
+					} else if (val == '4') {
+						return '已通过'
+					}else if (val == '5') {
+						return '已打款'
+					}
 				}
 
 			},

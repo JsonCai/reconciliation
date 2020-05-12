@@ -33,36 +33,47 @@
 				<text>申请人:</text>
 				<text>{{detailForm.applyPerson.employeeName}}</text>
 			</view>
-			<view class="item-wrap" v-if="detailForm.expenseAccountStatus.value == 2 " >
+			<view class="item-wrap" v-if="detailForm.expenseAccountStatus.value == 2 ">
 				<text>是否通过:</text>
 				<radio-group @change="radioChange">
 					<view>
 						<label class="radio">
 							<radio color="#06bebe" value="2" />
-								<text class="r-text" style="margin-right: 10rpx;">通过</text>
-							</label>
+							<text class="r-text" style="margin-right: 10rpx;">通过</text>
+						</label>
 						<label class="radio">
 							<radio color="#06bebe" value="1" />
-								<text class="r-text">拒绝</text>
-							</label>
+							<text class="r-text">拒绝</text>
+						</label>
 					</view>
 				</radio-group>
 			</view>
 			<view class="item-wrap" v-if="detailForm.expenseAccountStatus.value == 2">
 				<text>审批意见</text>
-				<input placeholder="审批意见" class="input-text" @input="changeReason" v-model="applyParams.approvalOpinion"/>
+				<input placeholder="审批意见" class="input-text" @input="changeReason" v-model="applyParams.approvalOpinion" />
 			</view>
-			<view class="big-btn-wrap">
+			<view class="big-btn-wrap" v-if="detailForm.expenseAccountStatus.value == 2">
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
 			</view>
-			<!-- <view class="item-nowrap">
-				<text>审批时间</text>
-				<text>2020-06-01</text>
+			<view class="title item-wrap" v-if="detailForm.approvals&&detailForm.expenseAccountStatus.value > 2">
+				<image src="../../../static/images/progress.png" class="icon-wallet mr-20"></image>
+				<text class="title-text">审批历史</text>
 			</view>
-			<view class="item-nowrap">
-				<text>审批人</text>
-				<text>黄总</text>
-			</view> -->
+			<view class="item-cross-line" v-if="detailForm.approvals&&detailForm.expenseAccountStatus.value > 2" v-for="(item,index) in detailForm.approvals"
+			 :key="item.createTime">
+				<view class="item-nowrap">
+					<text>审批意见</text>
+					<text>{{item.approvalOpinion}}</text>
+				</view>
+				<view class="item-nowrap">
+					<text>审批时间</text>
+					<text>{{item.createTime|fmtDate}}</text>
+				</view>
+				<view class="item-nowrap">
+					<text>审批人</text>
+					<text>{{item.approvalPerson.employeeName}}</text>
+				</view>
+			</view>
 		</view>
 	</view>
 	</view>
@@ -84,44 +95,44 @@
 		data() {
 			return {
 				detailForm: {
-					expenseAccountStatus:{}
+					expenseAccountStatus: {}
 				},
-				applyParams:{}
+				applyParams: {}
 			}
 		},
 		methods: {
-			onValidate(){
-				if(!this.applyParams.approvalType){
+			onValidate() {
+				if (!this.applyParams.approvalType) {
 					uni.showToast({
-						 title: '请选择是否通过',
-						 icon:'none'
+						title: '请选择是否通过',
+						icon: 'none'
 					})
 					return false
 				}
-				if(!this.applyParams.approvalOpinion){
+				if (!this.applyParams.approvalOpinion) {
 					uni.showToast({
-						 title: '请填写审批意见',
-						 icon:'none'
+						title: '请填写审批意见',
+						icon: 'none'
 					})
 					return false
 				}
 				return true
 			},
-			onPassTap(){
-				if(this.onValidate()){
+			onPassTap() {
+				if (this.onValidate()) {
 					console.log(this.applyParams)
 					approveExpense(this.applyParams).then(res => {
 						console.log(res)
 					}).catch(err => console.log(err))
 				}
-				
+
 			},
-			changeReason(ev){
-				this.$set(this.applyParams,'approvalOpinion',ev.target.value)
+			changeReason(ev) {
+				this.$set(this.applyParams, 'approvalOpinion', ev.target.value)
 			},
 			radioChange(ev) {
 				console.log(ev.target.value)
-				this.$set(this.applyParams,'approvalType',Number(ev.target.value))
+				this.$set(this.applyParams, 'approvalType', Number(ev.target.value))
 			}
 		},
 		filters: {
@@ -132,12 +143,12 @@
 			}
 		},
 		onLoad(option) {
-			if(option.id){
+			if (option.id) {
 				this.applyParams.expenseAccountId = option.id
 			}
 			applyDetail(option.id)
 				.then(res => {
-					if(res.code == '0'){}
+					if (res.code == '0') {}
 					this.detailForm = res.data.expenseAccount
 				})
 				.catch(err => {
@@ -149,16 +160,18 @@
 
 <style lang="less" scoped>
 	@import url('../../../common/detailForm.less');
-	radio-group{
-		display:flex;
+
+	radio-group {
+		display: flex;
 		align-items: center;
 	}
-	.r-text{
+
+	.r-text {
 		position: relative;
-		top:4rpx;
+		top: 4rpx;
 	}
-	.reasonInput{
+
+	.reasonInput {
 		text-align: right;
 	}
-	
 </style>

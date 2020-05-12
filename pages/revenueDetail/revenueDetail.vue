@@ -7,15 +7,15 @@
 			</view>
 			<view class="item-wrap">
 				<text>名称:</text>
-				<input class="input-text" placeholder="请输入名称" placeholder-class="place" v-model="detailForm.revenueAccountTitle" />
-			</view>
+				<text>{{ detailForm.revenueAccountTitle}}</text>
+				</view>
 			<view class="item-wrap">
 				<text>应收款:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.accountReceivable" />
+				<text>{{detailForm.accountReceivable}}</text>
 			</view>
 			<view class="item-wrap">
 				<text>实收款:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.fundsReceived" />
+				<text>{{detailForm.fundsReceived}}</text>
 			</view>
 			<view class="item-wrap">
 				<text>营收日期:</text>
@@ -76,7 +76,7 @@
 			revenueDetail(option.id)
 				.then(res => {
 					console.log(res)
-					this.$set(this, "detailForm", res.data.data.revenueAccount)
+					this.$set(this, "detailForm", res.data.revenueAccount)
 				})
 				.catch(err => {
 					console.log(err)

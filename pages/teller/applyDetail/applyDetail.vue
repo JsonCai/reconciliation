@@ -57,7 +57,7 @@
 			</view>
 			<view class="img-wrap fc-6 mt-20">
 				<text class="fc-30 fc-6">凭据：</text>
-				<imgList :list="detailForm.paymentVoucherUrls" />
+				<imgList :list="detailForm.paymentVoucherUrls" :isDisabled="detailForm.expenseAccountStatus&&detailForm.expenseAccountStatus.value == 5" />
 			</view>
 			<view class="item-wrap">
 				<text>打款日期:</text>
@@ -67,7 +67,7 @@
 					<text class="font-icon">&#xe662;</text>
 				</view>
 			</view>
-			<view class="big-btn-wrap">
+			<view class="big-btn-wrap" v-if="detailForm.expenseAccountStatus&&detailForm.expenseAccountStatus.value == 4">
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
 			</view>
 		</view>
@@ -132,6 +132,9 @@
 				this.detailForm.paymentVoucherUrls = list
 			},
 			onStartTimeTap(code) {
+				if(this.detailForm.expenseAccountStatus.value == 5){
+					return
+				}
 				this.timeCode = code;
 				this.showTimePicker = true;
 			},

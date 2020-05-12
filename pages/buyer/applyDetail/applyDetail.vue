@@ -35,7 +35,7 @@
 			</view>
 			<view class="item-wrap">
 				<text>状态:</text>
-				<text>{{detailForm.expenseAccountStatus | fmtState}}</text>
+				<text>{{detailForm.expenseAccountStatus.value | fmtState}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.applyPerson">
 				<text>申请人:</text>
@@ -77,6 +77,7 @@
 				return ''
 			},
 			fmtState(val) {
+				console.log(val)
 				if (val == 1) {
 					return '未提交'
 				} else if (val == 2) {
@@ -95,7 +96,7 @@
 			applyDetail(option.id)
 				.then(res => {
 					console.log(res)
-					this.$set(this, "detailForm", res.data.data.expenseAccount)
+					this.$set(this, "detailForm", res.data.expenseAccount)
 				})
 				.catch(err => {
 					console.log(err)

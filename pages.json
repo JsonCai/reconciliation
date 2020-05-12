@@ -139,7 +139,11 @@
         ,{
             "path" : "pages/revenue/searchPage/searchPage",
             "style" : {}
-        }
+        },{
+			"path":"pages/teller/revenue/revenuePage",
+			"style": {}
+		}
+		
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

@@ -1,11 +1,15 @@
 import {
 	baseUrl
 } from '../../config/config'
+import store from '@/store'
 
-import {
-	getAuthorization
-} from '../login/login.js'
-
+function getAuthorization(){
+	console.log('我是token')
+	console.log('我是token')
+	console.log('我是token')
+	console.log(store.state.token)
+	return store.state.token
+}
 function onHttpSuccess(res, resolve, reject) {
 	if (res.statusCode == 403) {
 		uni.navigateTo({

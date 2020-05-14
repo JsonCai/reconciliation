@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view class="item-list">
+		<view class="item-list" v-if="isLogin">
 			<indexNavItem  @handleClick="applyClick('BossPage')" text="报销" roleName="老板" v-if="showApplyBoss"/>
 			<indexNavItem @handleClick="financeClick('BossPage')" text="财务" roleName="老板" v-if="showFinanceBoss"/>
 			<indexNavItem @handleClick="applyClick('buyer')" text="报销" roleName="采购" v-if="showApplyBuyer"/>
@@ -13,13 +13,16 @@
 			<indexNavItem @handleClick="revenueClick('accountant')" text="营收" roleName="会计" v-if="showRevenueAccountant"/>
 			<indexNavItem @handleClick="handleClick" text="报表" roleName="会计" v-if="showStatementAccountant"/>
 		</view>
+		<noLogin v-else/>
 	</view>
 </template>
 <script>
-	import indexNavItem from '../../components/indexNavItem/indexNavItem.vue'
+	import indexNavItem from '@/components/indexNavItem/indexNavItem.vue'
+	import noLogin from '@/components/noLogin/noLogin.vue'
 	export default {
 		components:{
-			indexNavItem
+			indexNavItem,
+			noLogin
 		},
 		data() {
 			return {
@@ -37,8 +40,11 @@
 				showFinanceCashier:true
 			}
 		},
-		onLoad() {
-
+		computed:{
+			isLogin(){
+				  if(this.$store.state.token) return true
+				  else return false
+			}
 		},
 		methods: {
 			applyClick(type){

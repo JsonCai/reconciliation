@@ -6,8 +6,8 @@
 				<text class="tips" v-if="!isLogin">登录获取更多信息</text>
 				<view class="info" v-else>
 					<view class="info-item">
-						<text>{{ userInfo.nickName }}</text>
-						<!-- <image class="sex-img" :src="sexSrc"></image> -->
+						<text>{{ userInfo.employeeName }}</text>
+						<image class="sex-img" :src="userInfo.gender == 1 ? boySrc : girlSrc"></image>
 					</view>
 					<view class="info-item">
 						<text class="roleName fc-c">
@@ -33,8 +33,8 @@ export default {
 			isLogin: false,
 			userInfo: {
 			},
-			boySrc: '/images/boy.png',
-			sexSrc: ''
+			boySrc: '../../static/images/boy.png',
+			girlSrc: '../../static/images/girl.png',
 		};
 	},
 	methods: {
@@ -69,6 +69,7 @@ export default {
 			}
 		},
 		setToken(token){
+			this.$store.commit('setToken',token)
 			try {
 			    uni.setStorageSync('token', token);
 			} catch (e) {

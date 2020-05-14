@@ -23,7 +23,7 @@ const tabReject = {
 const tabGathring = {
 	id: "tab05",
 	name: '被收款',
-	expenseAccountStatus:4
+	expenseAccountStatus: 4
 }
 const tabUnpass = {
 	id: "tab06",
@@ -109,7 +109,7 @@ export const kjTabs = [
 	tabWaitRemit,
 	tabRemited
 ]
-export const tellerRevenueTab=[
+export const tellerRevenueTab = [
 	tabAll,
 	tabWaitRecepit,
 	tabRecepited,
@@ -123,26 +123,36 @@ export const tellerRevenueTab=[
 // }
 
 // 返回审核状态数据 （1.未提交2.已提交3.被拒收4.被收款）
-export function getRevenueStateStr(stateCode){
-	if(stateCode == 1){
+export function getRevenueStateStr(stateCode) {
+	if (stateCode == 1) {
 		return "未提交"
-	}else if(stateCode == 2){
+	} else if (stateCode == 2) {
 		return "已提交"
-	}else if(stateCode == 3){
+	} else if (stateCode == 3) {
 		return "被拒收"
-	}else if(stateCode == 4){
+	} else if (stateCode == 4) {
 		return "被收款"
 	}
 }
 
 // 返回特殊收支类型列表
-export const specialType = [
-	{
-		name:'其他收入',
-		type:1
+export const specialType = [{
+		name: '其他收入',
+		type: 1
 	},
 	{
-		name:'其他支出',
-		type:2
+		name: '其他支出',
+		type: 2
 	}
 ]
+
+
+export const MessageTypeList = {
+	bossCode: 1, // 老板-待审批消息
+	cashierRemitCode: 2, // 出纳-待打款消息
+	cashierCollectCode: 3, // 出纳-待收款消息
+	purchaseCode: 4, // 采购员-申报消息
+	revenueCode: 5, // 营收员-营收消息
+	accountantExpanseCode: 6, // 会计-支出消息
+	accountantEarningCode: 7 // 会计-收入消息
+}

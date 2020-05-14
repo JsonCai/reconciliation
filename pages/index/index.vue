@@ -10,7 +10,7 @@
 			<indexNavItem @handleClick="financeClick('revenue')" text="财务" roleName="出纳" v-if="showFinanceCashier"/>
 			<indexNavItem @handleClick="specialPayments" text="特殊收支" roleName="出纳" v-if="showFinanceCashier"/>
 			<indexNavItem @handleClick="applyClick('accountant')" text="报销" roleName="会计" v-if="showApplyAccountant"/>
-			<indexNavItem @handleClick="handleClick" text="营收" roleName="会计" v-if="showRevenueAccountant"/>
+			<indexNavItem @handleClick="revenueClick('accountant')" text="营收" roleName="会计" v-if="showRevenueAccountant"/>
 			<indexNavItem @handleClick="handleClick" text="报表" roleName="会计" v-if="showStatementAccountant"/>
 		</view>
 	</view>

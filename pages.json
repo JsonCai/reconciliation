@@ -156,6 +156,24 @@
 			}
 		}
 		
+        ,{
+            "path" : "pages/teller/revenueSearchPage/revenueSearchPage",
+            "style" : {
+				"navigationBarTitleText": "搜索"
+			}
+        }
+        ,{
+            "path" : "pages/accountant/revenue/revenuePage",
+            "style" : {
+				"navigationBarTitleText": "营收"
+			}
+        }
+        ,{
+            "path" : "pages/accountant/revenueSearchPage/revenueSearchPage",
+            "style" : {
+				"navigationBarTitleText": "搜索"
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

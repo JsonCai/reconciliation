@@ -6,7 +6,6 @@
 			<block v-for="(item,index) in tabs" :key="index">
 				<revenueList :tab="item" :ref="'list'+index" v-if="index == tabIndex" />
 			</block>
-			<view class="btn-add" @tap="revenueFrom">&#xe604;</view>
 		</view>
 	</view>
 </template>
@@ -40,14 +39,9 @@
 			this.$refs[gv][0].loadMore()
 		},
 		methods: {
-			revenueFrom() {
-				uni.navigateTo({
-					url: '../../revenueForm/revenueForm'
-				})
-			},
 			onSearch() {
 				uni.navigateTo({
-					url:'../searchPage/searchPage'
+					url:'../revenueSearchPage/revenueSearchPage'
 				})
 			}
 		}

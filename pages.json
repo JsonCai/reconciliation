@@ -51,7 +51,9 @@
 			}
 		}, {
 			"path": "pages/msgList/msgList",
-			"style": {}
+			"style": {
+				"navigationBarTitleText": "消息"
+			}
 		}, {
 			"path": "pages/BossPage/applyDetail/applyDetail",
 			"style": {

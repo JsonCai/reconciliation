@@ -147,7 +147,7 @@ export const specialType = [{
 ]
 
 
-export const MessageTypeList = {
+export const MessageTypes = {
 	bossCode: 1, // 老板-待审批消息
 	cashierRemitCode: 2, // 出纳-待打款消息
 	cashierCollectCode: 3, // 出纳-待收款消息

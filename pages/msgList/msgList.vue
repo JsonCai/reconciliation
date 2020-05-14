@@ -1,7 +1,7 @@
 <template>
 	<view class="list-wrap">
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback">
-			<view class="msg-label" v-for="(item,index) in dataList" :key="item.code" @tap="onClick(item.code)">
+			<view class="msg-label" v-for="(item,index) in dataList" :key="item.messageId" @tap="onClick(item)">
 				<image class="msg-img" :src="item.img"></image>
 				<view class="v-text">
 					<text class="msg-title">{{item.messageTitle}}</text>
@@ -23,7 +23,7 @@
 	import {
 		getMessageList
 	} from '@/api/message/message.js'
-	
+
 	export default {
 		mixins: [MescrollMixin],
 		components: {
@@ -34,9 +34,9 @@
 				dataList: []
 			};
 		},
-		filters:{
-			readType(type){
-				if(type){
+		filters: {
+			readType(type) {
+				if (type) {
 					return '已读'
 				}
 				return '未读'
@@ -51,18 +51,7 @@
 			upCallback(page) {
 				getMessageList(this.channelSerialNumber)
 					.then(res => {
-						this.mescroll.endSuccess(res.data.messageChannels.length);
-						if (page.num == 1) {
-							this.dataList = []
-						}
-						this.dataList = this.dataList.concat(
-							res.data.messageChannels.map(item => {
-								let messageItem = imgList[item.channelSerialNumber - 1]
-								messageItem.title = item.channelTitle
-								messageItem.unReadMessageCount = item.unReadMessageCount
-								messageItem.latestMessageTime = item.latestMessageTime
-								return messageItem
-							}))
+						this.dataList = res.data.messages
 					})
 					.catch(err => {
 						console.log(err)
@@ -71,7 +60,7 @@
 			}
 		},
 		onLoad(option) {
-			if(option.channelSerialNumber){
+			if (option.channelSerialNumber) {
 				this.channelSerialNumber = option.channelSerialNumber
 			}
 		}

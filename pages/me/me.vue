@@ -7,7 +7,7 @@
 				<view class="info" v-else>
 					<view class="info-item">
 						<text>{{ userInfo.nickName }}</text>
-					<!-- 	<image class="sex-img" :src="sexSrc"></image> -->
+						<!-- <image class="sex-img" :src="sexSrc"></image> -->
 					</view>
 					<view class="info-item">
 						<text class="roleName fc-c">
@@ -19,6 +19,7 @@
 			</view>
 		</view>
 		<view class="big-btn" @tap="onLogin" v-if="!isLogin">微信授权登录</view>
+		<view class="big-btn" @tap="logout" v-else>退出</view>
 	</view>
 </template>
 <script>
@@ -37,6 +38,49 @@ export default {
 		};
 	},
 	methods: {
+		logout(){
+			console.log(222222222222)
+			let _this = this
+			uni.showModal({
+			    title: '温馨提示',
+			    content: '确定退出登录?',
+			    success: function (res) {
+			        if (res.confirm) {
+						_this.isLogin = false
+			            try {
+			                uni.clearStorageSync();
+			            } catch (e) {
+			                // error
+			            }
+			        } 
+			    }
+			});
+		},
+		checkLogin(){
+			try {
+			    const token = uni.getStorageSync('token');
+			    if (token) {
+			       return true
+			    }else{
+					return false
+				}
+			} catch (e) {
+			    // error
+			}
+		},
+		setToken(token){
+			try {
+			    uni.setStorageSync('token', token);
+			} catch (e) {
+			}
+		},
+		setUserInfo(userInfo){
+			try {
+			    uni.setStorageSync('userInfo',userInfo);
+			} catch (e) {
+			    
+			}
+		},
 		onLogin() {
 			let _this = this
 			uni.login({
@@ -55,15 +99,33 @@ export default {
 								login({
 									wechatNumber: openId
 								}).then((res) => {
-									console.log(res)
-									// const appToken = r['Set-Authorization'];
-									// console.log(appToken);
+									const token = res.header['Set-Authorization']
+									_this.userInfo = Object.assign({},res.data.data.employee,_this.userInfo)
+									_this.setToken(token)
+									_this.setUserInfo(_this.userInfo)
+									
 								});
 							}
 						}
 					});
 				}
 			});
+		}
+	},
+	onLoad(){
+		if(this.checkLogin()){
+			console.log('进来了')
+			this.isLogin = true
+			try {
+			    const userInfo = uni.getStorageSync('userInfo');
+				console.log(12312312)
+				console.log(userInfo)
+			    if (userInfo) {
+			      this.userInfo = userInfo
+			    }
+			} catch (e) {
+			    // error
+			}
 		}
 	}
 };

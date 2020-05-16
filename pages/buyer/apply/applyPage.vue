@@ -31,7 +31,6 @@
 			};
 		},
 		onReachBottom(){
-			console.log(this.tabIndex)
 			let gv='list'+this.tabIndex;
 			this.$refs[gv][0].loadMore()
 		},
@@ -41,7 +40,15 @@
 					url:'../../applyForm/applyForm'
 				})
 			}
-		}
+		},
+		onShow(){
+		    uni.$on("reload", () => {
+				let gv='list'+this.tabIndex;
+				if(this.$refs[gv][0]){
+					this.$refs[gv][0].reload()
+				}
+		    })
+		},
 	};
 </script>
 

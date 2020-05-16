@@ -86,7 +86,6 @@
 				this.$set(this.detailForm, 'amount', v.toFixed(2))
 			},
 			changeImgList(list) {
-				console.log(list)
 				this.detailForm.imgList = list
 			},
 			onStartTimeTap(code) {
@@ -113,19 +112,17 @@
 					});
 					this.submitApplyForm()
 						.then(res => {
-							console.log(res)
 							uni.showToast({
 								icon: 'none',
 								title: "暂存成功"
 							})
-							//uni.navigateBack()
-							 var pages = getCurrentPages();
-							 var prevPage = pages[pages.length - 2];  //上一个页面
-							 console.log(prevPage)
+							uni.$emit('reload')
+							setTimeout(()=>{
+								uni.navigateBack()
+							},500)
 						})
 						.catch(err => {
 							uni.hideLoading();
-							console.log(err)
 							uni.showToast({
 								icon: 'none',
 								title: "请求失败"
@@ -134,14 +131,12 @@
 				}
 			},
 			onSubmitTap() {
-				console.log(123)
 				if (this.onValidate()) {
 					uni.showLoading({
 						title: '正在提交'
 					});
 					this.submitApplyForm()
 						.then(res => {
-							console.log(res)
 							this.detailForm.expenseAccountId = res.data.expenseAccount.expenseAccountId
 							return applyExpense({
 								expenseAccountId: this.detailForm.expenseAccountId
@@ -149,11 +144,11 @@
 						})
 						.then(res => {
 							uni.hideLoading();
-							console.log(res)
 							uni.showToast({
 								icon: 'none',
 								title: "提交成功"
 							})
+							uni.$emit('reload')
 							setTimeout(() => {
 								uni.navigateBack()
 							}, 500)
@@ -161,7 +156,6 @@
 						})
 						.catch(err => {
 							uni.hideLoading();
-							console.log(err)
 							uni.showToast({
 								icon: 'none',
 								title: "请求失败"
@@ -174,7 +168,6 @@
 				let form = deepClone(this.detailForm)
 				form.amount = Number(this.detailForm.amount)
 				form.expenseTime = resetDateFormat(form.expenseTime)
-				console.log(form)
 				if (this.detailForm.expenseAccountId) {
 					return updateApplyForm(form.expenseAccountId, form)
 				} else {
@@ -214,10 +207,10 @@
 			},
 		},
 		onLoad(options) {
+			    //因为修改的是data里面的绑定数据，所以返回后页面数据会直接显示修改后的
 			if (options.id) {
 				applyDetail(options.id).then(res => {
 					this.detailForm = res.data.expenseAccount
-					console.log(this.detailForm)
 					if (this.detailForm.expenseTime) {
 						this.detailForm.expenseTime = this.detailForm.expenseTime.split(' ')[0]
 					}

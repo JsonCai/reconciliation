@@ -52,13 +52,6 @@
 				<text>审批意见</text>
 				<input placeholder="审批意见" class="input-text" @input="changeReason" v-model="applyParams.approvalOpinion" />
 			</view>
-			<view class="big-btn-wrap" v-if="detailForm.expenseAccountStatus.value == 2">
-				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
-			</view>
-			<view class="title item-wrap" v-if="detailForm.approvals&&detailForm.expenseAccountStatus.value > 2">
-				<image src="../../../static/images/progress.png" class="icon-wallet mr-20"></image>
-				<text class="title-text">审批历史</text>
-			</view>
 			<view class="item-cross-line" v-if="detailForm.approvals&&detailForm.expenseAccountStatus.value > 2" v-for="(item,index) in detailForm.approvals"
 			 :key="item.createTime">
 				<view class="item-nowrap">
@@ -74,8 +67,10 @@
 					<text>{{item.approvalPerson.employeeName}}</text>
 				</view>
 			</view>
+			<view class="big-btn-wrap" v-if="detailForm.expenseAccountStatus.value == 2">
+				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
+			</view>
 		</view>
-	</view>
 	</view>
 </template>
 
@@ -122,7 +117,15 @@
 				if (this.onValidate()) {
 					console.log(this.applyParams)
 					approveExpense(this.applyParams).then(res => {
-						console.log(res)
+						if (res.code == 0) {
+							uni.showToast({
+								title: '审批成功',
+								icon: 'none'
+							})
+							let pages = getCurrentPages();
+							console.log(JSON.stringify(pages))
+							let prevPage = pages[pages.length - 2];
+						}
 					}).catch(err => console.log(err))
 				}
 
@@ -150,6 +153,7 @@
 				.then(res => {
 					if (res.code == '0') {}
 					this.detailForm = res.data.expenseAccount
+					console.log(this.detailForm)
 				})
 				.catch(err => {
 					console.log(err)

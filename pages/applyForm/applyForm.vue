@@ -118,7 +118,10 @@
 								icon: 'none',
 								title: "暂存成功"
 							})
-							uni.navigateBack()
+							//uni.navigateBack()
+							 var pages = getCurrentPages();
+							 var prevPage = pages[pages.length - 2];  //上一个页面
+							 console.log(prevPage)
 						})
 						.catch(err => {
 							uni.hideLoading();

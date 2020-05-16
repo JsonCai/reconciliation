@@ -11,20 +11,18 @@
 			</view>
 			<view class="item-wrap require1">
 				<text>分类:</text>
-				<picker :value="categoryIndex" :disabled="isDisabled" 
-				mode = 'selector'
-				range-key="label" :range="categoryList" @change="onCatagory">
+				<picker :value="categoryIndex" :disabled="isDisabled" mode='selector' range-key="label" :range="categoryList"
+				 @change="onCatagory">
 					<view class="picker">
-						<text  v-if="category">{{category}}</text>
+						<text v-if="category">{{category}}</text>
 						<text class="fc-9" v-else>请选择分类</text>
 					</view>
 				</picker>
 			</view>
 			<view class="item-wrap require1">
 				<text>申报金额:</text>
-				<input class="input-text" placeholder="请输入申报金额" 
-				type="digit"
-				placeholder-class="place" v-model="detailForm.amount" @blur="changePrice"/>
+				<input class="input-text" placeholder="请输入申报金额" type="digit" placeholder-class="place" v-model="detailForm.amount"
+				 @blur="changePrice" />
 			</view>
 			<view class="item-wrap require1">
 				<text>申报日期:</text>
@@ -47,9 +45,6 @@
 </template>
 
 <script>
-	import {
-		categoryList
-	} from '@/libs/testDates';
 	import timePicker from '@/components/timePicker/timePicker';
 	import imgList from '@/components/imgList/imgList.vue'
 	import {
@@ -76,16 +71,16 @@
 				detailForm: {
 					imgList: []
 				},
-				categoryList,
+				categoryList: [],
 				categoryIndex: 0,
 				category: ""
 			};
 		},
 		methods: {
-			
-			changePrice(ev){
+
+			changePrice(ev) {
 				const v = Number(ev.detail.value)
-				this.$set(this.detailForm,'amount',v.toFixed(2))
+				this.$set(this.detailForm, 'amount', v.toFixed(2))
 			},
 			changeImgList(list) {
 				console.log(list)
@@ -153,10 +148,10 @@
 								icon: 'none',
 								title: "提交成功"
 							})
-							setTimeout(()=>{
+							setTimeout(() => {
 								uni.navigateBack()
-							},500)
-							
+							}, 500)
+
 						})
 						.catch(err => {
 							uni.hideLoading();
@@ -180,32 +175,32 @@
 					return createApplyForm(form)
 				}
 			},
-			onValidate(){
-				if(!this.detailForm.expenseAccountTitle){
+			onValidate() {
+				if (!this.detailForm.expenseAccountTitle) {
 					uni.showToast({
-						 title: '请输入报销单名称',
-						 icon:'none'
+						title: '请输入报销单名称',
+						icon: 'none'
 					})
 					return false
 				}
-				if(!this.detailForm.costCategoryId ){
+				if (!this.detailForm.costCategoryId) {
 					uni.showToast({
-						 title: '请填选择分类',
-						 icon:'none'
+						title: '请填选择分类',
+						icon: 'none'
 					})
 					return false
 				}
-				if(!this.detailForm.amount ){
+				if (!this.detailForm.amount) {
 					uni.showToast({
-						 title: '请填写申报金额',
-						 icon:'none'
+						title: '请填写申报金额',
+						icon: 'none'
 					})
 					return false
 				}
-				if(!this.detailForm.expenseTime ){
+				if (!this.detailForm.expenseTime) {
 					uni.showToast({
-						 title: '请填选报销时间',
-						 icon:'none'
+						title: '请填选报销时间',
+						icon: 'none'
 					})
 					return false
 				}
@@ -213,21 +208,31 @@
 			},
 		},
 		onLoad(options) {
-			if(options.id){
+			if (options.id) {
 				applyDetail(options.id).then(res => {
 					this.detailForm = res.data.expenseAccount
 					console.log(this.detailForm)
-					if(this.detailForm.expenseTime){
-					this.detailForm.expenseTime = this.detailForm.expenseTime.split(' ')[0]
+					if (this.detailForm.expenseTime) {
+						this.detailForm.expenseTime = this.detailForm.expenseTime.split(' ')[0]
+					}
+					if (this.detailForm.costCategory) {
+						this.category = this.detailForm.costCategory.costCategoryName
 					}
 				}).catch(err => {
 					uni.showToast({
-						 title: res.msg,
-						 icon:'none'
+						title: res.msg,
+						icon: 'none'
 					})
 					uni.navigateBack()
 				})
 			}
+			getCategoryList()
+				.then(res => {
+					this.categoryList = res.data.costCategories
+				})
+				.catch(err => {
+					
+				})
 		}
 	};
 </script>

@@ -69,6 +69,9 @@
 					url:"../../reportScope/reportScope"
 				})
 			}
+		},
+		onLoad() {
+			
 		}
 	}
 </script>

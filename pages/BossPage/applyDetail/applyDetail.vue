@@ -122,9 +122,7 @@
 								title: '审批成功',
 								icon: 'none'
 							})
-							let pages = getCurrentPages();
-							console.log(JSON.stringify(pages))
-							let prevPage = pages[pages.length - 2];
+							
 						}
 					}).catch(err => console.log(err))
 				}

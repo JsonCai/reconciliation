@@ -68,11 +68,6 @@
 				"navigationBarTitleText": "详情"
 			}
 		}, {
-			"path": "pages/BossPage/approve/approve",
-			"style": {
-				"navigationBarTitleText": "审核报销"
-			}
-		}, {
 			"path": "pages/teller/remit/remit",
 			"style": {
 				"navigationBarTitleText": "打款"

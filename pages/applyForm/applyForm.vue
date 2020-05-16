@@ -103,8 +103,8 @@
 			onCatagory(value) {
 				const idex = value.detail.value
 				const category = this.categoryList[idex]
-				this.category = category.label
-				this.detailForm.costCategoryId = category.value
+				this.category = category.costCategoryName
+				this.detailForm.costCategoryId = category.costCategoryId
 			},
 			onSuspendTap() {
 				if (this.onValidate()) {

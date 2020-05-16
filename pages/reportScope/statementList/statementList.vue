@@ -70,5 +70,4 @@
 </script>
 
 <style lang="less">
-	@import url('./msg.less');
 </style>

@@ -11,7 +11,7 @@
 			</view>
 			<view class="item-wrap require1">
 				<text>分类:</text>
-				<picker :value="categoryIndex" :disabled="isDisabled" mode='selector' range-key="label" :range="categoryList"
+				<picker :value="categoryIndex" :disabled="isDisabled" mode='selector' range-key="costCategoryName" :range="categoryList"
 				 @change="onCatagory">
 					<view class="picker">
 						<text v-if="category">{{category}}</text>

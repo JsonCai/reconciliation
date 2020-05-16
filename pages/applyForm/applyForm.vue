@@ -54,6 +54,9 @@
 		applyDetail
 	} from '../../api/apply/apply.js'
 	import {
+		getCategoryList
+	} from '../../api/category/category.js'
+	import {
 		deepClone,
 		resetDateFormat,
 		dateFtt

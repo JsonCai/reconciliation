@@ -43,6 +43,31 @@
 			}
 		},
 		methods: {
+			onClick(code) {
+				// switch (code) {
+				// 	case purchaseCode:
+				// 		console.log(code)
+				// 		break;
+				// 	case revenueCode:
+				// 		console.log(code)
+				// 		break;
+				// 	case cashierRemitCode:
+				// 		console.log(code)
+				// 		break;
+				// 	case cashierCollectCode:
+				// 		console.log(code)
+				// 		break;
+				// 	case bossCode:
+				// 		console.log(code)
+				// 		break;
+				// 	case accountantExpanseCode:
+				// 		console.log(code)
+				// 		break;
+				// 	case accountantEarningCode:
+				// 		console.log(code)
+				// 		break;
+				// }
+			},
 			/*下拉刷新的回调 */
 			downCallback() {
 				this.mescroll.resetUpScroll()

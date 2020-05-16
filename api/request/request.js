@@ -4,16 +4,12 @@ import {
 import store from '@/store'
 
 function getAuthorization(){
-	console.log('我是token')
-	console.log('我是token')
-	console.log('我是token')
-	console.log(store.state.token)
 	return store.state.token
 }
 function onHttpSuccess(res, resolve, reject) {
 	if (res.statusCode == 403) {
-		uni.navigateTo({
-			url: '/pages/me/me.vue'
+		uni.switchTab({
+			url: '/pages/me/me'
 		})
 		reject(res)
 	} else if (res.data.code == 0) {

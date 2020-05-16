@@ -42,6 +42,7 @@
 		},
 		computed:{
 			isLogin(){
+				console.log(this.$store.state.token)
 				  if(this.$store.state.token) return true
 				  else return false
 			}

@@ -7,7 +7,8 @@
 			</view>
 			<view class="item-wrap">
 				<text>名称:</text>
-				<input class="input-text" placeholder="请输入名称" placeholder-class="place" v-model="detailForm.specialAccountTitle" />
+				<input :disabled="detailForm.specialAccountId" class="input-text" placeholder="请输入名称" placeholder-class="place"
+				 v-model="detailForm.specialAccountTitle" />
 			</view>
 			<view class="item-wrap">
 				<text>分类:</text>
@@ -17,21 +18,21 @@
 			</view>
 			<view class="item-wrap">
 				<text>金额:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.amount" />
+				<input :disabled="detailForm.specialAccountId" class="input-text" placeholder="请输入申报金额" placeholder-class="place"
+				 v-model="detailForm.amount" />
 			</view>
 			<view class="item-wrap">
 				<text>日期:</text>
 				<view class="inner-wrap" @tap="onStartTimeTap(1)">
 					<text v-if="!detailForm.accountTime" class="fc-9">请选择申报日期</text>
 					<text v-else>{{ detailForm.accountTime}}</text>
-					<text class="font-icon">&#xe662;</text>
 				</view>
 			</view>
-			<view class="img-wrap fc-6">
+			<view class="img-wrap fc-6" v-if="(detailForm.specialAccountId&&detailForm.voucherUrls&&detailForm.voucherUrls.length)||!detailForm.specialAccountId">
 				<text class="fc-6">凭据：</text>
-				<imgList :list="detailForm.voucherUrls" :isDisabled="isDisabled" @changeImgList="changeImgList" />
+				<imgList :list="detailForm.voucherUrls" :isDisabled="detailForm.specialAccountId" @changeImgList="changeImgList" />
 			</view>
-			<view class="btn-wrap">
+			<view class="btn-wrap" v-if="!detailForm.specialAccountId">
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
 			</view>
 		</view>
@@ -40,15 +41,16 @@
 </template>
 
 <script>
-	import{
+	import {
 		specialType
 	} from '../../../config/config.js'
-	
+
 	import timePicker from '@/components/timePicker/timePicker';
 	import imgList from '@/components/imgList/imgList.vue'
 	import {
 		createSpecialAccounts,
-		updateSpecialForm
+		updateSpecialForm,
+		getSpecialPaymentsDetail
 	} from '../../../api/specailPayments/specialPayments.js'
 	import {
 		deepClone,
@@ -127,17 +129,43 @@
 			isFormFill() {
 				return true
 			}
+		},
+		onLoad(option) {
+			if (option.id) {
+				getSpecialPaymentsDetail(option.id)
+					.then(res => {
+						console.log(res)
+						this.detailForm = res.data.specialAccount
+						if (this.detailForm.accountTime) {
+							this.detailForm.accountTime = this.detailForm.accountTime.split(' ')[0]
+						}
+						if (this.detailForm.specialAccountType) {
+							if (this.detailForm.specialAccountType == 1) {
+								this.specialTypeName = "其他收入"
+							} else {
+								this.specialTypeName = "其他支出"
+							}
+						}
+					})
+					.catch(err => {
+						console.log("获取详情失败")
+						uni.navigateBack()
+					})
+			}
 		}
 	};
 </script>
 
 <style lang="less" scoped>
 	@import url('@/common/detailForm.less');
-	.btn-wrap{
+
+	.btn-wrap {
 		justify-content: center;
-		.btn{
+
+		.btn {
 			width: 60%;
 		}
+
 		margin-top: 100rpx;
 		margin-bottom: 50rpx;
 	}

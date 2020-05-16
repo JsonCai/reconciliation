@@ -179,6 +179,10 @@
 				"navigationBarTitleText": "搜索"
 			}
         }
+        ,{
+            "path" : "pages/specialPayments/searchPage/searchPage",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

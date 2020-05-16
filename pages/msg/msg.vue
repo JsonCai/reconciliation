@@ -23,7 +23,7 @@
 	} from '@/api/message/message.js'
 
 	import {
-		MessageTypeList
+		MessageTypes
 	} from '@/config/config.js'
 	//Z...MessageTypeList
 	// console.log({...MessageTypeList})
@@ -46,49 +46,49 @@
 	// const revenueCode = 5 // 营收员-营收消息
 	// const accountantExpanseCode = 6 // 会计-支出消息
 	// const accountantEarningCode = 7 // 会计-收入消息
-	// const imgList = [{
-	// 		img: "../../static/images/msg_apply.png",
-	// 		title: "采购员",
-	// 		content: "申报消息",
-	// 		code: purchaseCode
-	// 	},
-	// 	{
-	// 		img: "../../static/images/msg-revenue.png",
-	// 		title: "营收员",
-	// 		content: "营收消息",
-	// 		code: revenueCode
-	// 	},
-	// 	{
-	// 		img: "../../static/images/msg_backlog_remit.png",
-	// 		title: "出纳",
-	// 		content: "待打款消息",
-	// 		code: cashierRemitCode
-	// 	},
-	// 	{
-	// 		img: "../../static/images/msg_backlog_collect.png",
-	// 		title: "出纳",
-	// 		content: "待收款消息",
-	// 		code: cashierCollectCode
-	// 	},
-	// 	{
-	// 		img: "../../static/images/msg_approve.png",
-	// 		title: "老板",
-	// 		content: "待审批消息",
-	// 		code: bossCode
-	// 	},
-	// 	{
-	// 		img: "../../static/images/msg_expense.png",
-	// 		title: "会计",
-	// 		content: "支出消息",
-	// 		code: accountantExpanseCode
-	// 	},
-	// 	{
-	// 		img: "../../static/images/msg_earning.png",
-	// 		title: "会计",
-	// 		content: "收入消息",
-	// 		code: accountantEarningCode
-	// 	},
-	// ]
+	const imgList = [{
+			img: "../../static/images/msg_apply.png",
+			title: "采购员",
+			content: "申报消息",
+			code: MessageTypes.purchaseCode
+		},
+		{
+			img: "../../static/images/msg-revenue.png",
+			title: "营收员",
+			content: "营收消息",
+			code: MessageTypes.revenueCode
+		},
+		{
+			img: "../../static/images/msg_backlog_remit.png",
+			title: "出纳",
+			content: "待打款消息",
+			code: MessageTypes.cashierRemitCode
+		},
+		{
+			img: "../../static/images/msg_backlog_collect.png",
+			title: "出纳",
+			content: "待收款消息",
+			code: MessageTypes.cashierCollectCode
+		},
+		{
+			img: "../../static/images/msg_approve.png",
+			title: "老板",
+			content: "待审批消息",
+			code: MessageTypes.bossCode
+		},
+		{
+			img: "../../static/images/msg_expense.png",
+			title: "会计",
+			content: "支出消息",
+			code: MessageTypes.accountantExpanseCode
+		},
+		{
+			img: "../../static/images/msg_earning.png",
+			title: "会计",
+			content: "收入消息",
+			code: MessageTypes.accountantEarningCode
+		},
+	]
 	export default {
 		mixins: [MescrollMixin],
 		components: {
@@ -129,6 +129,9 @@
 				// 		console.log(code)
 				// 		break;
 				// }
+				uni.navigateTo({
+					url: '../msgList/msgList?channelSerialNumber' + item.code
+				})
 			},
 			/*下拉刷新的回调 */
 			downCallback() {

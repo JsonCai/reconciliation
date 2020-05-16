@@ -4,12 +4,12 @@
 		<view class="v-time-range">
 			<text class="time-range" @tap="onStartTimeTap(0,startTime)">
 				<text v-if="startTime==''" style="font-size: 30rpx;color: #cccccc;">选择开始时间</text>
-				{{startTime | formatDate}}&ensp;&#xe74b;
+				{{startTime}}&ensp;&#xe74b;
 			</text>
 			<text style="padding: 0 20rpx;color: #666666;">-</text>
 			<text class="time-range" @tap="onStartTimeTap(1,endTime)">
 				<text v-if="endTime==''" style="font-size: 30rpx;color: #cccccc;">选择结束时间</text>
-				{{endTime | formatDate}}&ensp;&#xe74b;
+				{{endTime}}&ensp;&#xe74b;
 			</text>
 		</view>
 		<view class="v-btn">
@@ -19,7 +19,7 @@
 
 		<view class="report-label" v-if="isShowReport">
 			<text class="report-text">报表区间</text>
-			<text class="report-text">{{realTime.startTime | formatDate}}&ensp;至&ensp;{{realTime.endTime |formatDate}}</text>
+			<text class="report-text">{{realTime.startTime}}&ensp;至&ensp;{{realTime.endTime}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport">
 			<text class="report-text">利润：</text>
@@ -27,36 +27,73 @@
 		</view>
 		<view class="report-label" v-if="isShowReport">
 			<text class="report-text">现金：</text>
-			<text class="report-text">¥{{reportDetail.crash}}</text>
+			<text class="report-text">¥{{reportDetail.cash}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport">
-			<text class="report-text">应收款：</text>
-			<text class="report-text">¥{{reportDetail.accountReceivable}}<text class="arrow-right">&#xe662;</text></text>
+			<text class="report-text">未收款：</text>
+			<text class="report-text">¥{{reportDetail.uncollected}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport">
 			<text class="report-text">实收款：</text>
-			<text class="report-text">¥{{reportDetail.fundsReceived}}<text class="arrow-right">&#xe662;</text></text>
+			<text class="report-text">¥{{reportDetail.fundsReceived}}</text>
 		</view>
-		<view class="report-label" v-if="isShowReport">
-			<text class="report-text">支出：</text>
-			<text class="report-text">¥{{reportDetail.expenditure}}<text class="arrow-right">&#xe662;</text></text>
+		<view class="report-label" v-if="isShowReport" @tap="onItemClick(StatementTypes.mainBusinessExpenses)">
+			<text class="report-text">主营支出：</text>
+			<text class="report-text">¥{{reportDetail.mainBusinessExpenses}}</text>
 		</view>
-
-		<timePicker :requestCode="timeCode" :year="dialogTime.year" :month="dialogTime.month" :day="dialogTime.day" :show="showTimePicker"
-		 @onConfirm="timePickConfirm" @onCancel="showTimePicker = false"></timePicker>
-		<monthPicker :month="dialogTime.month" :show="showMonthPicker" @onConfirm="monthPickConfirm" @onCancel="showMonthPicker = false"></monthPicker>
+		<view class="report-label" v-if="isShowReport" @tap="onItemClick(StatementTypes.mainBusinessIncome)">
+			<text class="report-text">主营收入：</text>
+			<text class="report-text">¥{{reportDetail.mainBusinessIncome}}</text>
+		</view>
+		<view class="report-label" v-if="isShowReport" @tap="onItemClick(StatementTypes.otherExpenses)">
+			<text class="report-text">其他支出：</text>
+			<text class="report-text">¥{{reportDetail.otherExpenses}}</text>
+		</view>
+		<view class="report-label" v-if="isShowReport" @tap="onItemClick(StatementTypes.otherIncome)">
+			<text class="report-text">其他收入：</text>
+			<text class="report-text">¥{{reportDetail.otherIncome}}</text>
+		</view>
+		<timePicker :requestCode="timeCode" :date="dialogTime" :show="showTimePicker" @onConfirm="timePickConfirm" @onCancel="showTimePicker = false"></timePicker>
+		<monthPicker :show="showMonthPicker" @onConfirm="monthPickConfirm" @onCancel="showMonthPicker = false"></monthPicker>
 	</view>
 </template>
 
 <script>
 	import timePicker from '@/components/timePicker/timePicker.vue';
 	import monthPicker from '@/components/monthPicker/monthPicker.vue';
+	import {
+		getSectionStatement
+	} from '@/api/statement/statement.js'
+	import{
+		StatementTypes
+	}from '@/config/config.js'
 	export default {
 		components: {
 			timePicker,
 			monthPicker
 		},
-
+		filters: {
+			formatMoney(val) {
+				if (val) {
+					var result = [],
+						counter = 0;
+					let num = (float || 0).toString().split('.')[0].split('');
+					for (var i = num.length - 1; i >= 0; i--) {
+						counter++;
+						result.unshift(num[i]);
+						if (!(counter % 3) && i != 0) {
+							result.unshift(',');
+						}
+					}
+					if (float.toString().indexOf('.') != -1) {
+						return result.join('') + "." + float.toString().split('.')[1];
+					}
+					return result.join('');
+				} else {
+					return '0'
+				}
+			}
+		},
 		data() {
 			return {
 				timeCode: 0,
@@ -64,80 +101,62 @@
 				endTime: "",
 				showTimePicker: false,
 				showMonthPicker: false,
-				dialogTime: {
-					year: 0,
-					month: 0,
-					day: 0
-				},
+				dialogTime: "",
 				realTime: {
 					startTime: "",
 					endTime: ""
 				},
-				reportDetail: {
-					profit: 2000, // 利润
-					crash: 2312333, // 现金
-					accountReceivable: 123123123, // 应收款
-					fundsReceived: 123142342345345, // 实收款
-					expenditure: 1231245235634563 // 支出
-				},
+				reportDetail: {},
 				isShowReport: false
 			}
 		},
-		filters: {
-			formatDate(time) {
-				if (time == "") {
-					return ""
-				}
-
-				var text = time.year + "-" + (time.month < 9 ? "0" + (time.month + 1) : (time.month + 1)) +
-					"-" + (time.day < 10 ? "0" + time.day : time.day)
-
-				return text
-			}
-		},
 		onLoad() {
-			const date = new Date()
-			this.dialogTime.year = date.getFullYear();
-			this.dialogTime.month = date.getMonth();
-			this.dialogTime.day = date.getDate();
+
 		},
 		methods: {
 			onStartTimeTap(code, time) {
 				this.timeCode = code
-				if (time != "") {
-					this.dialogTime.year = time.year;
-					this.dialogTime.month = time.month;
-					this.dialogTime.day = time.day;
-				}
+				this.dialogTime = time
 				this.showTimePicker = true;
 			},
 			timePickConfirm(time) {
 				this.showTimePicker = false;
 				if (time.code == 0) {
-					this.startTime = time;
+					this.startTime = time.date;
 				} else {
-					this.endTime = time;
+					this.endTime = time.date;
 				}
 			},
 			monthPickConfirm(time) {
 				this.showMonthPicker = false
-				const date = new Date(new Date().getFullYear(), time.month + 1, 0)
-				this.startTime = {
-					year: date.getFullYear(),
-					month: time.month,
-					day: 1
-				};
-				this.endTime = {
-					year: date.getFullYear(),
-					month: time.month,
-					day: date.getDate()
-				};
-				console.log(this.endTime)
+				console.log(time)
+				const date = new Date(new Date().getFullYear(), time.month, 0)
+				this.startTime = date.getFullYear() + "-" + (time.month < 10 ? ('0' + time.month) : time.month) + "-" + '01'
+				this.endTime = date.getFullYear() + "-" + time.month + "-" + date.getDate()
 			},
 			onGetReport() {
-				this.isShowReport = true
-				this.realTime.startTime = this.startTime;
-				this.realTime.endTime = this.endTime;
+				if (this.startTime && this.endTime) {
+					// this.isShowReport = true
+					this.realTime.startTime = this.startTime;
+					this.realTime.endTime = this.endTime;
+					getSectionStatement({
+							sectionStartTime: this.startTime + " 00:00:00",
+							sectionEndTime: this.endTime + " 23:59:59"
+						})
+						.then(res => {
+							console.log(res)
+							this.reportDetail = res.data.sectionStatementDto
+							this.isShowReport = true
+						})
+						.catch(err => {
+							console.log(err)
+						})
+				}
+			},
+			onItemClick(type){
+				uni.navigateTo({
+					url:''
+				})
 			}
 		}
 	}

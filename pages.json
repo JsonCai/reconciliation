@@ -178,6 +178,10 @@
             "path" : "pages/specialPayments/searchPage/searchPage",
             "style" : {}
         }
+        ,{
+            "path" : "pages/reportScope/statementList/statementList",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

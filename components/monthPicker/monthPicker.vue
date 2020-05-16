@@ -20,7 +20,7 @@
 		props: {
 			requestCode: Number, // 选择时间的请求code
 			show: Boolean,
-			month: Number 
+			month: Number
 		},
 		data() {
 			const months = []
@@ -42,7 +42,7 @@
 			onConfirm() {
 				this.$emit("onConfirm", {
 					code: this.requestCode,
-					month: this.value[0]
+					month: this.value[0]+1
 				})
 			},
 			onCancel() {
@@ -52,7 +52,9 @@
 		watch: {
 			month: {
 				handler(newVal, oldVal) {
-					this.value[0] = newVal;
+					if (newVal) {
+						this.value[0] = newVal;
+					}
 				},
 				immediate: true,
 				deep: true

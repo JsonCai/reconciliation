@@ -57,7 +57,7 @@
 			const date = new Date()
 			this.value[0] = date.getFullYear();
 			this.value[1] = date.getMonth();
-			this.value[2] = date.getDate();
+			this.value[2] = date.getDate()-1;
 		},
 		methods: {
 			bindChange(e) {
@@ -81,8 +81,10 @@
 			date: {
 				handler(newVal, oldVal) {
 					if (newVal) {
-						let dateList = newVal.split('-')
+						const dateList = newVal.split('-')
 						if (dateList.length && dateList.length >= 3) {
+							dateList[1] = dateList[1] - 1
+							dateList[2] = dateList[2] - 1
 							this.value = dateList
 						}
 					}
@@ -105,6 +107,7 @@
 		top: 0;
 		left: 0;
 		background-color: rgba(0, 0, 0, 0.7);
+
 		.v-title {
 			display: flex;
 			width: 100%;
@@ -112,6 +115,7 @@
 			flex: 0 0 100rpx;
 			background-color: #FFFFFF;
 			border-bottom: solid #ededed 1rpx;
+
 			.sel-btn {
 				width: 15%;
 				font-size: 30rpx;
@@ -119,6 +123,7 @@
 				text-align: center;
 				line-height: 100rpx;
 			}
+
 			.time-picker-title {
 				flex: 1;
 				font-size: 40rpx;
@@ -126,10 +131,12 @@
 				line-height: 100rpx;
 			}
 		}
+
 		.mpvue-picker-view {
 			width: 750rpx;
 			height: 470rpx;
 			background-color: rgba(255, 255, 255, 1);
+
 			.item {
 				text-align: center;
 				text-overflow: ellipsis;

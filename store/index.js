@@ -4,11 +4,15 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
-		token: ''
+		token: '',
+		permissions:''
 	},
 	mutations:{
 		setToken(state,token){
 			state.token = token
+		},
+		setPermissions(state,permissions){
+			state.permissions = permissions
 		}
 	}
 })

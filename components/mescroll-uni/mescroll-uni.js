@@ -508,7 +508,6 @@ MeScroll.prototype.triggerUpScroll = function(isCheck) {
 
 /* 显示上拉加载中 */
 MeScroll.prototype.showUpScroll = function() {
-	console.log('showUpScroll')
 	this.isUpScrolling = true; // 标记上拉加载中
 	this.optUp.showLoading && this.optUp.showLoading(this); // 回调
 }
@@ -543,7 +542,6 @@ MeScroll.prototype.endUpScroll = function(isShowNoMore) {
  * 3.传参false,则不显示上拉和下拉的进度 (常用于静默更新列表数据)
  */
 MeScroll.prototype.resetUpScroll = function(isShowLoading) {
-	console.log('我被充值了')
 	if (this.optUp && this.optUp.use) {
 		let page = this.optUp.page;
 		this.prePageNum = page.num; // 缓存重置前的页码,加载失败可退回

@@ -64,9 +64,9 @@
 	import {
 		getSectionStatement
 	} from '@/api/statement/statement.js'
-	import{
+	import {
 		StatementTypes
-	}from '@/config/config.js'
+	} from '@/config/config.js'
 	export default {
 		components: {
 			timePicker,
@@ -107,7 +107,8 @@
 					endTime: ""
 				},
 				reportDetail: {},
-				isShowReport: false
+				isShowReport: false,
+				StatementTypes
 			}
 		},
 		onLoad() {
@@ -153,13 +154,17 @@
 						})
 				}
 			},
-			onItemClick(type){
+			onItemClick(type) {
 				uni.navigateTo({
-					url:''
-				})
+						url: 'statementList/statementList?request=' + encodeURIComponent(JSON.stringify({
+								sectionStartTime: this.startTime + " 00:00:00",
+								sectionEndTime: this.endTime + " 23:59:59",
+								statementItemType: type
+							}))
+						})
+				}
 			}
 		}
-	}
 </script>
 
 <style lang="less">

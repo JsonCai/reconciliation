@@ -3,7 +3,7 @@ import {
 	baseUrl
 } from '../../config/config'
 
-const tenantId = '23945197-a5df-44bf-842f-106b42f80355'
+const tenantId = '3c0c90e3-97ba-4c5e-b9c3-7320e8eab329'
 
 export function login(data) {
 	data.tenantId = tenantId

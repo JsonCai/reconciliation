@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<text class="time-label">时间区间</text>
-		<view class="v-time-range">
+		<text class="time-label" v-if="isSectionShow">时间区间</text>
+		<view class="v-time-range" v-if="isSectionShow">
 			<text class="time-range" @tap="onStartTimeTap(0,startTime)">
 				<text v-if="startTime==''" style="font-size: 30rpx;color: #cccccc;">选择开始时间</text>
 				{{startTime}}&ensp;&#xe74b;
@@ -12,7 +12,7 @@
 				{{endTime}}&ensp;&#xe74b;
 			</text>
 		</view>
-		<view class="v-btn">
+		<view class="v-btn" v-if="isSectionShow">
 			<text class="t-btn btn-speedy" @tap="showMonthPicker = true">月份选择</text>
 			<text class="t-btn btn-report" @tap="onGetReport">生成报表</text>
 		</view>
@@ -108,11 +108,18 @@
 				},
 				reportDetail: {},
 				isShowReport: false,
-				StatementTypes
+				StatementTypes,
+				isSectionShow: true
 			}
 		},
-		onLoad() {
-
+		onLoad(option) {
+			if (option.year && option.month) {
+				this.isSectionShow = false
+				const date = new Date(option.year,  option.month, 0)
+				this.startTime = option.year + "-" + (option.month < 10 ? ('0' + option.month) : option.month) + "-" + '01'
+				this.endTime = option.year + "-" + (option.month < 10 ? ('0' + option.month) : option.month) + "-" + date.getDate()
+				this.onGetReport()
+			}
 		},
 		methods: {
 			onStartTimeTap(code, time) {
@@ -133,7 +140,7 @@
 				console.log(time)
 				const date = new Date(new Date().getFullYear(), time.month, 0)
 				this.startTime = date.getFullYear() + "-" + (time.month < 10 ? ('0' + time.month) : time.month) + "-" + '01'
-				this.endTime = date.getFullYear() + "-" + time.month + "-" + date.getDate()
+				this.endTime = date.getFullYear() + "-" + (time.month < 10 ? ('0' + time.month) : time.month) + "-" + date.getDate()
 			},
 			onGetReport() {
 				if (this.startTime && this.endTime) {
@@ -156,15 +163,15 @@
 			},
 			onItemClick(type) {
 				uni.navigateTo({
-						url: 'statementList/statementList?request=' + encodeURIComponent(JSON.stringify({
-								sectionStartTime: this.startTime + " 00:00:00",
-								sectionEndTime: this.endTime + " 23:59:59",
-								statementItemType: type
-							}))
-						})
-				}
+					url: 'statementList/statementList?request=' + encodeURIComponent(JSON.stringify({
+						sectionStartTime: this.startTime + " 00:00:00",
+						sectionEndTime: this.endTime + " 23:59:59",
+						statementItemType: type
+					}))
+				})
 			}
 		}
+	}
 </script>
 
 <style lang="less">

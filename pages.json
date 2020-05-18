@@ -176,11 +176,19 @@
         }
         ,{
             "path" : "pages/specialPayments/searchPage/searchPage",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "搜索"
+			}
         }
         ,{
             "path" : "pages/reportScope/statementList/statementList",
             "style" : {}
+        }
+        ,{
+            "path" : "pages/reportScope/yearReportScope/yearReportScope",
+            "style" : {
+				"navigationBarTitleText": "年度报表"
+			}
         }
     ],
 	"globalStyle": {

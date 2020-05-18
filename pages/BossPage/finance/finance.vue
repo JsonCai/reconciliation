@@ -4,7 +4,7 @@
 		<view class="tab-title">
 			<text class="tab" @tap="reportScope">区间财务</text>
 			<view style="width: 1px;height: 40rpx;background-color: #ededed;"></view>
-			<text class="tab">年度财务</text>
+			<text class="tab" @tap="yearReportClick">年度财务</text>
 		</view>
 
 		<view class="card yellow">
@@ -66,6 +66,11 @@
 			reportScope() {
 				uni.navigateTo({
 					url: "../../reportScope/reportScope"
+				})
+			},
+			yearReportClick(){
+				uni.navigateTo({
+					url:'../../reportScope/yearReportScope/yearReportScope'
 				})
 			}
 		},

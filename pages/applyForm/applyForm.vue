@@ -171,7 +171,8 @@
 				if (this.detailForm.expenseAccountId) {
 					return updateApplyForm(form.expenseAccountId, form)
 				} else {
-					return createApplyForm(form)
+					console.log(form)
+					 return createApplyForm(form)
 				}
 			},
 			onValidate() {

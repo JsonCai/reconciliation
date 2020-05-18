@@ -12,7 +12,7 @@
 					<view class="info-item">
 						<text class="roleName fc-c">
 							职位:
-							<text class="ml-20">老板</text>
+							<text class="ml-20">{{userInfo.roles}}</text>
 						</text>
 					</view>
 				</view>
@@ -24,7 +24,8 @@
 </template>
 <script>
 	import {
-		login
+		login,
+		getCompany
 	} from '@/api/login/login';
 	export default {
 		data() {
@@ -36,11 +37,12 @@
 				userInfo: {},
 				boySrc: '../../static/images/boy.png',
 				girlSrc: '../../static/images/girl.png',
+				permissions:[],
+				roles:[]
 			};
 		},
 		methods: {
 			logout() {
-				console.log(222222222222)
 				let _this = this
 				uni.showModal({
 					title: '温馨提示',
@@ -69,6 +71,12 @@
 					// error
 				}
 			},
+			setPermissions(permissions){
+				this.$store.commit('setPermissions', permissions)
+				try {
+					uni.setStorageSync('setPermissions', permissions);
+				} catch (e) {}
+			},
 			setToken(token) {
 				this.$store.commit('setToken', token)
 				try {
@@ -94,18 +102,36 @@
 							provider: 'weixin',
 							success: function(res) {
 								if (res.errMsg == 'getUserInfo:ok') {
-									console.log(res.userInfo)
 									const openId = res.userInfo.openId;
 									_this.userInfo = res.userInfo
-									login({
-										wechatNumber: openId
-									}).then((res) => {
-										const token = res.header['Set-Authorization']
-										_this.userInfo = Object.assign({}, res.data.data.employee, _this.userInfo)
-										_this.setToken(token)
-										_this.setUserInfo(_this.userInfo)
-
-									});
+									const p = getCompany(openId)
+									const p1 = p.then(res => {
+										if (res.data.code == 0) {
+											const tenants = res.data.data.tenants
+											return login({
+												tenantId: tenants[0].tenantId,
+												wechatNumber: openId
+											})
+										}
+									})
+									p1.then(res => {
+										if(res.header['Set-Authorization']){
+											const token = res.header['Set-Authorization']
+											_this.setToken(token)
+										}
+										if(res.data.data.permissions){
+											_this.permissions = res.data.data.permissions
+											_this.setPermissions(_this.permissions)
+										}
+										if(res.data.data.roles){
+											_this.roles = res.data.data.roles.map(v => v.roleName)
+										}
+										if(res.data.data.employee){
+											_this.userInfo = Object.assign({}, res.data.data.employee, _this.userInfo)
+											_this.setUserInfo(_this.userInfo)
+											_this.$set(_this.userInfo,'roles',_this.roles.join(','))
+										}
+									})
 								}
 							}
 						});
@@ -119,8 +145,8 @@
 				try {
 					const userInfo = uni.getStorageSync('userInfo');
 					const token = uni.getStorageSync('token')
-					console.log(token)
-					console.log(userInfo)
+					const permissions = uni.getStorageSync('permissions')
+					this.$store.commit('permissions', permissions)
 					this.$store.commit('setToken', token)
 					if (userInfo) {
 						this.userInfo = userInfo

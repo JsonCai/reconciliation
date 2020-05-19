@@ -12,11 +12,12 @@
 			<view class="item-wrap">
 				<text>应收款:</text>
 				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.accountReceivable"
-				 type="digit" />
+				 type="digit"  @blur="changeReceivable"/>
 			</view>
 			<view class="item-wrap">
 				<text>实收款:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.fundsReceived" type="digit" />
+				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.fundsReceived" type="digit"
+				 @blur="changeReceived"/>
 			</view>
 			<view class="item-wrap">
 				<text>营收日期:</text>
@@ -165,7 +166,16 @@
 			},
 			isFormFill() {
 				return true
+			},
+			changeReceivable(e){
+				const v = Number(ev.detail.value)
+				this.$set(this.detailForm, 'accountReceivable', v.toFixed(2))
+			},
+			changeReceived(e){
+				const v = Number(ev.detail.value)
+				this.$set(this.detailForm, 'fundsReceived', v.toFixed(2))
 			}
+			
 		},
 		onLoad(option) {
 			if (option.id) {

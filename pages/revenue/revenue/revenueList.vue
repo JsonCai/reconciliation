@@ -11,7 +11,7 @@
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	import revenueItem from '@/components/revenueItem/revenueItem.vue';
 	import {
-		searchRevenueList
+		revenueSearchRevenueList
 	} from '../../../api/revenue/revenue.js'
 
 	export default {
@@ -48,7 +48,7 @@
 			},
 			/*上拉加载的回调: 其中page.num:当前页 从1开始, page.size:每页数据条数,默认10 */
 			upCallback(page) {
-				searchRevenueList(this.getApplyFormData(page))
+				revenueSearchRevenueList(this.getApplyFormData(page))
 					.then(res => {
 						console.log(res)
 						this.mescroll.endSuccess(res.data.revenueAccounts.length);

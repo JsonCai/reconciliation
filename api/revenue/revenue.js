@@ -27,17 +27,29 @@ export function applyRevenue(data){
 export function revenueDetail(id){
 	return http.get('/revenue-accounts/'+id)
 }
-// 获取营收单据列表
-export function searchRevenueList(data){
-	data.revenuePersonId = applyPersonId
-	data.tenantId = tenantId
-	console.log(JSON.stringify(data))
-	return http.post('/revenue-accounts/search',data)
-}
 // 接收营收单据
 export function receiveRevenueAccounts(data){
 	data.receiptPersonId = applyPersonId
 	data.tenantId = tenantId
 	console.log(JSON.stringify(data))
 	return http.post('/revenue-accounts/receipt',data)
+}
+// 获取营收单据列表
+export function searchRevenueList(role,data){
+	data.revenuePersonId = applyPersonId
+	data.tenantId = tenantId
+	console.log(JSON.stringify(data))
+	return http.post('/revenue-accounts/search/'+role,data)
+}
+// 营收人员 搜索匹配条件的营收单据
+export function revenueSearchRevenueList(data){
+	return searchRevenueList('as-revenue-person',data)
+}
+// 收款人 搜索匹配条件的营收单据
+export function receiptSearchRevenueList(data){
+	return searchRevenueList('as-receipt-person',data)
+}
+// 确认查看人 搜索匹配条件的营收单据
+export function confirmSearchRevenueList(data){
+	return searchRevenueList('as-confirm-person',data)
 }

@@ -130,9 +130,8 @@
 										}
 										if (res.data.data.employee) {
 											_this.userInfo = Object.assign({}, res.data.data.employee, _this.userInfo)
-											_this.setUserInfo(_this.userInfo)
 											_this.$set(_this.userInfo, 'roles', _this.roles.join(','))
-
+											_this.setUserInfo(_this.userInfo)
 										}
 									})
 								}
@@ -147,6 +146,7 @@
 				this.isLogin = true
 				try {
 					const userInfo = uni.getStorageSync('userInfo');
+					console.log(userInfo)
 					const token = uni.getStorageSync('token')
 					const permissions = uni.getStorageSync('permissions')
 					this.$store.commit('setPermissions', permissions)

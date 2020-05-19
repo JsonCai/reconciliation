@@ -28,7 +28,6 @@ export function login(data) {
 			method: 'POST',
 			data,
 			success: (res) => {
-				console.log(res.data,res.header)
 				resolve(res)
 			},
 			fail: (err) => {

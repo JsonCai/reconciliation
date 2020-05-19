@@ -2,15 +2,15 @@
 	<view class="container">
 		<view class="item-list" v-if="isLogin">
 			{{JSON.stringify(permissions)}}
-			<indexNavItem @handleClick="applyClick('BossPage')" text="报销" roleName="老板" v-if="showApplyBoss" />
-			<indexNavItem @handleClick="financeClick('BossPage')" text="财务" roleName="老板" v-if="showFinanceBoss" />
-			<indexNavItem @handleClick="applyClick('buyer')" text="报销" roleName="采购" v-if="showApplyBuyer" />
-			<indexNavItem @handleClick="revenueClick('revenue')" text="营收" roleName="营收" v-if="showRevenueRevenuer" />
-			<indexNavItem @handleClick="applyClick('teller')" text="报销" roleName="出纳" v-if="showApplyCashier" />
-			<indexNavItem @handleClick="revenueClick('teller')" text="营收" roleName="出纳" v-if="showApplyCashier" />
-			<indexNavItem @handleClick="financeClick('BossPage')" text="财务" roleName="出纳" v-if="showFinanceCashier" />
-			<indexNavItem @handleClick="specialPayments" text="特殊收支" roleName="出纳" v-if="showFinanceCashier" />
-			<indexNavItem @handleClick="applyClick('accountant')" text="报销" roleName="会计" v-if="showApplyAccountant" />
+			<indexNavItem @handleClick="applyClick('BossPage')" text="审核采购单据"  v-if="permissions.includes('审核采购单据')" />
+			<indexNavItem @handleClick="financeClick('BossPage')" text="查看财务"  v-if="permissions.includes('查看财务')"/>
+			<indexNavItem @handleClick="applyClick('buyer')" text="报销" v-if="permissions.includes('提交采购单据')" />
+			<indexNavItem @handleClick="revenueClick('revenue')" text="营收" v-if="permissions.includes('接收营收单据')" />
+			<indexNavItem @handleClick="applyClick('teller')" text="报销"  v-if="permissions.includes('接收营收单据')" />
+			<indexNavItem @handleClick="revenueClick('teller')" text="营收" v-if="permissions.includes('接收营收单据')" />
+			<indexNavItem @handleClick="financeClick('BossPage')" text="财务" v-if="permissions.includes('查看财务')" />
+			<indexNavItem @handleClick="specialPayments" text="特殊收支"  v-if="showFinanceCashier" />
+			<indexNavItem @handleClick="applyClick('accountant')" text="报销"  v-if="showApplyAccountant" />
 			<indexNavItem @handleClick="revenueClick('accountant')" text="营收" roleName="会计" v-if="showRevenueAccountant" />
 			<indexNavItem @handleClick="statement" text="报表" roleName="会计" v-if="showStatementAccountant" />
 		</view>

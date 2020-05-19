@@ -8,11 +8,23 @@ export function createApplyForm(data){
 export function getBuyeApplyrForm(data){
 	return http.post('/expense-accounts/search/as-apply-person',data)
 }
+// 获取审核人员报销单据列表
+export function getApprovalApplyrForm(data){
+	return http.post('/expense-accounts/search/as-approval-person',data)
+}
+// 获取打款人报销单据列表
+export function getPaymentApplyrForm(data){
+	return http.post('/expense-accounts/search/as-payment-person',data)
+}
+// 获取确认打款人报销单据列表
+export function getConfirmApplyrForm(data){
+	return http.post('/expense-accounts/search/as-confirm-person',data)
+}
 // 删除销单据列表
 export function delApplyForm(id,data){
 	return http.post(url + '/' + id,data)
 }
-// 报销单详情
+// 报销单详情Audit
 export function applyDetail(id){
 	return http.get('/expense-accounts/'+id)
 }

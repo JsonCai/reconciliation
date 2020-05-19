@@ -2,14 +2,12 @@
 	<view class="index-item" @tap="onClick">
 		<image :src="iconSrc" class="icon" @tap.stop="onClick"></image>
 		<text>{{text}}</text>
-		<view class="role-wrap"><text class="text">{{roleName}}</text></view>
 	</view>
 </template>
 <script>
 	export default {
 		props:{
-			text:String,
-			roleName:String
+			text:String
 		},
 		data(){
 			return {

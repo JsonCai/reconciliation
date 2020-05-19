@@ -74,7 +74,7 @@
 			setPermissions(permissions) {
 				this.$store.commit('setPermissions', permissions)
 				try {
-					uni.setStorageSync('setPermissions', permissions);
+					uni.setStorageSync('permissions', permissions);
 				} catch (e) {}
 			},
 			setToken(token) {
@@ -123,6 +123,7 @@
 										}
 										if (res.data.data.permissions) {
 											_this.permissions = res.data.data.permissions
+											console.log(_this.permissions)
 											_this.setPermissions(_this.permissions)
 										}
 										if (res.data.data.roles) {
@@ -146,9 +147,9 @@
 				this.isLogin = true
 				try {
 					const userInfo = uni.getStorageSync('userInfo');
-					console.log(userInfo)
 					const token = uni.getStorageSync('token')
 					const permissions = uni.getStorageSync('permissions')
+					console.log(permissions)
 					this.$store.commit('setPermissions', permissions)
 					this.$store.commit('setToken', token)
 					if (userInfo) {

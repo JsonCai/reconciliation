@@ -18,7 +18,7 @@
 	import fakeSearch from '@/components/fakeSearch/fakeSearch.vue';
 
 	import {
-		searchApplyFormList
+		getConfirmApplyrForm
 	} from '../../../api/apply/apply.js'
 
 	export default {
@@ -57,7 +57,7 @@
 			},
 			/*上拉加载的回调: 其中page.num:当前页 从1开始, page.size:每页数据条数,默认10 */
 			upCallback(page) {
-				searchApplyFormList(this.getApplyFormData(page))
+				getConfirmApplyrForm(this.getApplyFormData(page))
 					.then(res => {
 						this.mescroll.endSuccess(res.data.expenseAccounts.length);
 						if (page.num == 1) {

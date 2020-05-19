@@ -50,8 +50,15 @@
 					url:'../searchPage/searchPage'
 				})
 			}
+		},
+		onShow() {
+			uni.$once("reload", () => {
+				let gv='list'+this.tabIndex;
+				if(this.$refs[gv][0]){
+					this.$refs[gv][0].reload()
+				}
+			})
 		}
-
 	};
 </script>
 

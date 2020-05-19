@@ -109,6 +109,7 @@
 								title: "暂存成功"
 							})
 							uni.navigateBack()
+							uni.$emit('reload')
 						})
 						.catch(err => {
 							uni.hideLoading();
@@ -141,6 +142,7 @@
 								title: "提交成功"
 							})
 							uni.navigateBack()
+							uni.$emit('reload')
 						})
 						.catch(err => {
 							uni.hideLoading();
@@ -168,11 +170,11 @@
 				return true
 			},
 			changeReceivable(e){
-				const v = Number(ev.detail.value)
+				const v = Number(e.detail.value)
 				this.$set(this.detailForm, 'accountReceivable', v.toFixed(2))
 			},
 			changeReceived(e){
-				const v = Number(ev.detail.value)
+				const v = Number(e.detail.value)
 				this.$set(this.detailForm, 'fundsReceived', v.toFixed(2))
 			}
 			

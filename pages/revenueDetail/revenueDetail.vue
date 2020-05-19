@@ -124,11 +124,13 @@
 			onPassTap() {
 				if (this.onValidate()) {
 					console.log(this.revenueParams)
-					receiveRevenueAccounts(this.revenueParams).then(res => {
+					receiveRevenueAccounts(this.revenueParams)
+					.then(res => {
 						console.log(res)
+						uni.navigateBack()
+						uni.$emit('reload')
 					}).catch(err => console.log(err))
 				}
-			
 			},
 			changeReason(ev) {
 				this.$set(this.revenueParams, 'receiptOpinion', ev.target.value)
@@ -148,6 +150,7 @@
 				})
 				.catch(err => {
 					console.log(err)
+					uni.navigateBack()
 				})
 		}
 	}

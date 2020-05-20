@@ -8,6 +8,8 @@
 			</block>
 		</view>
 		<view class="btn-add" @tap="applyFrom">&#xe604;</view>
+		
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
 <script>

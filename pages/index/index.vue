@@ -15,6 +15,7 @@
 			<indexNavItem @handleClick="statement" text="报表" roleName="会计" v-if="showStatementAccountant" />
 		</view>
 		<noLogin v-else />
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
 <script>
@@ -53,6 +54,7 @@
 		},
 		methods: {
 			applyClick(type) {
+				this.showLoading()
 				uni.navigateTo({
 					url: '/pages/' + type + '/apply/applyPage'
 				})
@@ -63,6 +65,7 @@
 				})
 			},
 			revenueClick(type) {
+				this.dismissLoading()
 				uni.navigateTo({
 					url: '../' + type + '/revenue/revenuePage'
 				})

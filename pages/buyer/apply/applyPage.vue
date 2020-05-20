@@ -42,7 +42,7 @@
 			}
 		},
 		onShow(){
-		    uni.$on("reload", () => {
+		    uni.$once("reload", () => {
 				let gv='list'+this.tabIndex;
 				if(this.$refs[gv][0]){
 					this.$refs[gv][0].reload()

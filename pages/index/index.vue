@@ -1,6 +1,7 @@
 <template>
 	<view class="container">
 		<view class="item-list" v-if="isLogin">
+			{{permissions}}
 			<indexNavItem @handleClick="applyClick('BossPage')" text="审核采购单据"  v-if="permissions.includes('审核采购单据')" />
 			<indexNavItem @handleClick="financeClick('BossPage')" text="查看财务"  v-if="permissions.includes('查看财务')"/>
 			<indexNavItem @handleClick="applyClick('buyer')" text="报销" v-if="permissions.includes('提交采购单据')" />
@@ -13,8 +14,7 @@
 			<indexNavItem @handleClick="revenueClick('accountant')" text="营收" roleName="会计" v-if="showRevenueAccountant" />
 			<indexNavItem @handleClick="statement" text="报表" roleName="会计" v-if="showStatementAccountant" />
 		</view>
-		<noLogin />
-		<loading :isShow='isShowLoading'></loading>
+		<noLogin v-else/>
 	</view>
 </template>
 <script>
@@ -53,7 +53,6 @@
 		},
 		methods: {
 			applyClick(type) {
-				this.showLoading()
 				uni.navigateTo({
 					url: '/pages/' + type + '/apply/applyPage'
 				})
@@ -64,7 +63,6 @@
 				})
 			},
 			revenueClick(type) {
-				this.dismissLoading()
 				uni.navigateTo({
 					url: '../' + type + '/revenue/revenuePage'
 				})

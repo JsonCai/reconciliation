@@ -35,6 +35,10 @@
 			loadMore(){
 				 this.mescroll && this.mescroll.onReachBottom()
 			},
+			reload(){
+				console.log('我reload')
+				this.mescroll && this.mescroll.resetUpScroll()
+			},
 			getApplyFormData(page) {
 				let offset = page.size * (page.num - 1)
 				const params = {

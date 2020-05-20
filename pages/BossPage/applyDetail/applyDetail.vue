@@ -115,15 +115,20 @@
 				return true
 			},
 			onPassTap() {
+			
 				if (this.onValidate()) {
 					this.showLoading()
-					console.log(this.applyParams)
 					approveExpense(this.applyParams).then(res => {
 						this.dismissLoading()
 						uni.showToast({
 							title: '审批成功',
 							icon: 'none'
 						})
+						
+						setTimeout(()=>{
+							uni.$emit('reload')
+							uni.navigateBack()
+						},2000)
 					}).catch(err => {
 						this.dismissLoading()
 						console.log(err)

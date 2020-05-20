@@ -75,6 +75,7 @@
 				</view>
 			</view>
 		</view>
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
 
@@ -100,7 +101,7 @@
 		data() {
 			return {
 				detailForm: {},
-				revenueParams:{}
+				revenueParams: {}
 			}
 		},
 		methods: {
@@ -123,13 +124,22 @@
 			},
 			onPassTap() {
 				if (this.onValidate()) {
+					this.showLoading()
 					console.log(this.revenueParams)
 					receiveRevenueAccounts(this.revenueParams)
-					.then(res => {
-						console.log(res)
-						uni.navigateBack()
-						uni.$emit('reload')
-					}).catch(err => console.log(err))
+						.then(res => {
+							console.log(res)
+							setTimeout(() => {
+								uni.navigateBack()
+							}, 500)
+							uni.$emit('reload')
+						}).catch(err => {
+							console.log(err)
+							uni.showToast({
+								icon: 'none',
+								title: '请求失败'
+							})
+						})
 				}
 			},
 			changeReason(ev) {
@@ -143,14 +153,23 @@
 		onLoad(option) {
 			console.log(option)
 			this.revenueParams.revenueAccountId = option.id
+			this.showLoading()
 			revenueDetail(option.id)
 				.then(res => {
+					this.dismissLoading()
 					console.log(res)
 					this.$set(this, "detailForm", res.data.revenueAccount)
 				})
 				.catch(err => {
+					this.dismissLoading()
 					console.log(err)
-					uni.navigateBack()
+					uni.showToast({
+						icon: 'none',
+						title: "获取详情失败"
+					})
+					setTimeout(() => {
+						uni.navigateBack()
+					}, 500)
 				})
 		}
 	}

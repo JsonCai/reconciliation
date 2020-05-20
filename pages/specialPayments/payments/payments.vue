@@ -37,6 +37,7 @@
 			</view>
 		</view>
 		<timePicker :requestCode="timeCode" :show="showTimePicker" @onConfirm="timePickConfirm" @onCancel="showTimePicker = false"></timePicker>
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
 
@@ -97,16 +98,17 @@
 			},
 			onPassTap() {
 				if (this.isFormFill()) {
-					uni.showLoading({
-						title: '正在提交'
-					});
+					this.showLoading()
 					this.submitApplyForm()
 						.then(res => {
+							this.dismissLoading()
 							console.log(res)
-							uni.navigateBack()
+							setTimeout(() => {
+								uni.navigateBack()
+							}, 500)
 						})
 						.catch(err => {
-							uni.hideLoading();
+							this.dismissLoading()
 							console.log(err)
 							uni.showToast({
 								icon: 'none',
@@ -132,8 +134,10 @@
 		},
 		onLoad(option) {
 			if (option.id) {
+				this.showLoading()
 				getSpecialPaymentsDetail(option.id)
 					.then(res => {
+						this.dismissLoading()
 						console.log(res)
 						this.detailForm = res.data.specialAccount
 						if (this.detailForm.accountTime) {
@@ -148,8 +152,14 @@
 						}
 					})
 					.catch(err => {
-						console.log("获取详情失败")
-						uni.navigateBack()
+						this.dismissLoading()
+						uni.showToast({
+							icon: 'none',
+							title: "获取详情失败"
+						})
+						setTimeout(() => {
+							uni.navigateBack()
+						}, 500)
 					})
 			}
 		}

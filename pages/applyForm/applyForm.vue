@@ -41,6 +41,7 @@
 			</view>
 		</view>
 		<timePicker :requestCode="timeCode" :show="showTimePicker" @onConfirm="timePickConfirm" @onCancel="showTimePicker = false"></timePicker>
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
 
@@ -107,22 +108,21 @@
 			},
 			onSuspendTap() {
 				if (this.onValidate()) {
-					uni.showLoading({
-						title: '正在暂存'
-					});
+					this.showLoading()
 					this.submitApplyForm()
 						.then(res => {
+							this.dismissLoading()
 							uni.showToast({
 								icon: 'none',
 								title: "暂存成功"
 							})
 							uni.$emit('reload')
-							setTimeout(()=>{
+							setTimeout(() => {
 								uni.navigateBack()
-							},500)
+							}, 500)
 						})
 						.catch(err => {
-							uni.hideLoading();
+							this.dismissLoading()
 							uni.showToast({
 								icon: 'none',
 								title: "请求失败"
@@ -132,9 +132,7 @@
 			},
 			onSubmitTap() {
 				if (this.onValidate()) {
-					uni.showLoading({
-						title: '正在提交'
-					});
+					this.showLoading()
 					this.submitApplyForm()
 						.then(res => {
 							this.detailForm.expenseAccountId = res.data.expenseAccount.expenseAccountId
@@ -143,7 +141,7 @@
 							})
 						})
 						.then(res => {
-							uni.hideLoading();
+							this.dismissLoading()
 							uni.showToast({
 								icon: 'none',
 								title: "提交成功"
@@ -155,7 +153,7 @@
 
 						})
 						.catch(err => {
-							uni.hideLoading();
+							this.dismissLoading()
 							uni.showToast({
 								icon: 'none',
 								title: "请求失败"
@@ -172,7 +170,7 @@
 					return updateApplyForm(form.expenseAccountId, form)
 				} else {
 					console.log(form)
-					 return createApplyForm(form)
+					return createApplyForm(form)
 				}
 			},
 			onValidate() {
@@ -208,9 +206,11 @@
 			},
 		},
 		onLoad(options) {
-			    //因为修改的是data里面的绑定数据，所以返回后页面数据会直接显示修改后的
+			//因为修改的是data里面的绑定数据，所以返回后页面数据会直接显示修改后的
 			if (options.id) {
+				this.showLoading()
 				applyDetail(options.id).then(res => {
+					this.dismissLoading()
 					this.detailForm = res.data.expenseAccount
 					if (this.detailForm.expenseTime) {
 						this.detailForm.expenseTime = this.detailForm.expenseTime.split(' ')[0]
@@ -219,11 +219,14 @@
 						this.category = this.detailForm.costCategory.costCategoryName
 					}
 				}).catch(err => {
+					this.dismissLoading()
 					uni.showToast({
 						title: res.msg,
 						icon: 'none'
 					})
-					uni.navigateBack()
+					setTimeout(() => {
+						uni.navigateBack()
+					}, 500)
 				})
 			}
 			getCategoryList()
@@ -231,7 +234,7 @@
 					this.categoryList = res.data.costCategories
 				})
 				.catch(err => {
-					
+
 				})
 		}
 	};

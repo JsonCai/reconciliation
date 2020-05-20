@@ -71,6 +71,7 @@
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
 			</view>
 		</view>
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
 
@@ -115,16 +116,25 @@
 			},
 			onPassTap() {
 				if (this.onValidate()) {
+					this.showLoading()
 					console.log(this.applyParams)
 					approveExpense(this.applyParams).then(res => {
-						if (res.code == 0) {
-							uni.showToast({
-								title: '审批成功',
-								icon: 'none'
-							})
-							
-						}
-					}).catch(err => console.log(err))
+						this.dismissLoading()
+						uni.showToast({
+							title: '审批成功',
+							icon: 'none'
+						})
+					}).catch(err => {
+						this.dismissLoading()
+						console.log(err)
+						uni.showToast({
+							icon: 'none',
+							title: "请求失败"
+						})
+						setTimeout(() => {
+							uni.navigateBack()
+						}, 500)
+					})
 				}
 
 			},
@@ -147,14 +157,24 @@
 			if (option.id) {
 				this.applyParams.expenseAccountId = option.id
 			}
+			this.showLoading()
 			applyDetail(option.id)
 				.then(res => {
+					this.dismissLoading()
 					if (res.code == '0') {}
 					this.detailForm = res.data.expenseAccount
 					console.log(this.detailForm)
 				})
 				.catch(err => {
+					this.dismissLoading()
 					console.log(err)
+					uni.showToast({
+						icon: 'none',
+						title: "获取详情失败"
+					})
+					setTimeout(() => {
+						uni.navigateBack()
+					}, 500)
 				})
 		}
 	}

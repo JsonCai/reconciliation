@@ -12,19 +12,18 @@
 			<view class="item-wrap">
 				<text>应收款:</text>
 				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.accountReceivable"
-				 type="digit"  @blur="changeReceivable"/>
+				 type="digit" @blur="changeReceivable" />
 			</view>
 			<view class="item-wrap">
 				<text>实收款:</text>
 				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.fundsReceived" type="digit"
-				 @blur="changeReceived"/>
+				 @blur="changeReceived" />
 			</view>
 			<view class="item-wrap">
 				<text>营收日期:</text>
 				<view class="inner-wrap" @tap="onStartTimeTap(1)">
 					<text v-if="!detailForm.revenueTime" class="fc-9">请选择营收日期</text>
 					<text v-else>{{ detailForm.revenueTime}}</text>
-					<text class="font-icon">&#xe662;</text>
 				</view>
 			</view>
 			<view class="img-wrap fc-6">
@@ -37,6 +36,7 @@
 			</view>
 		</view>
 		<timePicker :requestCode="timeCode" :show="showTimePicker" @onConfirm="timePickConfirm" @onCancel="showTimePicker = false"></timePicker>
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
 
@@ -98,21 +98,22 @@
 			},
 			onSuspendTap() {
 				if (this.isFormFill()) {
-					uni.showLoading({
-						title: '正在暂存'
-					});
+					this.showLoading()
 					this.submitApplyForm()
 						.then(res => {
 							console.log(res)
+							this.dismissLoading()
 							uni.showToast({
 								icon: 'none',
 								title: "暂存成功"
 							})
-							uni.navigateBack()
+							setTimeout(() => {
+								uni.navigateBack()
+							}, 500)
 							uni.$emit('reload')
 						})
 						.catch(err => {
-							uni.hideLoading();
+							this.dismissLoading()
 							console.log(err)
 							uni.showToast({
 								icon: 'none',
@@ -123,9 +124,7 @@
 			},
 			onSubmitTap() {
 				if (this.isFormFill()) {
-					uni.showLoading({
-						title: '正在提交'
-					});
+					this.showLoading()
 					this.submitApplyForm()
 						.then(res => {
 							console.log(res)
@@ -135,17 +134,19 @@
 							})
 						})
 						.then(res => {
-							uni.hideLoading();
+							this.dismissLoading()
 							console.log(res)
 							uni.showToast({
 								icon: 'none',
 								title: "提交成功"
 							})
-							uni.navigateBack()
+							setTimeout(() => {
+								uni.navigateBack()
+							}, 500)
 							uni.$emit('reload')
 						})
 						.catch(err => {
-							uni.hideLoading();
+							this.dismissLoading()
 							console.log(err)
 							uni.showToast({
 								icon: 'none',
@@ -169,20 +170,22 @@
 			isFormFill() {
 				return true
 			},
-			changeReceivable(e){
+			changeReceivable(e) {
 				const v = Number(e.detail.value)
 				this.$set(this.detailForm, 'accountReceivable', v.toFixed(2))
 			},
-			changeReceived(e){
+			changeReceived(e) {
 				const v = Number(e.detail.value)
 				this.$set(this.detailForm, 'fundsReceived', v.toFixed(2))
 			}
-			
+
 		},
 		onLoad(option) {
 			if (option.id) {
+				this.showLoading()
 				revenueDetail(option.id)
 					.then(res => {
+						this.dismissLoading()
 						console.log(res)
 						this.detailForm = res.data.revenueAccount
 						if (this.detailForm.revenueTime) {
@@ -190,6 +193,7 @@
 						}
 					})
 					.catch(err => {
+						this.dismissLoading()
 						uni.navigateBack()
 					})
 			}

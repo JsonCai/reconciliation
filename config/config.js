@@ -13,7 +13,7 @@ const tabUnSumit = {
 const tabSumit = {
 	id: "tab03",
 	name: '已提交',
-	expenseAccountStatus: 3
+	expenseAccountStatus: 2
 }
 const tabReject = {
 	id: "tab04",

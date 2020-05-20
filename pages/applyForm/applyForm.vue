@@ -153,6 +153,7 @@
 
 						})
 						.catch(err => {
+							console.log(err)
 							this.dismissLoading()
 							uni.showToast({
 								icon: 'none',
@@ -166,8 +167,9 @@
 				let form = deepClone(this.detailForm)
 				form.amount = Number(this.detailForm.amount)
 				form.expenseTime = resetDateFormat(form.expenseTime)
+				console.log(form)
 				if (this.detailForm.expenseAccountId) {
-					return updateApplyForm(form.expenseAccountId, form)
+					return updateApplyForm(this.detailForm.expenseAccountId, form)
 				} else {
 					console.log(form)
 					return createApplyForm(form)
@@ -211,12 +213,16 @@
 				this.showLoading()
 				applyDetail(options.id).then(res => {
 					this.dismissLoading()
-					this.detailForm = res.data.expenseAccount
-					if (this.detailForm.expenseTime) {
-						this.detailForm.expenseTime = this.detailForm.expenseTime.split(' ')[0]
+					// this.detailForm = res.data.expenseAccount
+					this.detailForm.expenseAccountId = res.data.expenseAccount.expenseAccountId
+					this.detailForm.expenseAccountTitle = res.data.expenseAccount.expenseAccountTitle
+					if (res.data.expenseAccount.costCategory) {
+						this.category = res.data.expenseAccount.costCategory.costCategoryName
+						this.detailForm.costCategoryId =res.data.expenseAccount.costCategory.costCategoryId
 					}
-					if (this.detailForm.costCategory) {
-						this.category = this.detailForm.costCategory.costCategoryName
+					this.detailForm.amount = res.data.expenseAccount.amount
+					if (res.data.expenseAccount.expenseTime) {
+						this.detailForm.expenseTime = res.data.expenseAccount.expenseTime.split(' ')[0]
 					}
 				}).catch(err => {
 					this.dismissLoading()

@@ -168,6 +168,34 @@
 				}
 			},
 			isFormFill() {
+				if(!this.detailForm.revenueAccountTitle){
+					uni.showToast({
+						icon: 'none',
+						title: "请输入名称"
+					})
+					return
+				}
+				if(!this.detailForm.accountReceivable){
+					uni.showToast({
+						icon: 'none',
+						title: "请输入应收款"
+					})
+					return
+				}
+				if(!this.detailForm.fundsReceived){
+					uni.showToast({
+						icon: 'none',
+						title: "请输入实收收款"
+					})
+					return
+				}
+				if(!this.detailForm.revenueTime){
+					uni.showToast({
+						icon: 'none',
+						title: "请选择营收日期"
+					})
+					return
+				}
 				return true
 			},
 			changeReceivable(e) {

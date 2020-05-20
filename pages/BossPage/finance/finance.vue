@@ -1,7 +1,7 @@
 <template>
 	<view class="card-wrap">
 
-		<view class="tab-title">
+		<view class="tab-title" v-if="isSectionShow">
 			<text class="tab" @tap="reportScope">区间财务</text>
 			<view style="width: 1px;height: 40rpx;background-color: #ededed;"></view>
 			<text class="tab" @tap="yearReportClick">年度财务</text>
@@ -37,7 +37,8 @@
 			return {
 				grossProfit: 0, // 总账面利润
 				grossCash: 0, // 总账面现金
-				grossUncollected: 0 //	总未收款
+				grossUncollected: 0, //	总未收款
+				isSectionShow:false
 			}
 		},
 		filters: {
@@ -75,6 +76,9 @@
 			}
 		},
 		onLoad() {
+			if(Option.type == 'BossPage'){
+				this.isSectionShow = true
+			}
 			getStatement()
 				.then(res => {
 					console.log(res)

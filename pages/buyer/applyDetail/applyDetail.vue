@@ -41,6 +41,10 @@
 				<text>申请人:</text>
 				<text>{{detailForm.applyPerson.employeeName}}</text>
 			</view>
+			<view class="item-wrap" @tap="showHistory" v-if="detailForm.approvals && detailForm.approvals.length">
+				<text>审批意见:</text>
+				<text>查看历史</text>
+			</view>
 		</view>
 	</view>
 	</view>

@@ -190,6 +190,10 @@
 				"navigationBarTitleText": "年度报表"
 			}
         }
+        ,{
+            "path" : "pages/reasonList/reasonList",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "#fffff",

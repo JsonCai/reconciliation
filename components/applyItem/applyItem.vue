@@ -23,6 +23,7 @@
 			</view>
 			<image class="arrow" :src="arrowSrc"></image>
 		</view>
+		<image src="../../static/images/del.png" class="del" @tap.stop="onDel(item)"></image>
 	</view>
 </template>
 
@@ -86,18 +87,8 @@
 			}
 		},
 		methods: {
-			onLongpress() {
-				uni.showModal({
-					title: '提示',
-					content: '确定要删除？',
-					success: function(res) {
-						if (res.confirm) {
-							console.log('用户点击确定');
-						} else if (res.cancel) {
-							console.log('用户点击取消');
-						}
-					}
-				});
+			onDel(item){
+				this.$emit('onDel',item)
 			},
 			clickitem(item){
 				this.$emit('clickItem',item)

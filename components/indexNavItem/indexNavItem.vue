@@ -14,21 +14,20 @@
 				applySrc:'../../static/images/index-rec-icon.png',
 				financeSrc:'../../static/images/index-finance-icon.png',
 				revenueSrc:'../../static/images/index-revenue-icon.png',
-				statementSrc:'../../static/images/index-statement-icon.png'
+				statementSrc:'../../static/images/index-statement-icon.png',
+				tsSrc:'../../static/images/ts.png'
 			}
 		},
 		computed:{
 			iconSrc(){
-				if(this.text == '审核采购单据' || this.text == '提交采购单据'){
+				if(this.text == '审核采购单据' || this.text == '提交采购单据' || this.text == '确认查看报销单据'){
 					return this.applySrc
 				}else if(this.text == '查看财务报表' || this.text == '查看财务情况'){
 					return this.financeSrc
-				}else if(this.text == '提交营收单据' || this.text == '接收营收单据'){
+				}else if(this.text == '提交营收单据' || this.text == '接收营收单据' || this.text == '确认查看营收单据'){
 					return this.revenueSrc
-				}else if(this.text == '特殊收支'){
-					return this.revenueSrc
-				}else if(this.text == '报表'){
-					return this.statementSrc
+				}else if(this.text == '操作特殊单据'){
+					return this.tsSrc
 				}
 			}
 		},

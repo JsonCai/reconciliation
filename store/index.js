@@ -5,14 +5,14 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
 		token: '',
-		permissions:''
+		roles:[]
 	},
 	mutations:{
 		setToken(state,token){
 			state.token = token
 		},
-		setPermissions(state,permissions){
-			state.permissions = permissions
+		setRoles(state,roles){
+			state.roles = roles
 		}
 	}
 })

@@ -53,7 +53,12 @@
 				this.mescroll && this.mescroll.onReachBottom()
 			},
 			reload(){
-				this.mescroll && this.mescroll.resetUpScroll()
+				uni.$on("reload", () => {
+					let gv='list'+this.tabIndex;
+					if(this.$refs[gv][0]){
+						this.$refs[gv][0].reload()
+					}
+				})
 			},
 			getApplyFormData(page) {
 				let offset = page.size * (page.num - 1)

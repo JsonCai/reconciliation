@@ -55,7 +55,8 @@
 	} from '../../../api/specailPayments/specialPayments.js'
 	import {
 		deepClone,
-		resetDateFormat
+		resetDateFormat,
+		fmtMoney2
 	} from '@/libs/utils.js'
 	export default {
 		components: {
@@ -107,9 +108,9 @@
 									icon: 'none',
 									title: "创建成功"
 								})
-								this.dismissLoading()
 								uni.$emit("reload")
 								uni.navigateBack()
+								this.dismissLoading()
 							}, 1000)
 						})
 						.catch(err => {
@@ -149,6 +150,9 @@
 						this.dismissLoading()
 						console.log(res)
 						this.detailForm = res.data.specialAccount
+						if(this.detailForm.amount){
+							this.detailForm.amount = fmtMoney2(this.detailForm.amount)
+						}
 						if (this.detailForm.accountTime) {
 							this.detailForm.accountTime = this.detailForm.accountTime.split(' ')[0]
 						}

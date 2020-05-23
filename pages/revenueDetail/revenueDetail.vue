@@ -136,8 +136,10 @@
 							setTimeout(() => {
 								uni.navigateBack()
 								uni.$emit('reload')
+								this.dismissLoading()
 							}, 1000)
 						}).catch(err => {
+							this.dismissLoading()
 							console.log(err)
 							uni.showToast({
 								icon: 'none',

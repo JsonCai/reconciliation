@@ -31,5 +31,5 @@ export function getSpecialPaymentsDetail(id) {
 }
 // 删除营收单据列表
 export function delSpecialPaymentsForm(id){
-	return http.detele('/special-accounts/' + id)
+	return http.doDelete('/special-accounts/' + id)
 }

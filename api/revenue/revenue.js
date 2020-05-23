@@ -55,5 +55,5 @@ export function confirmSearchRevenueList(data){
 }
 // 删除营收单据列表
 export function delRevenueForm(id){
-	return http.detele('/revenue-accounts/' + id)
+	return http.doDelete('/revenue-accounts/' + id)
 }

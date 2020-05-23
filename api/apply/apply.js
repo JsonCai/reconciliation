@@ -22,7 +22,7 @@ export function getConfirmApplyrForm(data){
 }
 // 删除销单据列表
 export function delApplyForm(id){
-	return http.detale('/expense-accounts/' + id)
+	return http.doDelete('/expense-accounts/' + id)
 }
 // 报销单详情Audit
 export function applyDetail(id){

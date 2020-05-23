@@ -63,6 +63,9 @@
 					}
 				});
 			},
+			onDel(item) {
+				this.$emit('onDel', item)
+			},
 			clickitem(item) {
 				this.$emit('clickItem', item)
 			}
@@ -72,7 +75,8 @@
 
 <style lang="less">
 	@import url('../../common/list-item.less');
-	.main_item_content{
+
+	.main_item_content {
 		padding-top: 20rpx;
 	}
 </style>

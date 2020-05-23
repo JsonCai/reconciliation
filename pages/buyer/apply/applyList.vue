@@ -1,9 +1,12 @@
 <template>
-	<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
-		<view class="list" v-for="listItem in dataList">
-			<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='buyer' @onDel="onDel"></applyItem>
-		</view>
-	</mescroll-body>
+	<view>
+		<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
+			<view class="list" v-for="listItem in dataList">
+				<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='buyer' @onDel="onDel"></applyItem>
+			</view>
+		</mescroll-body>
+		<loading :isShow='isShowLoading'></loading>
+	</view>
 </template>
 
 <script>
@@ -13,7 +16,7 @@
 	import {
 		getApplyForm,
 		getBuyeApplyrForm,
-		delApply
+		delApplyForm
 	} from '../../../api/apply/apply.js'
 
 	export default {
@@ -30,29 +33,41 @@
 			tab: Object // tab菜单,此处用于取关键词
 		},
 		methods: {
-			onDel(item){
+			onDel(item) {
 				uni.showModal({
-				    title: '提示',
-				    content: '确定要删除该数据?',
-				    success: function (res) {
-				        if (res.confirm) {
-				            delApply(item.expenseAccountId).then(res => {
-								if(res.code == 0){
+					title: '提示',
+					content: '确定要删除该数据?',
+					success: res => {
+						if (res.confirm) {
+							this.showLoading()
+							delApplyForm(item.expenseAccountId)
+								.then(res => {
+									setTimeout(() => {
+										uni.showToast({
+											title: '删除成功',
+											icon: 'none'
+										})
+										this.reload()
+										this.dismissLoading()
+									}, 1000)
+
+								})
+								.catch(err => {
+									this.dismissLoading()
+									console.log(err)
 									uni.showToast({
-										title: '删除成功',
-										icon: 'none'
+										icon: 'none',
+										title: "删除失败"
 									})
-									this.reload()
-								}
-							})
-				        } 
-				    }
+								})
+						}
+					}
 				});
 			},
 			loadMore() {
 				this.mescroll && this.mescroll.onReachBottom()
 			},
-			reload(){
+			reload() {
 				this.mescroll && this.mescroll.resetUpScroll()
 			},
 			getApplyFormData(page) {

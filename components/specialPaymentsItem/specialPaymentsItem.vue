@@ -13,7 +13,7 @@
 				<view class="item-wrap price-wrap">
 					<view>
 						<text>金额：</text>
-						<text class="fc-r">￥{{specialPayment.amount}}</text>
+						<text class="fc-r">￥{{specialPayment.amount | formatMoney}}</text>
 					</view>
 					<text class="apply-time fc-6">{{specialPayment.accountTime | fmtTime}}</text>
 				</view>
@@ -27,7 +27,7 @@
 <script>
 	import mixin from '../../libs/mixin/listItemMixin.js'
 	import {
-		dateFtt
+		dateFtt,fmtMoney2
 	} from '../../libs/utils'
 	export default {
 		mixins: [mixin],
@@ -47,6 +47,12 @@
 				if (val) {
 					return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val))
 				}
+			}
+		},
+		filters: {
+		
+			formatMoney(val){
+				return fmtMoney2(val)
 			}
 		},
 		methods: {

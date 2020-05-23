@@ -97,6 +97,7 @@
 		},
 		onLoad(option) {
 			if (option.channelSerialNumber) {
+				console.log(option.channelSerialNumber)
 				this.channelSerialNumber = option.channelSerialNumber
 			}
 		}

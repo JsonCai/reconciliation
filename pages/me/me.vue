@@ -127,6 +127,7 @@
 											_this.setPermissions(_this.permissions)
 										}
 										if (res.data.data.roles) {
+											console.log(res.data.data.roles)
 											_this.roles = res.data.data.roles.map(v => v.roleName)
 										}
 										if (res.data.data.employee) {

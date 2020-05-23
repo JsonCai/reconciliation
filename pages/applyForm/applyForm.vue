@@ -21,7 +21,7 @@
 			</view>
 			<view class="item-wrap require1">
 				<text>申报金额:</text>
-				<input class="input-text" placeholder="请输入申报金额" type="digit" placeholder-class="place" v-model="detailForm.amount"
+				<input class="input-text" placeholder="请输入申报金额" type="digit" placeholder-class="place" v-model="tempamount"
 				 @blur="changePrice" />
 			</view>
 			<view class="item-wrap require1">
@@ -60,7 +60,8 @@
 	import {
 		deepClone,
 		resetDateFormat,
-		dateFtt
+		dateFtt,
+		fmtMoney2
 	} from '@/libs/utils.js'
 	export default {
 		components: {
@@ -69,6 +70,7 @@
 		},
 		data() {
 			return {
+				tempamount:'',
 				showTimePicker: false,
 				timeCode: 0,
 				isDisabled: false,
@@ -82,8 +84,8 @@
 		},
 		methods: {
 			changePrice(ev) {
-				const v = Number(ev.detail.value)
-				this.$set(this.detailForm, 'amount', v.toFixed(2))
+				const v = Number(ev.detail.value) * 100
+				this.$set(this.detailForm, 'amount', v)
 			},
 			changeImgList(list) {
 				this.detailForm.imgList = list
@@ -216,6 +218,7 @@
 					// this.detailForm = res.data.expenseAccount
 					this.detailForm.expenseAccountId = res.data.expenseAccount.expenseAccountId
 					this.detailForm.expenseAccountTitle = res.data.expenseAccount.expenseAccountTitle
+					this.tempamount = fmtMoney2(res.data.expenseAccount.amount)
 					if (res.data.expenseAccount.costCategory) {
 						this.category = res.data.expenseAccount.costCategory.costCategoryName
 						this.detailForm.costCategoryId =res.data.expenseAccount.costCategory.costCategoryId

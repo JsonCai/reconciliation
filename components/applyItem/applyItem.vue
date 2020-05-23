@@ -16,7 +16,7 @@
 				<view class="item-wrap price-wrap">
 					<view>
 						<text>报销金额：</text>
-						<text class="fc-r">￥{{applyItem.amount}}</text>
+						<text class="fc-r">￥{{applyItem.amount | formatMoney}}</text>
 					</view>
 					<text class="apply-time fc-6">{{applyItem.createTime | fmtTime}}</text>
 				</view>
@@ -32,6 +32,9 @@
 	import {
 		dateFtt
 	} from '../../libs/utils'
+	import {
+		fmtMoney2
+	} from '@/libs/utils.js'
 	export default {
 		mixins: [mixin],
 		props: {
@@ -83,6 +86,9 @@
 				if (val) {
 					return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val))
 				}
+			},
+			formatMoney(val){
+				return fmtMoney2(val)
 			}
 		},
 		methods: {

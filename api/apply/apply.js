@@ -21,8 +21,8 @@ export function getConfirmApplyrForm(data){
 	return http.post('/expense-accounts/search/as-confirm-person',data)
 }
 // 删除销单据列表
-export function delApplyForm(id){
-	return http.detale('/expense-accounts/' + id)
+export function delApplyForm(id,data){
+	return http.post(url + '/' + id,data)
 }
 // 报销单详情Audit
 export function applyDetail(id){

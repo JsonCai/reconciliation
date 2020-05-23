@@ -24,7 +24,6 @@
 				</view>
 			</view>
 			<image class="arrow" :src="arrowSrc"></image>
-			<image src="../../static/images/del.png" class="del" @tap.stop="onDel(revenueItem)" v-if="revenueItem.revenueAccountStatus==1"></image>
 		</view>
 	</view>
 </template>
@@ -73,12 +72,9 @@
 					}
 				});
 			},
-			onDel(item) {
-				this.$emit('onDel', item)
-			},
-			clickitem(item) {
+			clickitem(item){
 				console.log(item)
-				this.$emit('clickItem', item)
+				this.$emit('clickItem',item)
 			}
 		}
 	}

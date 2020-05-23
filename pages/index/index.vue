@@ -1,20 +1,20 @@
 <template>
 	<view class="container">
 		<view class="item-list" v-if="isLogin">
-			{{permissions}}
-			<indexNavItem @handleClick="applyClick('BossPage')" text="审核采购单据"  v-if="permissions.includes('审核采购单据')" />
-			<indexNavItem @handleClick="financeClick('BossPage')" text="查看财务"  v-if="permissions.includes('查看财务')"/>
-			<indexNavItem @handleClick="applyClick('buyer')" text="报销" v-if="permissions.includes('提交采购单据')" />
-			<indexNavItem @handleClick="revenueClick('revenue')" text="营收" v-if="permissions.includes('接收营收单据')" />
-			<indexNavItem @handleClick="applyClick('teller')" text="报销"  v-if="permissions.includes('接收营收单据')" />
-			<indexNavItem @handleClick="revenueClick('teller')" text="营收" v-if="permissions.includes('接收营收单据')" />
-			<indexNavItem @handleClick="financeClick('BossPage')" text="财务" v-if="permissions.includes('查看财务')" />
-			<indexNavItem @handleClick="specialPayments" text="特殊收支"  v-if="showFinanceCashier" />
-			<indexNavItem @handleClick="applyClick('accountant')" text="报销"  v-if="showApplyAccountant" />
-			<indexNavItem @handleClick="revenueClick('accountant')" text="营收" roleName="会计" v-if="showRevenueAccountant" />
-			<indexNavItem @handleClick="statement" text="报表" roleName="会计" v-if="showStatementAccountant" />
+			<indexNavItem @handleClick="applyClick('BossPage')" text="审核采购单据" v-if="permissions.includes('审核采购单据')" />
+			<indexNavItem @handleClick="financeClick('BossPage')" text="查看财务" v-if="permissions.includes('查看财务报表')&&permissions.includes('查看财务情况')" />
+			<indexNavItem @handleClick="applyClick('buyer')" text="提交采购单据" />
+			<!-- <indexNavItem @handleClick="applyClick('buyer')" text="提交采购单据" v-if="permissions.includes('提交采购单据')" /> -->
+			<indexNavItem @handleClick="revenueClick('revenue')" text="提交营收单据" v-if="permissions.includes('提交营收单据')" />
+			<indexNavItem @handleClick="applyClick('teller')" text="接收营收单据" v-if="permissions.includes('接收营收单据')" />
+			<indexNavItem @handleClick="revenueClick('teller')" text="接收营收单据" v-if="permissions.includes('接收营收单据')" />
+			<indexNavItem @handleClick="financeClick('teller')" text="查看财务情况" v-if="permissions.includes('查看财务情况')" />
+			<indexNavItem @handleClick="specialPayments" text="操作特殊单据" v-if="permissions.includes('操作特殊单据')" />
+			<indexNavItem @handleClick="applyClick('accountant')" text="确认查看收支单据" v-if="permissions.includes('确认查看收支单据')" />
+			<indexNavItem @handleClick="revenueClick('accountant')" text="确认查看收支单据" roleName="会计" v-if="permissions.includes('确认查看收支单据')" />
+			<indexNavItem @handleClick="statement" text="查看财务报表"  v-if="permissions.includes('查看财务报表')" />
 		</view>
-		<noLogin v-else/>
+		<noLogin v-else />
 	</view>
 </template>
 <script>
@@ -59,7 +59,7 @@
 			},
 			financeClick(type) {
 				uni.navigateTo({
-					url: '/pages/' + type + '/finance/finance'
+					url: '/pages/BossPage/finance/finance?type=' + type
 				})
 			},
 			revenueClick(type) {
@@ -74,7 +74,7 @@
 			},
 			statement() {
 				uni.navigateTo({
-					url:'../reportScope/reportScope'
+					url: '../reportScope/reportScope'
 				})
 			},
 			handleClick(type) {

@@ -53,7 +53,6 @@
 				this.mescroll && this.mescroll.onReachBottom()
 			},
 			reload(){
-				console.log('我reload了')
 				this.mescroll && this.mescroll.resetUpScroll()
 			},
 			getApplyFormData(page) {
@@ -63,6 +62,7 @@
 					limit: page.size,
 					expenseAccountStatus: this.tab.expenseAccountStatus
 				}
+				console.log(params)
 				return params
 			},
 			/*下拉刷新的回调 */

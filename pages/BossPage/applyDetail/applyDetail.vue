@@ -89,7 +89,6 @@
 		},
 		methods: {
 			showHistory() {
-				// this.$refs.popup.open()
 				uni.navigateTo({
 					url: '/pages/reasonList/reasonList'
 				})
@@ -121,6 +120,11 @@
 							title: '审批成功',
 							icon: 'none'
 						})
+						setTimeout(()=>{
+							uni.$emit('reload')
+							uni.navigateBack()
+						},1000)
+						
 					}).catch(err => {
 						this.dismissLoading()
 						uni.showToast({

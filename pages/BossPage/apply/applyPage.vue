@@ -38,6 +38,14 @@
 			let gv = 'list' + this.tabIndex;
 			this.$refs[gv][0].loadMore()
 		},
+		onLoad(){
+			uni.$on("reload", () => {
+				let gv='list'+this.tabIndex;
+				if(this.$refs[gv][0]){
+					this.$refs[gv][0].reload()
+				}
+			})
+		},
 		methods: {
 			searchClick() {
 				uni.navigateTo({

@@ -81,7 +81,6 @@
 			};
 		},
 		methods: {
-
 			changePrice(ev) {
 				const v = Number(ev.detail.value)
 				this.$set(this.detailForm, 'amount', v.toFixed(2))
@@ -116,10 +115,10 @@
 								icon: 'none',
 								title: "暂存成功"
 							})
-							uni.$emit('reload')
 							setTimeout(() => {
+								uni.$emit('reload')
 								uni.navigateBack()
-							}, 500)
+							}, 1000)
 						})
 						.catch(err => {
 							this.dismissLoading()
@@ -146,10 +145,11 @@
 								icon: 'none',
 								title: "提交成功"
 							})
-							uni.$emit('reload')
+							
 							setTimeout(() => {
+								uni.$emit('reload')
 								uni.navigateBack()
-							}, 500)
+							}, 1000)
 
 						})
 						.catch(err => {

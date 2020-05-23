@@ -14,6 +14,8 @@ export function createRevenueAccounts(data){
 export function updateRevenueForm(id,data){
 	data.revenuePersonId = applyPersonId
 	data.tenantId = tenantId
+	console.log('/revenue-accounts/'+id)
+	console.log(data)
 	return http.put('/revenue-accounts/'+id,data)
 }
 // 申请营收

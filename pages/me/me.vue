@@ -71,10 +71,10 @@
 					// error
 				}
 			},
-			setPermissions(permissions) {
-				this.$store.commit('setPermissions', permissions)
+			setRoles(roles) {
+				this.$store.commit('setRoles', roles)
 				try {
-					uni.setStorageSync('permissions', permissions);
+					uni.setStorageSync('roles', roles);
 				} catch (e) {}
 			},
 			setToken(token) {
@@ -103,10 +103,8 @@
 								if (res.errMsg == 'getUserInfo:ok') {
 									const openId = res.userInfo.openId;
 									_this.userInfo = res.userInfo
-									console.log(_this.userInfo)
 									const p = getCompany(openId)
 									const p1 = p.then(res => {
-										console.log(res)
 										if (res.data.code == 0) {
 											const tenants = res.data.data.tenants
 											return login({
@@ -116,17 +114,13 @@
 										}
 									})
 									p1.then(res => {
-										console.log(res)
 										if (res.header['Set-Authorization']) {
 											const token = res.header['Set-Authorization']
 											_this.setToken(token)
 										}
-										if (res.data.data.permissions) {
-											_this.permissions = res.data.data.permissions
-											console.log(_this.permissions)
-											_this.setPermissions(_this.permissions)
-										}
 										if (res.data.data.roles) {
+											console.log(res.data.data.roles)
+											_this.setRoles(res.data.data.roles)
 											_this.roles = res.data.data.roles.map(v => v.roleName)
 										}
 										if (res.data.data.employee) {
@@ -148,10 +142,9 @@
 				try {
 					const userInfo = uni.getStorageSync('userInfo');
 					const token = uni.getStorageSync('token')
-					const permissions = uni.getStorageSync('permissions')
-					console.log(permissions)
-					this.$store.commit('setPermissions', permissions)
 					this.$store.commit('setToken', token)
+					const roles = uni.getStorageSync('roles')
+					this.$store.commit('setRoles', roles)
 					if (userInfo) {
 						this.userInfo = userInfo
 					}

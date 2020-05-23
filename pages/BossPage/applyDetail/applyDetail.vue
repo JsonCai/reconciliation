@@ -48,30 +48,18 @@
 					</view>
 				</radio-group>
 			</view>
-			<view class="item-wrap" v-if="detailForm.expenseAccountStatus.value == 2">
+			<view class="item-wrap" @tap="showHistory" v-if="detailForm.approvals && detailForm.approvals.length">
 				<text>审批意见</text>
-				<input placeholder="审批意见" class="input-text" @input="changeReason" v-model="applyParams.approvalOpinion" />
-			</view>
-			<view class="item-cross-line" v-if="detailForm.approvals&&detailForm.expenseAccountStatus.value > 2" v-for="(item,index) in detailForm.approvals"
-			 :key="item.createTime">
-				<view class="item-nowrap">
-					<text>审批意见</text>
-					<text>{{item.approvalOpinion}}</text>
-				</view>
-				<view class="item-nowrap">
-					<text>审批时间</text>
-					<text>{{item.createTime|fmtDate}}</text>
-				</view>
-				<view class="item-nowrap">
-					<text>审批人</text>
-					<text>{{item.approvalPerson.employeeName}}</text>
-				</view>
+				<text>查看历史</text>
 			</view>
 			<view class="big-btn-wrap" v-if="detailForm.expenseAccountStatus.value == 2">
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
 			</view>
 		</view>
 		<loading :isShow='isShowLoading'></loading>
+		<uni-popup ref="popup" type="center">
+			<reasonList :approvals="approvals"/>
+		</uni-popup>
 	</view>
 </template>
 
@@ -84,12 +72,15 @@
 		applyDetail,
 		approveExpense
 	} from '@/api/apply/apply.js'
+	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	export default {
 		components: {
-			imgList
+			imgList,
+			uniPopup,
 		},
 		data() {
 			return {
+				approvals:[],
 				detailForm: {
 					expenseAccountStatus: {}
 				},
@@ -97,6 +88,13 @@
 			}
 		},
 		methods: {
+			showHistory(){
+				 // this.$refs.popup.open()
+				 uni.navigateTo({
+				 	url:'/pages/reasonList/reasonList'
+				 })
+				 uni.$emit('showHistory',this.detailForm.approvals)
+			},
 			onValidate() {
 				if (!this.applyParams.approvalType) {
 					uni.showToast({
@@ -131,14 +129,13 @@
 						},2000)
 					}).catch(err => {
 						this.dismissLoading()
-						console.log(err)
 						uni.showToast({
 							icon: 'none',
 							title: "请求失败"
 						})
 						setTimeout(() => {
 							uni.navigateBack()
-						}, 500)
+						}, 1000)
 					})
 				}
 
@@ -168,7 +165,7 @@
 					this.dismissLoading()
 					if (res.code == '0') {}
 					this.detailForm = res.data.expenseAccount
-					console.log(this.detailForm)
+					this.approvals = this.detailForm.approvals
 				})
 				.catch(err => {
 					this.dismissLoading()

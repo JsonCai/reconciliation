@@ -1,7 +1,7 @@
 <template>
 	<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
 		<view class="list" v-for="listItem in dataList">
-			<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='buyer'></applyItem>
+			<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='buyer' @onDel="onDel"></applyItem>
 		</view>
 	</mescroll-body>
 </template>
@@ -12,7 +12,8 @@
 	import applyItem from '@/components/applyItem/applyItem.vue';
 	import {
 		getApplyForm,
-		getBuyeApplyrForm
+		getBuyeApplyrForm,
+		delApply
 	} from '../../../api/apply/apply.js'
 
 	export default {
@@ -29,6 +30,25 @@
 			tab: Object // tab菜单,此处用于取关键词
 		},
 		methods: {
+			onDel(item){
+				uni.showModal({
+				    title: '提示',
+				    content: '确定要删除该数据?',
+				    success: function (res) {
+				        if (res.confirm) {
+				            delApply(item.expenseAccountId).then(res => {
+								if(res.code == 0){
+									uni.showToast({
+										title: '删除成功',
+										icon: 'none'
+									})
+									this.reload()
+								}
+							})
+				        } 
+				    }
+				});
+			},
 			loadMore() {
 				this.mescroll && this.mescroll.onReachBottom()
 			},

@@ -19,11 +19,11 @@
 		},
 		computed:{
 			iconSrc(){
-				if(this.text == '报销'){
+				if(this.text == '审核采购单据' || this.text == '提交采购单据'){
 					return this.applySrc
-				}else if(this.text == '财务'){
+				}else if(this.text == '查看财务报表' || this.text == '查看财务情况'){
 					return this.financeSrc
-				}else if(this.text == '营收'){
+				}else if(this.text == '提交营收单据' || this.text == '接收营收单据'){
 					return this.revenueSrc
 				}else if(this.text == '特殊收支'){
 					return this.revenueSrc
@@ -48,6 +48,7 @@
 	background: #fff;
 	margin-bottom: 20rpx;
 	position: relative;
+	width: 100%;
 	.icon {
 		width: 100rpx;
 		height: 100rpx;

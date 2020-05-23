@@ -9,7 +9,6 @@
 				</view>
 				<text v-if="item.latestMessageTime">{{item.latestMessageTime}}</text>
 				<text class="msg-num" v-if="item.unReadMessageCount">{{item.unReadMessageCount | unreadNum}}</text>
-				<text class="arrow-right">&#xe662;</text>
 			</view>
 		</mescroll-body>
 	</view>
@@ -102,9 +101,9 @@
 						if (page.num == 1) {
 							this.dataList = []
 						}
+						console.log(res)
 						this.dataList = this.dataList.concat(
 							res.data.messageChannels.map(item => {
-								console.log(res)
 								let messageItem = imgList[item.channelSerialNumber - 1]
 								messageItem.title = item.channelTitle
 								messageItem.unReadMessageCount = item.unReadMessageCount

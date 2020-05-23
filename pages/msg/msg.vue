@@ -25,27 +25,7 @@
 	import {
 		MessageTypes
 	} from '@/config/config.js'
-	//Z...MessageTypeList
-	// console.log({...MessageTypeList})
 
-	// const {
-	// 	bossCode, // 老板-待审批消息
-	// 	cashierRemitCode, // 出纳-待打款消息
-	// 	cashierCollectCode, // 出纳-待收款消息
-	// 	purchaseCode: 4, // 采购员-申报消息
-	// 	revenueCode: 5, // 营收员-营收消息
-	// 	accountantExpanseCode: 6, // 会计-支出消息
-	// 	accountantEarningCode: 7 // 会计-收入消息
-	// } = MessageTypeList
-
-	// 1."待审批消息"2."待打款消息"3."待收款消息"4."申报消息"5."营收消息"6."支出消息"7."收入消息"
-	// const bossCode = 1 // 老板-待审批消息
-	// const cashierRemitCode = 2 // 出纳-待打款消息
-	// const cashierCollectCode = 3 // 出纳-待收款消息
-	// const purchaseCode = 4 // 采购员-申报消息
-	// const revenueCode = 5 // 营收员-营收消息
-	// const accountantExpanseCode = 6 // 会计-支出消息
-	// const accountantEarningCode = 7 // 会计-收入消息
 	const imgList = [{
 			img: "../../static/images/msg_apply.png",
 			title: "采购员",
@@ -106,31 +86,8 @@
 		},
 		methods: {
 			onClick(code) {
-				// switch (code) {
-				// 	case purchaseCode:
-				// 		console.log(code)
-				// 		break;
-				// 	case revenueCode:
-				// 		console.log(code)
-				// 		break;
-				// 	case cashierRemitCode:
-				// 		console.log(code)
-				// 		break;
-				// 	case cashierCollectCode:
-				// 		console.log(code)
-				// 		break;
-				// 	case bossCode:
-				// 		console.log(code)
-				// 		break;
-				// 	case accountantExpanseCode:
-				// 		console.log(code)
-				// 		break;
-				// 	case accountantEarningCode:
-				// 		console.log(code)
-				// 		break;
-				// }
 				uni.navigateTo({
-					url: '../msgList/msgList?channelSerialNumber' + item.code
+					url: '../msgList/msgList?channelSerialNumber=' + code
 				})
 			},
 			/*下拉刷新的回调 */
@@ -147,6 +104,7 @@
 						}
 						this.dataList = this.dataList.concat(
 							res.data.messageChannels.map(item => {
+								console.log(res)
 								let messageItem = imgList[item.channelSerialNumber - 1]
 								messageItem.title = item.channelTitle
 								messageItem.unReadMessageCount = item.unReadMessageCount

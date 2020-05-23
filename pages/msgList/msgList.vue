@@ -2,16 +2,9 @@
 	<view class="list-wrap">
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback">
 			<view class="msg-label" v-for="(item,index) in dataList" :key="item.messageId" @tap="onClick(item)">
-				<image class="msg-img" :src="item.img"></image>
-				<view class="v-text">
-					<text class="msg-title">{{item.messageTitle}}</text>
-					<text class="msg-content">{{item.messageContent}}</text>
-				</view>
-				<view class="v-text">
-					<text class="msg-title">{{item.createTime}}</text>
-					<text class="msg-content">{{item.isRead|readType}}</text>
-				</view>
-				<text class="arrow-right">&#xe662;</text>
+				<image class="msg-icon" :src="item.isRead|readType"></image>
+				<text class="msg-title">{{item.messageTitle}}</text>
+				<text class="t-time">{{item.createTime}}</text>
 			</view>
 		</mescroll-body>
 	</view>
@@ -40,9 +33,9 @@
 		filters: {
 			readType(type) {
 				if (type) {
-					return '已读'
+					return '../../static/images/msg_open.png'
 				}
-				return '未读'
+				return '../../static/images/msg_close.png'
 			}
 		},
 		methods: {
@@ -50,37 +43,37 @@
 				switch (item.channelSerialNumber) {
 					case MessageTypes.purchaseCode:
 						uni.navigateTo({
-							url:'../buyer/applyDetail/applyDetail?id='+item.externalResource
+							url: '../buyer/applyDetail/applyDetail?id=' + item.externalResource
 						})
 						break;
 					case MessageTypes.revenueCode:
 						uni.navigateTo({
-							url:'../revenue/revenueDetail/revenueDetail?id='+item.externalResource
+							url: '../revenue/revenueDetail/revenueDetail?id=' + item.externalResource
 						})
 						break;
 					case MessageTypes.cashierRemitCode:
 						uni.navigateTo({
-							url:'../teller/applyDetail/applyDetail?id='+item.externalResource
+							url: '../teller/applyDetail/applyDetail?id=' + item.externalResource
 						})
 						break;
 					case MessageTypes.cashierCollectCode:
 						uni.navigateTo({
-							url:'../revenueDetail/revenueDetail?id='+item.externalResource
+							url: '../revenueDetail/revenueDetail?id=' + item.externalResource
 						})
 						break;
 					case MessageTypes.bossCode:
 						uni.navigateTo({
-							url:'../BossPage/applyDetail/applyDetail?id='+item.externalResource
+							url: '../BossPage/applyDetail/applyDetail?id=' + item.externalResource
 						})
 						break;
 					case MessageTypes.accountantExpanseCode:
 						uni.navigateTo({
-							url:'../teller/applyDetail/applyDetail?id='+item.externalResource
+							url: '../teller/applyDetail/applyDetail?id=' + item.externalResource
 						})
 						break;
 					case MessageTypes.accountantEarningCode:
 						uni.navigateTo({
-							url:'../revenueDetail/revenueDetail?id='+item.externalResource
+							url: '../revenueDetail/revenueDetail?id=' + item.externalResource
 						})
 						break;
 				}
@@ -93,6 +86,7 @@
 			upCallback(page) {
 				getMessageList(this.channelSerialNumber)
 					.then(res => {
+						console.log(res)
 						this.dataList = res.data.messages
 					})
 					.catch(err => {
@@ -109,6 +103,6 @@
 	}
 </script>
 
-<style>
+<style lang="less">
 	@import url('./msgList.less');
 </style>

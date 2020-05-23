@@ -21,8 +21,7 @@
 			</view>
 			<view class="item-wrap require1">
 				<text>申报金额:</text>
-				<input class="input-text" placeholder="请输入申报金额" type="digit" placeholder-class="place" v-model="tempamount"
-				 @blur="changePrice" />
+				<input class="input-text" placeholder="请输入申报金额" type="digit" placeholder-class="place" v-model="tempamount"/>
 			</view>
 			<view class="item-wrap require1">
 				<text>申报日期:</text>
@@ -83,10 +82,6 @@
 			};
 		},
 		methods: {
-			changePrice(ev) {
-				const v = Number(ev.detail.value) * 100
-				this.$set(this.detailForm, 'amount', v)
-			},
 			changeImgList(list) {
 				this.detailForm.imgList = list
 			},
@@ -167,7 +162,7 @@
 			// 返回报销单id（提交->申请报销）
 			submitApplyForm() {
 				let form = deepClone(this.detailForm)
-				form.amount = Number(this.detailForm.amount)
+				form.amount = Number(this.tempamount) * 100
 				form.expenseTime = resetDateFormat(form.expenseTime)
 				console.log(form)
 				if (this.detailForm.expenseAccountId) {
@@ -192,7 +187,7 @@
 					})
 					return false
 				}
-				if (!this.detailForm.amount) {
+				if (!this.tempamount) {
 					uni.showToast({
 						title: '请填写申报金额',
 						icon: 'none'

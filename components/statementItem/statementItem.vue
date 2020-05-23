@@ -24,7 +24,7 @@
 <script>
 	import mixin from '../../libs/mixin/listItemMixin.js'
 	import {
-		dateFtt
+		dateFtt,fmtMoney2
 	} from '../../libs/utils'
 	import StatementTypes from '@/config/config.js'
 	export default {

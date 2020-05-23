@@ -15,7 +15,7 @@
 			</view>
 			<view class="item-wrap">
 				<text>金额:</text>
-				<text>￥{{detailForm.amount}}</text>
+				<text>￥{{detailForm.amount | formatMoney}}</text>
 			</view>
 			<view class="item-wrap">
 				<text>报销日期:</text>
@@ -73,6 +73,7 @@
 		approveExpense
 	} from '@/api/apply/apply.js'
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
+	import {fmtMoney2} from '@/libs/utils'
 	export default {
 		components: {
 			imgList,
@@ -151,6 +152,9 @@
 				if (val) {
 					return val.split(' ')[0]
 				}
+			},
+			formatMoney(val){
+				return fmtMoney2(val)
 			}
 		},
 		onLoad(option) {
@@ -161,9 +165,12 @@
 			applyDetail(option.id)
 				.then(res => {
 					this.dismissLoading()
-					if (res.code == '0') {}
-					this.detailForm = res.data.expenseAccount
-					this.approvals = this.detailForm.approvals
+					if (res.code == '0') {
+						this.detailForm = res.data.expenseAccount
+								console.log(this.detailForm)
+						this.approvals = this.detailForm.approvals
+					}
+					
 				})
 				.catch(err => {
 					this.dismissLoading()

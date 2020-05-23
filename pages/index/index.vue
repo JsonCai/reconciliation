@@ -3,7 +3,8 @@
 		<view class="item-list" v-if="isLogin">
 			<indexNavItem @handleClick="applyClick('BossPage')" text="审核采购单据" v-if="permissions.includes('审核采购单据')" />
 			<indexNavItem @handleClick="financeClick('BossPage')" text="查看财务" v-if="permissions.includes('查看财务报表')&&permissions.includes('查看财务情况')" />
-			<indexNavItem @handleClick="applyClick('buyer')" text="提交采购单据" v-if="permissions.includes('提交采购单据')" />
+			<indexNavItem @handleClick="applyClick('buyer')" text="提交采购单据" />
+			<!-- <indexNavItem @handleClick="applyClick('buyer')" text="提交采购单据" v-if="permissions.includes('提交采购单据')" /> -->
 			<indexNavItem @handleClick="revenueClick('revenue')" text="提交营收单据" v-if="permissions.includes('提交营收单据')" />
 			<indexNavItem @handleClick="applyClick('teller')" text="接收营收单据" v-if="permissions.includes('接收营收单据')" />
 			<indexNavItem @handleClick="revenueClick('teller')" text="接收营收单据" v-if="permissions.includes('接收营收单据')" />

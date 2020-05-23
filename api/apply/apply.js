@@ -45,7 +45,10 @@ export function approveExpense(data){
 export function paymentExpence(data){
 	return http.post('/expense-accounts/payment-expense-account',data)
 }
+
 // 获取报销单据列表
-export function searchApplyFormList(data){
-	return http.post('/expense-accounts/search',data)
+export function delApply(expenseAccountId){
+	return http.post('/expense-accounts/search' + expenseAccountId ,{
+		expenseAccountId
+	})
 }

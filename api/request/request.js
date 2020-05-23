@@ -76,7 +76,7 @@ const http = {
 			});
 		})
 	},
-	delete: (url, data) => {
+	doDelete: (url, data) => {
 		return new Promise((resolve, reject) => {
 			uni.request({
 				url: baseUrl + url,

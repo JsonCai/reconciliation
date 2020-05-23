@@ -129,15 +129,19 @@
 					receiveRevenueAccounts(this.revenueParams)
 						.then(res => {
 							console.log(res)
+							uni.showToast({
+								icon: 'none',
+								title: '审批成功'
+							})
 							setTimeout(() => {
 								uni.navigateBack()
-							}, 500)
-							uni.$emit('reload')
+								uni.$emit('reload')
+							}, 1000)
 						}).catch(err => {
 							console.log(err)
 							uni.showToast({
 								icon: 'none',
-								title: '请求失败'
+								title: '审批失败'
 							})
 						})
 				}

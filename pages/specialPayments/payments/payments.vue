@@ -101,11 +101,16 @@
 					this.showLoading()
 					this.submitApplyForm()
 						.then(res => {
-							this.dismissLoading()
 							console.log(res)
 							setTimeout(() => {
+								uni.showToast({
+									icon: 'none',
+									title: "创建成功"
+								})
+								this.dismissLoading()
+								uni.$emit("reload")
 								uni.navigateBack()
-							}, 500)
+							}, 1000)
 						})
 						.catch(err => {
 							this.dismissLoading()

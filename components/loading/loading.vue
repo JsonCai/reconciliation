@@ -25,5 +25,6 @@
 		height: 100%;
 		background-color: #333333;
 		opacity:0.3;
+		z-index: 999;
 	}
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<fakeSearch @onSearch='onSearch'/>
+		<fakeSearch @onSearch='onSearch' />
 		<view class="list-wrap">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="120" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList">
@@ -9,6 +9,7 @@
 			</mescroll-body>
 		</view>
 		<view class="btn-add" @tap="applyFrom">&#xe604;</view>
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
 <script>
@@ -16,12 +17,12 @@
 	import MescrollBody from "@/components/mescroll-diy/beibei/mescroll-body.vue";
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	import specialPayments from '@/components/specialPaymentsItem/specialPaymentsItem.vue';
-	
+
 	import {
 		searchSpecialList,
 		delSpecialPaymentsForm
 	} from '../../../api/specailPayments/specialPayments.js'
-	
+
 	export default {
 		mixins: [MescrollMixin],
 		components: {
@@ -31,7 +32,7 @@
 		},
 		data() {
 			return {
-				dataList:[]
+				dataList: []
 			};
 		},
 		onReachBottom() {
@@ -39,23 +40,33 @@
 			this.$refs.list.loadMore()
 		},
 		methods: {
-			onDel(item){
+			onDel(item) {
 				uni.showModal({
-				    title: '提示',
-				    content: '确定要删除该数据?',
-				    success: function (res) {
-				        if (res.confirm) {
-				            delSpecialPaymentsForm(item.specialAccountId).then(res => {
-								if(res.code == 0){
+					title: '提示',
+					content: '确定要删除该数据?',
+					success: res => {
+						this.showLoading()
+						if (res.confirm) {
+							delSpecialPaymentsForm(item.specialAccountId)
+								.then(res => {
 									uni.showToast({
 										title: '删除成功',
 										icon: 'none'
 									})
-									this.reload()
-								}
-							})
-				        } 
-				    }
+									setTimeout(() => {
+										this.dismissLoading()
+										this.mescroll.resetUpScroll()
+									}, 1000)
+								})
+								.catch(err => {
+									this.dismissLoading()
+									uni.showToast({
+										title: '删除失败',
+										icon: 'none'
+									})
+								})
+						}
+					}
 				});
 			},
 			applyFrom() {
@@ -96,14 +107,20 @@
 			},
 			itemClick(item) {
 				uni.navigateTo({
-					url: '../payments/payments?id='+item.specialAccountId
+					url: '../payments/payments?id=' + item.specialAccountId
 				})
 			},
-			onSearch(){
+			onSearch() {
 				uni.navigateTo({
-					url:'../searchPage/searchPage'
+					url: '../searchPage/searchPage'
 				})
 			}
+		},
+		onLoad() {
+			uni.$on("reload", () => {
+				console.log("paymentList reload")
+				this.mescroll.resetUpScroll()
+			})
 		}
 	};
 </script>

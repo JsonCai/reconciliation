@@ -30,7 +30,10 @@
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.imgList" :isDisabled="isDisabled" @changeImgList="changeImgList" />
 			</view>
-			<view class="btn-wrap">
+			<view class="big-btn-wrap" v-if="isReject">
+				<view class='btn confirm-btn' @tap="onResubmitTap">重新提交</view>
+			</view>
+			<view class="btn-wrap" v-else>
 				<view class='btn save-btn' @tap="onSuspendTap">暂存</view>
 				<view class='btn confirm-btn' @tap="onSubmitTap">提交</view>
 			</view>
@@ -71,7 +74,8 @@
 				},
 				categoryList,
 				categoryIndex: 0,
-				category: ""
+				category: "",
+				isReject: false
 			};
 		},
 		methods: {
@@ -108,9 +112,9 @@
 								title: "暂存成功"
 							})
 							setTimeout(() => {
+								uni.$emit('reload')
 								uni.navigateBack()
-							}, 500)
-							uni.$emit('reload')
+							}, 1000)
 						})
 						.catch(err => {
 							this.dismissLoading()
@@ -141,9 +145,35 @@
 								title: "提交成功"
 							})
 							setTimeout(() => {
+								uni.$emit('reload')
 								uni.navigateBack()
-							}, 500)
-							uni.$emit('reload')
+							}, 1000)
+						})
+						.catch(err => {
+							this.dismissLoading()
+							console.log(err)
+							uni.showToast({
+								icon: 'none',
+								title: "请求失败"
+							})
+						})
+				}
+			},
+			onResubmitTap() {
+				if (this.isFormFill()) {
+					this.showLoading()
+					this.submitApplyForm()
+						.then(res => {
+							console.log(res)
+							this.dismissLoading()
+							uni.showToast({
+								icon: 'none',
+								title: "重新提交成功"
+							})
+							setTimeout(() => {
+								uni.$emit('reload')
+								uni.navigateBack()
+							}, 1000)
 						})
 						.catch(err => {
 							this.dismissLoading()
@@ -168,28 +198,28 @@
 				}
 			},
 			isFormFill() {
-				if(!this.detailForm.revenueAccountTitle){
+				if (!this.detailForm.revenueAccountTitle) {
 					uni.showToast({
 						icon: 'none',
 						title: "请输入名称"
 					})
 					return
 				}
-				if(!this.detailForm.accountReceivable){
+				if (!this.detailForm.accountReceivable) {
 					uni.showToast({
 						icon: 'none',
 						title: "请输入应收款"
 					})
 					return
 				}
-				if(!this.detailForm.fundsReceived){
+				if (!this.detailForm.fundsReceived) {
 					uni.showToast({
 						icon: 'none',
 						title: "请输入实收收款"
 					})
 					return
 				}
-				if(!this.detailForm.revenueTime){
+				if (!this.detailForm.revenueTime) {
 					uni.showToast({
 						icon: 'none',
 						title: "请选择营收日期"
@@ -218,6 +248,9 @@
 						this.detailForm = res.data.revenueAccount
 						if (this.detailForm.revenueTime) {
 							this.detailForm.revenueTime = this.detailForm.revenueTime.split(' ')[0]
+						}
+						if(this.detailForm.revenueAccountStatus){
+							this.isReject = this.detailForm.revenueAccountStatus.value == 4
 						}
 					})
 					.catch(err => {

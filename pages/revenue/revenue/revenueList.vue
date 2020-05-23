@@ -1,9 +1,12 @@
 <template>
-	<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
-		<view class="list" v-for="listItem in dataList">
-			<revenueItem :revenueItem="listItem" @clickItem="itemClick" fromType='revenue' @onDel="onDel"></revenueItem>
-		</view>
-	</mescroll-body>
+	<view>
+		<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
+			<view class="list" v-for="listItem in dataList">
+				<revenueItem :revenueItem="listItem" @clickItem="itemClick" fromType='revenue' @onDel="onDel"></revenueItem>
+			</view>
+		</mescroll-body>
+		<loading :isShow='isShowLoading'></loading>
+	</view>
 </template>
 
 <script>
@@ -30,14 +33,14 @@
 			tab: Object // tab菜单,此处用于取关键词
 		},
 		methods: {
-			onDel(item){
+			onDel(item) {
 				uni.showModal({
-				    title: '提示',
-				    content: '确定要删除该数据?',
-				    success: function (res) {
-				        if (res.confirm) {
-				            delRevenueForm(item.revenueAccountId).then(res => {
-								if(res.code == 0){
+					title: '提示',
+					content: '确定要删除该数据?',
+					success: function(res) {
+						if (res.confirm) {
+							delRevenueForm(item.revenueAccountId).then(res => {
+								if (res.code == 0) {
 									uni.showToast({
 										title: '删除成功',
 										icon: 'none'
@@ -45,14 +48,14 @@
 									this.reload()
 								}
 							})
-				        } 
-				    }
+						}
+					}
 				});
 			},
 			loadMore() {
 				this.mescroll && this.mescroll.onReachBottom()
 			},
-			reload(){
+			reload() {
 				this.mescroll && this.mescroll.resetUpScroll()
 			},
 			getApplyFormData(page) {

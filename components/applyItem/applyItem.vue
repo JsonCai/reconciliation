@@ -23,7 +23,6 @@
 			</view>
 			<image class="arrow" :src="arrowSrc"></image>
 		</view>
-		<image src="../../static/images/del.png" class="del" @tap.stop="onDel(applyItem)" v-if="applyItem.expenseAccountStatus==1"></image>
 	</view>
 </template>
 
@@ -49,10 +48,10 @@
 						return '已拒绝'
 					} else if (val == '4') {
 						return '已通过'
-					} else if (val == '1') {
+					}else if (val == '1') {
 						return '未提交'
 					}
-				} else if (type == 'buyer') {
+				}else if (type == 'buyer') {
 					if (val == '1') {
 						return '未提交'
 					} else if (val == '2') {
@@ -61,10 +60,10 @@
 						return '未通过'
 					} else if (val == '4') {
 						return '已通过'
-					} else if (val == '5') {
+					}else if (val == '5') {
 						return '已打款'
 					}
-				} else if (type == 'revenue') {
+				}else if (type == 'revenue') {
 					if (val == '1') {
 						return '未提交'
 					} else if (val == '2') {
@@ -73,24 +72,35 @@
 						return '已拒绝'
 					} else if (val == '4') {
 						return '已通过'
-					} else if (val == '5') {
+					}else if (val == '5') {
 						return '已打款'
 					}
 				}
 
 			},
 			fmtTime(val) {
-				if (val) {
+				console.log(val)
+				if(val){
 					return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val))
 				}
 			}
 		},
 		methods: {
-			onDel(item) {
-				this.$emit('onDel', item)
+			onLongpress() {
+				uni.showModal({
+					title: '提示',
+					content: '确定要删除？',
+					success: function(res) {
+						if (res.confirm) {
+							console.log('用户点击确定');
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
 			},
-			clickitem(item) {
-				this.$emit('clickItem', item)
+			clickitem(item){
+				this.$emit('clickItem',item)
 			}
 		}
 	}

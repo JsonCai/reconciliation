@@ -1,7 +1,7 @@
 <template>
 	<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
 		<view class="list" v-for="listItem in dataList">
-			<revenueItem :revenueItem="listItem" @clickItem="itemClick" fromType='revenue' @onDel="onDel"></revenueItem>
+			<revenueItem :revenueItem="listItem" @clickItem="itemClick" fromType='revenue'></revenueItem>
 		</view>
 	</mescroll-body>
 </template>
@@ -11,8 +11,7 @@
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	import revenueItem from '@/components/revenueItem/revenueItem.vue';
 	import {
-		revenueSearchRevenueList,
-		delRevenueForm
+		revenueSearchRevenueList
 	} from '../../../api/revenue/revenue.js'
 
 	export default {
@@ -30,25 +29,6 @@
 			tab: Object // tab菜单,此处用于取关键词
 		},
 		methods: {
-			onDel(item){
-				uni.showModal({
-				    title: '提示',
-				    content: '确定要删除该数据?',
-				    success: function (res) {
-				        if (res.confirm) {
-				            delRevenueForm(item.revenueAccountId).then(res => {
-								if(res.code == 0){
-									uni.showToast({
-										title: '删除成功',
-										icon: 'none'
-									})
-									this.reload()
-								}
-							})
-				        } 
-				    }
-				});
-			},
 			loadMore() {
 				this.mescroll && this.mescroll.onReachBottom()
 			},

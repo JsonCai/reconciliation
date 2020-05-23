@@ -71,13 +71,7 @@
 			}
 		},
 		methods: {
-			showHistory(){
-				 // this.$refs.popup.open()
-				 uni.navigateTo({
-				 	url:'/pages/reasonList/reasonList'
-				 })
-				 uni.$emit('showHistory',this.detailForm.approvals)
-			},
+
 		},
 		filters: {
 			fmtDate(val) {

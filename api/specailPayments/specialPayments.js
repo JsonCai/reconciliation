@@ -29,7 +29,3 @@ export function searchSpecialList(data) {
 export function getSpecialPaymentsDetail(id) {
 	return http.get('/special-accounts/' + id)
 }
-// 删除营收单据列表
-export function delSpecialPaymentsForm(id){
-	return http.detele('/special-accounts/' + id)
-}

@@ -19,7 +19,6 @@
 				</view>
 			</view>
 			<image class="arrow" :src="arrowSrc"></image>
-			<image src="../../static/images/del.png" class="del" @tap.stop="onDel(specialPayment)"></image>
 		</view>
 	</view>
 </template>

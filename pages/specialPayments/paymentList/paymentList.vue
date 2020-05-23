@@ -4,7 +4,7 @@
 		<view class="list-wrap">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="120" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList">
-					<specialPayments :specialPayment="listItem" @clickItem="itemClick(listItem)" @onDel="onDel"></specialPayments>
+					<specialPayments :specialPayment="listItem" @clickItem="itemClick(listItem)"></specialPayments>
 				</view>
 			</mescroll-body>
 		</view>
@@ -18,8 +18,7 @@
 	import specialPayments from '@/components/specialPaymentsItem/specialPaymentsItem.vue';
 	
 	import {
-		searchSpecialList,
-		delSpecialPaymentsForm
+		searchSpecialList
 	} from '../../../api/specailPayments/specialPayments.js'
 	
 	export default {
@@ -39,25 +38,6 @@
 			this.$refs.list.loadMore()
 		},
 		methods: {
-			onDel(item){
-				uni.showModal({
-				    title: '提示',
-				    content: '确定要删除该数据?',
-				    success: function (res) {
-				        if (res.confirm) {
-				            delSpecialPaymentsForm(item.specialAccountId).then(res => {
-								if(res.code == 0){
-									uni.showToast({
-										title: '删除成功',
-										icon: 'none'
-									})
-									this.reload()
-								}
-							})
-				        } 
-				    }
-				});
-			},
 			applyFrom() {
 				uni.navigateTo({
 					url: '../payments/payments'

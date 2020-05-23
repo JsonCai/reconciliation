@@ -113,7 +113,6 @@
 				return true
 			},
 			onPassTap() {
-			
 				if (this.onValidate()) {
 					this.showLoading()
 					approveExpense(this.applyParams).then(res => {
@@ -122,11 +121,6 @@
 							title: '审批成功',
 							icon: 'none'
 						})
-						
-						setTimeout(()=>{
-							uni.$emit('reload')
-							uni.navigateBack()
-						},2000)
 					}).catch(err => {
 						this.dismissLoading()
 						uni.showToast({

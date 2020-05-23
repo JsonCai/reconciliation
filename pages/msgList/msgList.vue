@@ -23,9 +23,6 @@
 	import {
 		getMessageList
 	} from '@/api/message/message.js'
-	import {
-		MessageTypes
-	} from '@/config/config.js'
 
 	export default {
 		mixins: [MescrollMixin],
@@ -46,44 +43,30 @@
 			}
 		},
 		methods: {
-			onClick(item) {
-				switch (item.channelSerialNumber) {
-					case MessageTypes.purchaseCode:
-						uni.navigateTo({
-							url:'../buyer/applyDetail/applyDetail?id='+item.externalResource
-						})
-						break;
-					case MessageTypes.revenueCode:
-						uni.navigateTo({
-							url:'../revenue/revenueDetail/revenueDetail?id='+item.externalResource
-						})
-						break;
-					case MessageTypes.cashierRemitCode:
-						uni.navigateTo({
-							url:'../teller/applyDetail/applyDetail?id='+item.externalResource
-						})
-						break;
-					case MessageTypes.cashierCollectCode:
-						uni.navigateTo({
-							url:'../revenueDetail/revenueDetail?id='+item.externalResource
-						})
-						break;
-					case MessageTypes.bossCode:
-						uni.navigateTo({
-							url:'../BossPage/applyDetail/applyDetail?id='+item.externalResource
-						})
-						break;
-					case MessageTypes.accountantExpanseCode:
-						uni.navigateTo({
-							url:'../teller/applyDetail/applyDetail?id='+item.externalResource
-						})
-						break;
-					case MessageTypes.accountantEarningCode:
-						uni.navigateTo({
-							url:'../revenueDetail/revenueDetail?id='+item.externalResource
-						})
-						break;
-				}
+			onClick(code) {
+				// switch (code) {
+				// 	case purchaseCode:
+				// 		console.log(code)
+				// 		break;
+				// 	case revenueCode:
+				// 		console.log(code)
+				// 		break;
+				// 	case cashierRemitCode:
+				// 		console.log(code)
+				// 		break;
+				// 	case cashierCollectCode:
+				// 		console.log(code)
+				// 		break;
+				// 	case bossCode:
+				// 		console.log(code)
+				// 		break;
+				// 	case accountantExpanseCode:
+				// 		console.log(code)
+				// 		break;
+				// 	case accountantEarningCode:
+				// 		console.log(code)
+				// 		break;
+				// }
 			},
 			/*下拉刷新的回调 */
 			downCallback() {

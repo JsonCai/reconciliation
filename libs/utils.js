@@ -74,4 +74,10 @@ export function fmtMoney(val) {
 	return val.toFixed(2)
 }
 
-
+export function fmtMoney2(val){
+	const str = '00' + val
+	const s = str.substring(0,str.length - 2)
+	const e = '.' + str.substring(str.length - 2)
+	console.log(Number(s + e))
+	return Number(s + e)
+}

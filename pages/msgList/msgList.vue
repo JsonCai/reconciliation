@@ -14,7 +14,7 @@
 	import MescrollBody from "@/components/mescroll-diy/beibei/mescroll-body.vue";
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	import {
-		getMessageList
+		getMessageList,readMsg
 	} from '@/api/message/message.js'
 	import {
 		MessageTypes
@@ -39,7 +39,21 @@
 			}
 		},
 		methods: {
+			reload() {
+				this.mescroll && this.mescroll.resetUpScroll()
+			},
 			onClick(item) {
+				console.log(item)
+				readMsg({
+					channelSerialNumber:item.channelSerialNumber,
+					messageId:item.messageId
+				}).then(res => {
+					if(res.code == '0'){
+						setTimeout(() => {
+							uni.$emit('reloadMsg')
+						}, 1000)
+					}
+				})
 				switch (item.channelSerialNumber) {
 					case MessageTypes.purchaseCode:
 						uni.navigateTo({
@@ -100,6 +114,9 @@
 				console.log(option.channelSerialNumber)
 				this.channelSerialNumber = option.channelSerialNumber
 			}
+			uni.$on("reloadMsg", () => {
+				this.reload()
+			})
 		}
 	}
 </script>

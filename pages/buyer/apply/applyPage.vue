@@ -41,7 +41,7 @@
 				})
 			}
 		},
-		onShow(){
+		onLoad(){
 		    uni.$on("reload", () => {
 				let gv='list'+this.tabIndex;
 				if(this.$refs[gv][0]){

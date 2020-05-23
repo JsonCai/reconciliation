@@ -11,3 +11,7 @@ export function getMessageBox(){
 export function getMessageList(channelSerialNumber){
 	return http.get('/message-box/channels/'+channelSerialNumber+'/messages')
 }
+// 读取消息
+export function readMsg(data){
+	return http.get('/message-box/read-message',data)
+}

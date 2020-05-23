@@ -107,7 +107,6 @@
 					this.showLoading()
 					this.submitApplyForm()
 						.then(res => {
-							this.dismissLoading()
 							uni.showToast({
 								icon: 'none',
 								title: "暂存成功"
@@ -115,6 +114,7 @@
 							setTimeout(() => {
 								uni.$emit('reload')
 								uni.navigateBack()
+								this.dismissLoading()
 							}, 1000)
 						})
 						.catch(err => {
@@ -137,7 +137,7 @@
 							})
 						})
 						.then(res => {
-							this.dismissLoading()
+						
 							uni.showToast({
 								icon: 'none',
 								title: "提交成功"
@@ -146,6 +146,7 @@
 							setTimeout(() => {
 								uni.$emit('reload')
 								uni.navigateBack()
+								this.dismissLoading()
 							}, 1000)
 
 						})

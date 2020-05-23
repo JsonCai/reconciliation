@@ -2,6 +2,7 @@
 	<view class="spinner" v-if="isShow">
 		<view class="double-bounce1"></view>
 		<view class="double-bounce2"></view>
+		<view class="mask-wrap"></view>
 	</view>
 </template>
 
@@ -30,7 +31,15 @@
 		margin-left: -20rpx;
 		margin-top: -20rpx;
 	}
-
+	.mask-wrap{
+		position: fixed;
+		top:0;
+		bottom:0;
+		left:0;
+		right:0;
+		z-index: 999;
+		background: rgba(0,0,0,0.5);
+	}
 	.double-bounce1,
 	.double-bounce2 {
 		width: 100%;

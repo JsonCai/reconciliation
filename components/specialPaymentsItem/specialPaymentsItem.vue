@@ -47,10 +47,8 @@
 				if (val) {
 					return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val))
 				}
-			}
-		},
-		filters: {
-		
+			},
+			
 			formatMoney(val){
 				return fmtMoney2(val)
 			}

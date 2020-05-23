@@ -25,17 +25,12 @@
 		MessageTypes
 	} from '@/config/config.js'
 
-	const imgList = [{
-			img: "../../static/images/msg_apply.png",
-			title: "采购员",
-			content: "申报消息",
-			code: MessageTypes.purchaseCode
-		},
+	const imgList = [
 		{
-			img: "../../static/images/msg-revenue.png",
-			title: "营收员",
-			content: "营收消息",
-			code: MessageTypes.revenueCode
+			img: "../../static/images/msg_approve.png",
+			title: "老板",
+			content: "待审批消息",
+			code: MessageTypes.bossCode
 		},
 		{
 			img: "../../static/images/msg_backlog_remit.png",
@@ -48,12 +43,17 @@
 			title: "出纳",
 			content: "待收款消息",
 			code: MessageTypes.cashierCollectCode
+		},{
+			img: "../../static/images/msg_apply.png",
+			title: "采购员",
+			content: "申报消息",
+			code: MessageTypes.purchaseCode
 		},
 		{
-			img: "../../static/images/msg_approve.png",
-			title: "老板",
-			content: "待审批消息",
-			code: MessageTypes.bossCode
+			img: "../../static/images/msg-revenue.png",
+			title: "营收员",
+			content: "营收消息",
+			code: MessageTypes.revenueCode
 		},
 		{
 			img: "../../static/images/msg_expense.png",

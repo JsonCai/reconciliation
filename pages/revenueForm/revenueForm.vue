@@ -245,12 +245,16 @@
 					.then(res => {
 						this.dismissLoading()
 						console.log(res)
-						this.detailForm = res.data.revenueAccount
-						if (this.detailForm.revenueTime) {
-							this.detailForm.revenueTime = this.detailForm.revenueTime.split(' ')[0]
+						// this.detailForm = res.data.revenueAccount
+						this.detailForm.revenueAccountId = res.data.revenueAccount.revenueAccountId
+						this.detailForm.fundsReceived = res.data.revenueAccount.fundsReceived
+						this.detailForm.accountReceivable = res.data.revenueAccount.accountReceivable
+						this.detailForm.revenueAccountTitle = res.data.revenueAccount.revenueAccountTitle
+						if (res.data.revenueAccount.revenueTime) {
+							this.detailForm.revenueTime = res.data.revenueAccount.revenueTime.split(' ')[0]
 						}
-						if(this.detailForm.revenueAccountStatus){
-							this.isReject = this.detailForm.revenueAccountStatus.value == 4
+						if(res.data.revenueAccount.revenueAccountStatus){
+							this.isReject = res.data.revenueAccount.revenueAccountStatus.value == 4
 						}
 					})
 					.catch(err => {

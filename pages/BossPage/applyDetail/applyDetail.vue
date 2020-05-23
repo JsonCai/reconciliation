@@ -48,9 +48,9 @@
 					</view>
 				</radio-group>
 			</view>
-			<view class="item-wrap" @tap="showHistory" v-if="detailForm.approvals && detailForm.approvals.length">
+			<view class="item-wrap" v-if="detailForm.expenseAccountStatus.value == 2">
 				<text>审批意见</text>
-				<text>查看历史</text>
+				<input placeholder="审批意见" class="input-text" @input="changeReason" v-model="applyParams.approvalOpinion" />
 			</view>
 			<view class="big-btn-wrap" v-if="detailForm.expenseAccountStatus.value == 2">
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
@@ -58,7 +58,7 @@
 		</view>
 		<loading :isShow='isShowLoading'></loading>
 		<uni-popup ref="popup" type="center">
-			<reasonList :approvals="approvals"/>
+			<reasonList :approvals="approvals" />
 		</uni-popup>
 	</view>
 </template>
@@ -80,7 +80,7 @@
 		},
 		data() {
 			return {
-				approvals:[],
+				approvals: [],
 				detailForm: {
 					expenseAccountStatus: {}
 				},
@@ -88,12 +88,12 @@
 			}
 		},
 		methods: {
-			showHistory(){
-				 // this.$refs.popup.open()
-				 uni.navigateTo({
-				 	url:'/pages/reasonList/reasonList'
-				 })
-				 uni.$emit('showHistory',this.detailForm.approvals)
+			showHistory() {
+				// this.$refs.popup.open()
+				uni.navigateTo({
+					url: '/pages/reasonList/reasonList'
+				})
+				uni.$emit('showHistory', this.detailForm.approvals)
 			},
 			onValidate() {
 				if (!this.applyParams.approvalType) {

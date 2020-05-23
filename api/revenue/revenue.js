@@ -53,3 +53,7 @@ export function receiptSearchRevenueList(data){
 export function confirmSearchRevenueList(data){
 	return searchRevenueList('as-confirm-person',data)
 }
+// 删除营收单据列表
+export function delRevenueForm(id){
+	return http.detele('/revenue-accounts/' + id)
+}

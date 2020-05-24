@@ -41,6 +41,9 @@
 			loadMore() {
 				this.mescroll && this.mescroll.onReachBottom()
 			},
+			reload() {
+				this.mescroll && this.mescroll.resetUpScroll()
+			},
 			getApplyFormData(page) {
 				let offset = page.size * (page.num - 1)
 				const params = {
@@ -95,6 +98,11 @@
 		},
 		onBackPress() {
 			uni.hideKeyboard()
+		},
+		onLoad(){
+			uni.$on("reload", () => {
+				this.reload()
+			})
 		}
 	}
 </script>

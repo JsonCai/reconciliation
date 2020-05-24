@@ -103,6 +103,7 @@
 								if (res.errMsg == 'getUserInfo:ok') {
 									const openId = res.userInfo.openId;
 									_this.userInfo = res.userInfo
+									console.log(_this.userInfo)
 									const p = getCompany(openId)
 									const p1 = p.then(res => {
 										if (res.data.code == 0) {
@@ -127,6 +128,7 @@
 											_this.userInfo = Object.assign({}, res.data.data.employee, _this.userInfo)
 											_this.$set(_this.userInfo, 'roles', _this.roles.join(','))
 											_this.setUserInfo(_this.userInfo)
+	
 										}
 									})
 								}

@@ -96,6 +96,11 @@
 		},
 		onBackPress() {
 			uni.hideKeyboard()
+		},
+		onLoad() {
+			uni.$on("reload", () => {
+				this.mescroll.resetUpScroll()
+			})
 		}
 	}
 </script>

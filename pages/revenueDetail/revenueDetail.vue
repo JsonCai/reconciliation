@@ -33,6 +33,10 @@
 				<text>提交日期:</text>
 				<text>{{ detailForm.createTime}}</text>
 			</view>
+			<view class="item-wrap" @tap="showHistory" v-if="this.approvals && this.approvals.length">
+				<text>审批意见:</text>
+				<text>查看历史</text>
+			</view>
 			<view class="item-wrap" v-if="detailForm.revenueAccountStatus&&detailForm.revenueAccountStatus.value == 2 ">
 				<text>是否通过:</text>
 				<radio-group @change="radioChange">
@@ -85,10 +89,17 @@
 		data() {
 			return {
 				detailForm: {},
-				revenueParams: {}
+				revenueParams: {},
+				approvals:[]
 			}
 		},
 		methods: {
+			showHistory() {
+				uni.navigateTo({
+					url: '../reasonList/reasonList'
+				})
+				uni.$emit('showHistory', this.approvals)
+			},
 			onValidate() {
 				if (!this.revenueParams.receiptActionType) {
 					uni.showToast({
@@ -115,7 +126,7 @@
 							console.log(res)
 							uni.showToast({
 								icon: 'none',
-								title: '打款成功'
+								title: '操作成功'
 							})
 							setTimeout(() => {
 								uni.navigateBack()
@@ -149,6 +160,17 @@
 					this.dismissLoading()
 					console.log(res)
 					this.$set(this, "detailForm", res.data.revenueAccount)
+					if (res.data.revenueAccount.receiptActions&&res.data.revenueAccount.receiptActions.length) {
+						this.approvals = res.data.revenueAccount.receiptActions.map(item => {
+							let result =  {
+								"approvalOpinion": item.receiptOpinion,
+								"approvalPerson": item.receiptPerson,
+								"approvalType": item.receiptActionType.value,
+								"createTime": item.createTime
+							}
+							return result
+						})
+					}
 				})
 				.catch(err => {
 					this.dismissLoading()

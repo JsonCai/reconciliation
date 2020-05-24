@@ -64,7 +64,6 @@
 				<view class="inner-wrap" @tap="onStartTimeTap(1)">
 					<text v-if="!detailForm.paymentTime" class="fc-9">请选择打款日期</text>
 					<text v-else>{{ detailForm.paymentTime}}</text>
-					<text class="font-icon">&#xe662;</text>
 				</view>
 			</view>
 			<view class="big-btn-wrap" v-if="detailForm.expenseAccountStatus&&detailForm.expenseAccountStatus.value == 4">
@@ -112,7 +111,7 @@
 				this.showLoading()
 				paymentExpence({
 						expenseAccountId: this.detailForm.expenseAccountId,
-						paymentTime: this.detailForm.paymentTime,
+						paymentTime: this.detailForm.paymentTime+" 00:00:00",
 						paymentVoucherUrls: this.detailForm.paymentVoucherUrls = ['aaa']
 					})
 					.then(res => {
@@ -151,16 +150,20 @@
 			}
 		},
 		onLoad(option) {
-			console.log(option)
 			applyDetail(option.id)
 				.then(res => {
 					console.log(res)
-					if (res.code == '0') {
-						this.$set(this, "detailForm", res.data.expenseAccount)
-					}
+					this.$set(this, "detailForm", res.data.expenseAccount)
 				})
 				.catch(err => {
 					console.log(err)
+					uni.showToast({
+						icon: 'none',
+						title: "获取详情失败"
+					})
+					setTimeout(() => {
+						uni.navigateBack()
+					}, 500)
 				})
 		}
 	}

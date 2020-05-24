@@ -67,7 +67,7 @@
 					} else if (val == '5') {
 						return '已打款'
 					}
-				} else if (type == 'revenue') {
+				} else if (type == 'teller') {
 					if (val == '1') {
 						return '未提交'
 					} else if (val == '2') {
@@ -75,7 +75,7 @@
 					} else if (val == '3') {
 						return '已拒绝'
 					} else if (val == '4') {
-						return '已通过'
+						return '待打款'
 					} else if (val == '5') {
 						return '已打款'
 					}

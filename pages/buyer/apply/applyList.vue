@@ -100,6 +100,14 @@
 						this.dataList = this.dataList.concat(res.data.expenseAccounts)
 					})
 					.catch(err => {
+						if (page.num == 1) {
+							this.dataList = []
+							this.mescroll.endSuccess(0);
+						}
+						uni.showToast({
+							icon: 'none',
+							title: "请求失败"
+						})
 						console.log(err)
 					})
 			},

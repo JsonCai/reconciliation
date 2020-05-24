@@ -43,6 +43,7 @@
 			getApplyFormData(page) {
 				let offset = page.size * (page.num - 1)
 				const params = {
+					revenueAccountTitleMatch: this.searchKey,
 					offset,
 					limit: page.size
 				}
@@ -65,6 +66,14 @@
 						this.dataList = this.dataList.concat(res.data.revenueAccounts)
 					})
 					.catch(err => {
+						if (page.num == 1) {
+							this.dataList = []
+							this.mescroll.endSuccess(0);
+						}
+						uni.showToast({
+							icon: 'none',
+							title: "请求失败"
+						})
 						console.log(err)
 					})
 			},

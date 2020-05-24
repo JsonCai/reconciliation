@@ -4,7 +4,7 @@
 		<view class="list-wrap" v-if="isShow">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="120" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList">
-					<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='boss'></applyItem>
+					<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='teller'></applyItem>
 				</view>
 			</mescroll-body>
 		</view>
@@ -68,6 +68,14 @@
 					})
 					.catch(err => {
 						console.log(err)
+						if (page.num == 1) {
+							this.dataList = []
+							this.mescroll.endSuccess(0);
+						}
+						uni.showToast({
+							icon: 'none',
+							title: "请求失败"
+						})
 					})
 			},
 			itemClick(item) {

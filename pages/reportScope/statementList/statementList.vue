@@ -84,7 +84,14 @@
 					})
 					.catch(err => {
 						console.log(err)
-						this.mescroll.endErr()
+						if (page.num == 1) {
+							this.dataList = []
+							this.mescroll.endSuccess(0);
+						}
+						uni.showToast({
+							icon: 'none',
+							title: "请求失败"
+						})
 					})
 			}
 		},

@@ -158,9 +158,11 @@ export const MessageTypes = {
 }
 
 // 报表款项类型（1.主营收入2.主营支出3.其它收入4.其它支出）
-export const StatementTypes={
-	mainBusinessExpenses :1,
-	mainBusinessIncome:2,
-	otherExpenses:3,
-	otherIncome:4
+export const StatementTypes = {
+	mainBusinessExpenses: 1,
+	mainBusinessIncome: 2,
+	otherExpenses: 3,
+	otherIncome: 4
 }
+
+export const REFRESH_DELAYED = 1200

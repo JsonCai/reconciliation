@@ -18,6 +18,9 @@
 		getBuyeApplyrForm,
 		delApplyForm
 	} from '../../../api/apply/apply.js'
+	import {
+		REFRESH_DELAYED
+	} from '@/config/config.js'
 
 	export default {
 		mixins: [MescrollMixin],
@@ -34,6 +37,7 @@
 		},
 		methods: {
 			onDel(item) {
+				console.log(REFRESH_DELAYED)
 				uni.showModal({
 					title: '提示',
 					content: '确定要删除该数据?',
@@ -49,7 +53,7 @@
 										})
 										this.reload()
 										this.dismissLoading()
-									}, 1000)
+									}, REFRESH_DELAYED)
 
 								})
 								.catch(err => {

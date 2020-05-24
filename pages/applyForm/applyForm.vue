@@ -38,7 +38,11 @@
 				<text>审批意见</text>
 				<text>查看历史</text>
 			</view>
-			<view class="btn-wrap">
+
+			<view class="big-btn-wrap" v-if="approvals && approvals.length">
+				<view class='btn confirm-btn' @tap="onResubmitTap">重新提交</view>
+			</view>
+			<view class="btn-wrap" v-else>
 				<view class='btn save-btn' @tap="onSuspendTap">暂存</view>
 				<view class='btn confirm-btn' @tap="onSubmitTap">提交</view>
 			</view>
@@ -67,6 +71,9 @@
 		fmtMoney2,
 		accMul
 	} from '@/libs/utils.js'
+	import {
+		REFRESH_DELAYED
+	} from '@/config/config.js'
 	export default {
 		components: {
 			timePicker,
@@ -114,6 +121,30 @@
 				this.category = category.costCategoryName
 				this.detailForm.costCategoryId = category.costCategoryId
 			},
+			onResubmitTap() {
+				if (this.onValidate()) {
+					this.showLoading()
+					this.submitApplyForm()
+						.then(res => {
+							uni.showToast({
+								icon: 'none',
+								title: "重新提交成功"
+							})
+							setTimeout(() => {
+								uni.$emit('reload')
+								uni.navigateBack()
+								this.dismissLoading()
+							}, REFRESH_DELAYED)
+						})
+						.catch(err => {
+							this.dismissLoading()
+							uni.showToast({
+								icon: 'none',
+								title: "请求失败"
+							})
+						})
+				}
+			},
 			onSuspendTap() {
 				if (this.onValidate()) {
 					this.showLoading()
@@ -127,7 +158,7 @@
 								uni.$emit('reload')
 								uni.navigateBack()
 								this.dismissLoading()
-							}, 1000)
+							}, REFRESH_DELAYED)
 						})
 						.catch(err => {
 							this.dismissLoading()
@@ -159,7 +190,7 @@
 								uni.$emit('reload')
 								uni.navigateBack()
 								this.dismissLoading()
-							}, 1000)
+							}, REFRESH_DELAYED)
 
 						})
 						.catch(err => {

@@ -23,6 +23,10 @@
 		delSpecialPaymentsForm
 	} from '../../../api/specailPayments/specialPayments.js'
 
+	import {
+		REFRESH_DELAYED
+	} from '@/config/config.js'
+
 	export default {
 		mixins: [MescrollMixin],
 		components: {
@@ -56,7 +60,7 @@
 									setTimeout(() => {
 										this.dismissLoading()
 										this.mescroll.resetUpScroll()
-									}, 1000)
+									}, REFRESH_DELAYED)
 								})
 								.catch(err => {
 									this.dismissLoading()

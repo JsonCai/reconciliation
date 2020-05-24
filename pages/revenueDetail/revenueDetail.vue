@@ -66,7 +66,10 @@
 		revenueDetail,
 		receiveRevenueAccounts
 	} from '@/api/revenue/revenue.js'
-	import getRevenueStateStr from '@/config/config.js'
+	import {
+		getRevenueStateStr,
+		REFRESH_DELAYED
+	} from '@/config/config.js'
 	export default {
 		components: {
 			imgList
@@ -118,7 +121,7 @@
 								uni.navigateBack()
 								uni.$emit('reload')
 								this.dismissLoading()
-							}, 1000)
+							}, REFRESH_DELAYED)
 						}).catch(err => {
 							this.dismissLoading()
 							console.log(err)

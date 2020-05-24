@@ -19,7 +19,8 @@
 		getMessageList,readMsg
 	} from '@/api/message/message.js'
 	import {
-		MessageTypes
+		MessageTypes,
+		REFRESH_DELAYED
 	} from '@/config/config.js'
 
 	export default {
@@ -50,12 +51,10 @@
 					channelSerialNumber:item.channelSerialNumber,
 					messageId:item.messageId
 				}).then(res => {
-					console.log(22222222222)
 					if(res.code == '0'){
-						console.log(123123123123)
 						setTimeout(() => {
 							uni.$emit('reloadMsg')
-						}, 1000)
+						}, REFRESH_DELAYED)
 					}
 				}).catch(err => {
 					console.log(err)

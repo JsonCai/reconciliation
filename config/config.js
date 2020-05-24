@@ -165,4 +165,4 @@ export const StatementTypes = {
 	otherIncome: 4
 }
 
-export const REFRESH_DELAYED = 1200
+export const REFRESH_DELAYED = 1500

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<fakeSearch></fakeSearch>
+		<fakeSearch @onSearch="searchClick"></fakeSearch>
 		<app-tabs v-model="tabIndex" :tabs="tabs" :fixed="true" :top="120"></app-tabs>
 		<view class="list-wrap">
 			<block v-for="(item,index) in tabs" :key="index">
@@ -38,6 +38,11 @@
 			applyFrom(){
 				uni.navigateTo({
 					url:'../../applyForm/applyForm'
+				})
+			},
+			searchClick() {
+				uni.navigateTo({
+					url:'../searchPage/searchPage'
 				})
 			}
 		},

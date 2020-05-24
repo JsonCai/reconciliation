@@ -80,7 +80,9 @@
 	import {
 		fmtMoney2
 	} from '@/libs/utils'
-	import REFRESH_DELAYED from '@/config/config.js'
+	import {
+		REFRESH_DELAYED
+	} from '@/config/config.js'
 	export default {
 		components: {
 			imgList,

@@ -1,10 +1,7 @@
 <template>
-	<mescroll-body ref="mescrollRef"
-	 @init="mescrollInit" top="240" 
-	 bottom="10" @down="downCallback"
-	  @up="upCallback">
+	<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
 		<view class="list" v-for="listItem in dataList">
-			<applyItem :applyItem="listItem" @clickItem="clickItem" fromType='boss'></applyItem>
+			<applyItem :applyItem="listItem" @clickItem="clickItem" fromType='teller'></applyItem>
 		</view>
 	</mescroll-body>
 </template>
@@ -32,15 +29,18 @@
 			tab: Object // tab菜单,此处用于取关键词
 		},
 		methods: {
-			loadMore(){
-				 this.mescroll && this.mescroll.onReachBottom()
+			reload() {
+				this.mescroll && this.mescroll.resetUpScroll()
+			},
+			loadMore() {
+				this.mescroll && this.mescroll.onReachBottom()
 			},
 			getApplyFormData(page) {
 				let offset = page.size * (page.num - 1)
 				const params = {
 					offset,
 					limit: page.size,
-					expenseAccountStatus:this.tab.expenseAccountStatus
+					expenseAccountStatus: this.tab.expenseAccountStatus
 				}
 				console.log(params)
 				return params
@@ -53,6 +53,7 @@
 			upCallback(page) {
 				getPaymentApplyrForm(this.getApplyFormData(page))
 					.then(res => {
+						console.log(res)
 						this.mescroll.endSuccess(res.data.expenseAccounts.length);
 						if (page.num == 1) {
 							this.dataList = []
@@ -61,16 +62,21 @@
 					})
 					.catch(err => {
 						console.log(err)
+						if (page.num == 1) {
+							this.dataList = []
+							this.mescroll.endSuccess(0);
+						}
+						uni.showToast({
+							icon: 'none',
+							title: "请求失败"
+						})
 					})
 			},
 			clickItem(item) {
 				uni.navigateTo({
-					url: '../applyDetail/applyDetail?id='+item.expenseAccountId
+					url: '../applyDetail/applyDetail?id=' + item.expenseAccountId
 				})
 			}
-		},
-		mounted() {
-
 		}
 	};
 </script>

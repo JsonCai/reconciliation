@@ -115,7 +115,7 @@
 							console.log(res)
 							uni.showToast({
 								icon: 'none',
-								title: '审批成功'
+								title: '打款成功'
 							})
 							setTimeout(() => {
 								uni.navigateBack()
@@ -127,7 +127,7 @@
 							console.log(err)
 							uni.showToast({
 								icon: 'none',
-								title: '审批失败'
+								title: '操作失败'
 							})
 						})
 				}

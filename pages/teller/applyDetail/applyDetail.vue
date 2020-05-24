@@ -38,17 +38,17 @@
 				<text class="title-text">审批信息</text>
 			</view>
 			<view class="item-cross-line">
-				<view class="item-nowrap" v-if="detailForm.approvals">
+				<view class="item-nowrap" v-if="detailForm.approvals&&detailForm.approvals.length">
 					<text>审批意见</text>
-					<text >{{detailForm.approvals.approvalOpinion}}</text>
+					<text>{{detailForm.approvals[0].approvalOpinion}}</text>
 				</view>
 				<view class="item-nowrap" v-if="detailForm.approvals">
 					<text>审批时间</text>
-					<text>{{detailForm.approvals.createTime}}</text>
+					<text>{{detailForm.approvals[0].createTime}}</text>
 				</view>
 				<view class="item-nowrap" v-if="detailForm.approvals && detailForm.approvals.approvalPerson">
 					<text>审批人</text>
-					<text>{{detailForm.approvals.approvalPerson.employeeName}}</text>
+					<text>{{detailForm.approvals.approvalPerson[0].employeeName}}</text>
 				</view>
 			</view>
 			<view class="title item-wrap" v-if="detailForm.approvals">
@@ -71,9 +71,8 @@
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
 			</view>
 		</view>
-		<timePicker :requestCode="timeCode"
-		:show="showTimePicker" @onConfirm="timePickConfirm" 
-		@onCancel="showTimePicker = false"></timePicker>
+		<timePicker :requestCode="timeCode" :show="showTimePicker" @onConfirm="timePickConfirm" @onCancel="showTimePicker = false"></timePicker>
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
 
@@ -85,6 +84,9 @@
 		applyDetail,
 		paymentExpence
 	} from '@/api/apply/apply.js'
+	import {
+		REFRESH_DELAYED
+	} from '@/config/config.js'
 	export default {
 		components: {
 			imgList,
@@ -95,32 +97,35 @@
 				detailForm: {},
 				showTimePicker: false,
 				timeCode: 0,
-				
+
 			}
 		},
 		methods: {
 			onPassTap() {
-				if(!this.detailForm.paymentTime){
+				if (!this.detailForm.paymentTime) {
 					uni.showToast({
-						 title: '请选择打款时间',
-						 icon:'none'
+						title: '请选择打款时间',
+						icon: 'none'
 					})
 					return
 				}
+				this.showLoading()
 				paymentExpence({
 						expenseAccountId: this.detailForm.expenseAccountId,
 						paymentTime: this.detailForm.paymentTime,
 						paymentVoucherUrls: this.detailForm.paymentVoucherUrls = ['aaa']
 					})
 					.then(res => {
-						if(res.code == '0'){
+						if (res.code == '0') {
 							uni.showToast({
 								icon: 'none',
 								title: "打款成功"
 							})
-							setTimeout(()=>{
+							setTimeout(() => {
+								this.dismissLoading()
+								uni.$emit('reload')
 								uni.navigateBack()
-							},500)
+							}, REFRESH_DELAYED)
 						}
 					})
 					.catch(err => {
@@ -132,7 +137,7 @@
 				this.detailForm.paymentVoucherUrls = list
 			},
 			onStartTimeTap(code) {
-				if(this.detailForm.expenseAccountStatus.value == 5){
+				if (this.detailForm.expenseAccountStatus.value == 5) {
 					return
 				}
 				this.timeCode = code;
@@ -150,7 +155,7 @@
 			applyDetail(option.id)
 				.then(res => {
 					console.log(res)
-					if(res.code == '0'){
+					if (res.code == '0') {
 						this.$set(this, "detailForm", res.data.expenseAccount)
 					}
 				})

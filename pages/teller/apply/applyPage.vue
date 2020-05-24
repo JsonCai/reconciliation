@@ -41,10 +41,18 @@
 		methods: {
 			onSearch() {
 				uni.navigateTo({
-					url:'../searchPage/searchPage'
+					url: '../searchPage/searchPage'
 				})
-				
+
 			}
+		},
+		onLoad() {
+			uni.$on("reload", () => {
+				let gv = 'list' + this.tabIndex;
+				if (this.$refs[gv][0]) {
+					this.$refs[gv][0].reload()
+				}
+			})
 		}
 
 	};

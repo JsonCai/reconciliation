@@ -16,7 +16,8 @@
 	import MescrollBody from "@/components/mescroll-diy/beibei/mescroll-body.vue";
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
 	import {
-		getMessageList,readMsg
+		getMessageList,
+		readMsg
 	} from '@/api/message/message.js'
 	import {
 		MessageTypes,
@@ -48,10 +49,10 @@
 			onClick(item) {
 				console.log(item)
 				readMsg({
-					channelSerialNumber:item.channelSerialNumber,
-					messageId:item.messageId
+					channelSerialNumber: item.channelSerialNumber,
+					messageId: item.messageId
 				}).then(res => {
-					if(res.code == '0'){
+					if (res.code == '0') {
 						setTimeout(() => {
 							uni.$emit('reloadMsg')
 						}, REFRESH_DELAYED)
@@ -109,7 +110,12 @@
 						this.mescroll.endSuccess(res.data.messages.length);
 					})
 					.catch(err => {
-						this.mescroll.endErr()
+						this.dataList = []
+						this.mescroll.endSuccess(0);
+						uni.showToast({
+							icon: 'none',
+							title: "请求失败"
+						})
 					})
 			}
 		},

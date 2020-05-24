@@ -1,16 +1,21 @@
 <template>
 	<view class="index-item" @tap="onClick">
-		<image :src="iconSrc" class="icon" @tap.stop="onClick"></image>
-		<text>{{text}}</text>
+		<view class="nav-inner-wrap">
+			<image :src="iconSrc" class="icon" @tap.stop="onClick"></image>
+			<text>{{text}}</text>
+		</view>
+		<view class="role-wrap">{{role}}</view>
 	</view>
 </template>
 <script>
 	export default {
 		props:{
-			text:String
+			text:String,
+			role:String
 		},
 		data(){
 			return {
+				arrowSrc:'../../static/images/arrow.png',
 				applySrc:'../../static/images/index-rec-icon.png',
 				financeSrc:'../../static/images/index-finance-icon.png',
 				revenueSrc:'../../static/images/index-revenue-icon.png',
@@ -47,7 +52,11 @@
 	background: #fff;
 	margin-bottom: 20rpx;
 	position: relative;
-	width: 100%;
+	padding: 0 20rpx;
+	.nav-inner-wrap{
+		display: flex;
+		align-items: center;
+	}
 	.icon {
 		width: 100rpx;
 		height: 100rpx;
@@ -56,13 +65,14 @@
 	.role-wrap {
 		position: absolute;
 		top: 0;
-		right: 0;
-		width: 100rpx;
+		left: 0;
 		height: 40rpx;
 		background: #f7d01c;
 		color: #fff;
 		text-align: center;
 		font-size: 26rpx;
+		padding: 0 10rpx;
 	}
+
 }
 </style>

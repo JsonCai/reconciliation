@@ -159,8 +159,8 @@ export const MessageTypes = {
 
 // 报表款项类型（1.主营收入2.主营支出3.其它收入4.其它支出）
 export const StatementTypes = {
-	mainBusinessExpenses: 1,
-	mainBusinessIncome: 2,
+	mainBusinessIncome: 1,
+	mainBusinessExpenses: 2,
 	otherExpenses: 3,
 	otherIncome: 4
 }

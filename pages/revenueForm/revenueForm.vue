@@ -84,7 +84,8 @@
 				categoryList,
 				categoryIndex: 0,
 				category: "",
-				isReject: false
+				isReject: false,
+				approvals: []
 			};
 		},
 		methods: {
@@ -261,6 +262,17 @@
 						this.dismissLoading()
 						console.log(res)
 						// this.detailForm = res.data.revenueAccount
+						if (res.data.revenueAccount.receiptActions&&res.data.revenueAccount.receiptActions.length) {
+							this.approvals = res.data.revenueAccount.receiptActions.map(item => {
+								let result =  {
+									"approvalOpinion": item.receiptOpinion,
+									"approvalPerson": item.receiptPerson,
+									"approvalType": item.receiptActionType.value,
+									"createTime": item.createTime
+								}
+								return result
+							})
+						}
 						this.detailForm.revenueAccountId = res.data.revenueAccount.revenueAccountId
 						this.detailForm.fundsReceived = fmtMoney2(res.data.revenueAccount.fundsReceived)
 						this.detailForm.accountReceivable = fmtMoney2(res.data.revenueAccount.accountReceivable)
@@ -273,6 +285,7 @@
 						}
 					})
 					.catch(err => {
+						console.log(err)
 						this.dismissLoading()
 						uni.navigateBack()
 					})

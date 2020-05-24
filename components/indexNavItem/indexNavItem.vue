@@ -1,7 +1,9 @@
 <template>
 	<view class="index-item" @tap="onClick">
 		<view class="nav-inner-wrap">
-			<image :src="iconSrc" class="icon" @tap.stop="onClick"></image>
+			<view class="img-wrap">
+				<image :src="iconSrc" class="icon" @tap.stop="onClick"></image>
+			</view>
 			<text>{{text}}</text>
 		</view>
 		<view class="role-wrap">{{role}}</view>
@@ -25,9 +27,9 @@
 		},
 		computed:{
 			iconSrc(){
-				if(this.text == '审核采购单据' || this.text == '提交采购单据' || this.text == '确认查看报销单据'){
+				if(this.text == '审核采购单据' || this.text == '提交采购单据' || this.text == '确认查看采购单据' || this.text == '打款采购单据'){
 					return this.applySrc
-				}else if(this.text == '查看财务报表' || this.text == '查看财务情况'){
+				}else if(this.text == '查看财务报表' || this.text == '查看财务情况' || this.text == '查看财务'){
 					return this.financeSrc
 				}else if(this.text == '提交营收单据' || this.text == '接收营收单据' || this.text == '确认查看营收单据'){
 					return this.revenueSrc
@@ -48,14 +50,16 @@
 	height: 200rpx;
 	display: flex;
 	align-items: center;
-	justify-content: center;
 	background: #fff;
 	margin-bottom: 20rpx;
 	position: relative;
-	padding: 0 20rpx;
 	.nav-inner-wrap{
 		display: flex;
 		align-items: center;
+		margin-left: 200rpx;
+	}
+	.img-wrap{
+		width:150rpx;
 	}
 	.icon {
 		width: 100rpx;

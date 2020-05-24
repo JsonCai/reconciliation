@@ -23,12 +23,12 @@
 					<text>{{ detailForm.revenueTime|fmtDate}}</text>
 				</view>
 			</view>
-			<view class="img-wrap fc-6" v-if="detailForm.revenueVoucherUrls">
+			<view class="img-wrap fc-6 mt-20" v-if="detailForm.revenueVoucherUrls && detailForm.revenueVoucherUrls.length">
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.revenueVoucherUrls" :isDisabled="true" />
 			</view>
 			
-			<view class="item-wrap" v-if="detailForm.submitTime">
+			<view class="item-wrap mt-20" v-if="detailForm.submitTime">
 				<text>提交日期:</text>
 				<text>{{detailForm.submitTime|fmtDate}}</text>
 			</view>

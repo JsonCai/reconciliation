@@ -26,7 +26,7 @@
 					<text v-else>{{ detailForm.revenueTime}}</text>
 				</view>
 			</view>
-			<view class="img-wrap fc-6">
+			<view class="img-wrap fc-6 mt-20" >
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.revenueVoucherUrls" :isDisabled="isDisabled" @changeImgList="changeImgList" />
 			</view>

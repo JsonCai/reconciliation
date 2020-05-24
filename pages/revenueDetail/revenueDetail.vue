@@ -21,7 +21,7 @@
 				<text>营收日期:</text>
 				<text>{{ detailForm.revenueTime|fmtDate}}</text>
 			</view>
-			<view class="img-wrap fc-6" v-if="detailForm.revenueVoucherUrls">
+			<view class="img-wrap fc-6 mt-20" v-if="detailForm.revenueVoucherUrls && detailForm.revenueVoucherUrls.length">
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.revenueVoucherUrls" :isDisabled="true" />
 			</view>

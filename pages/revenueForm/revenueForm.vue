@@ -30,6 +30,10 @@
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.revenueVoucherUrls" :isDisabled="isDisabled" @changeImgList="changeImgList" />
 			</view>
+			<view class="item-wrap" @tap="showHistory" v-if="isReject">
+				<text>审批意见</text>
+				<text>查看历史</text>
+			</view>
 			<view class="big-btn-wrap" v-if="isReject">
 				<view class='btn confirm-btn' @tap="onResubmitTap">重新提交</view>
 			</view>
@@ -58,8 +62,12 @@
 	import {
 		deepClone,
 		resetDateFormat,
-		fmtMoney2
+		fmtMoney2,
+		accMul
 	} from '@/libs/utils.js'
+	import {
+		REFRESH_DELAYED
+	} from '@/config/config.js'
 	export default {
 		components: {
 			timePicker,
@@ -80,6 +88,12 @@
 			};
 		},
 		methods: {
+			showHistory() {
+				uni.navigateTo({
+					url: '../reasonList/reasonList'
+				})
+				uni.$emit('showHistory', this.approvals)
+			},
 			changeImgList(list) {
 				console.log(list)
 				this.detailForm.imgList = list
@@ -115,7 +129,7 @@
 								uni.$emit('reload')
 								uni.navigateBack()
 								this.dismissLoading()
-							}, 1000)
+							}, REFRESH_DELAYED)
 						})
 						.catch(err => {
 							this.dismissLoading()
@@ -148,7 +162,7 @@
 								uni.$emit('reload')
 								uni.navigateBack()
 								this.dismissLoading()
-							}, 1000)
+							}, REFRESH_DELAYED)
 						})
 						.catch(err => {
 							this.dismissLoading()
@@ -174,7 +188,7 @@
 								uni.$emit('reload')
 								uni.navigateBack()
 								this.dismissLoading()
-							}, 1000)
+							}, REFRESH_DELAYED)
 						})
 						.catch(err => {
 							this.dismissLoading()
@@ -189,8 +203,8 @@
 			// 返回报销单id（提交->申请报销）
 			submitApplyForm() {
 				let form = deepClone(this.detailForm)
-				form.accountReceivable = Number(this.detailForm.accountReceivable) * 100
-				form.fundsReceived = Number(this.detailForm.fundsReceived) * 100
+				form.accountReceivable = accMul(Number(this.detailForm.accountReceivable), 100)
+				form.fundsReceived = accMul(Number(this.detailForm.fundsReceived), 100)
 				form.revenueTime = resetDateFormat(form.revenueTime)
 				if (this.detailForm.revenueAccountId) {
 					return updateRevenueForm(form.revenueAccountId, form)

@@ -19,7 +19,7 @@
 			<view class="item-wrap">
 				<text>金额:</text>
 				<input :disabled="detailForm.specialAccountId" class="input-text" placeholder="请输入申报金额" placeholder-class="place"
-				 v-model="detailForm.amount" type="digit"  @blur="changeAmount" />
+				 v-model="detailForm.amount" type="digit" @blur="changeAmount" />
 			</view>
 			<view class="item-wrap">
 				<text>日期:</text>
@@ -56,8 +56,12 @@
 	import {
 		deepClone,
 		resetDateFormat,
-		fmtMoney2
+		fmtMoney2,
+		accMul
 	} from '@/libs/utils.js'
+	import {
+		REFRESH_DELAYED
+	} from '@/config/config.js'
 	export default {
 		components: {
 			timePicker,
@@ -111,7 +115,7 @@
 								uni.$emit("reload")
 								uni.navigateBack()
 								this.dismissLoading()
-							}, 1000)
+							}, REFRESH_DELAYED)
 						})
 						.catch(err => {
 							this.dismissLoading()
@@ -126,7 +130,7 @@
 			// 返回报销单id（提交->申请报销）
 			submitApplyForm() {
 				let form = deepClone(this.detailForm)
-				form.amount = Number(this.detailForm.amount)
+				form.amount = accMul(Number(this.detailForm.amount), 100)
 				form.accountTime = resetDateFormat(form.accountTime)
 				if (this.detailForm.expenseAccountId) {
 					return updateSpecialForm(form.expenseAccountId, form)
@@ -137,7 +141,7 @@
 			isFormFill() {
 				return true
 			},
-			changeAmount(e){
+			changeAmount(e) {
 				const v = Number(e.detail.value)
 				this.$set(this.detailForm, 'amount', v.toFixed(2))
 			}
@@ -150,7 +154,7 @@
 						this.dismissLoading()
 						console.log(res)
 						this.detailForm = res.data.specialAccount
-						if(this.detailForm.amount){
+						if (this.detailForm.amount) {
 							this.detailForm.amount = fmtMoney2(this.detailForm.amount)
 						}
 						if (this.detailForm.accountTime) {

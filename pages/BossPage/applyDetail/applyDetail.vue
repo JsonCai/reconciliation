@@ -80,6 +80,7 @@
 	import {
 		fmtMoney2
 	} from '@/libs/utils'
+	import REFRESH_DELAYED from '@/config/config.js'
 	export default {
 		components: {
 			imgList,
@@ -122,15 +123,15 @@
 				if (this.onValidate()) {
 					this.showLoading()
 					approveExpense(this.applyParams).then(res => {
-						this.dismissLoading()
 						uni.showToast({
 							title: '审批成功',
 							icon: 'none'
 						})
 						setTimeout(() => {
+							this.dismissLoading()
 							uni.$emit('reload')
 							uni.navigateBack()
-						}, 1000)
+						}, REFRESH_DELAYED)
 
 					}).catch(err => {
 						this.dismissLoading()
@@ -138,9 +139,6 @@
 							icon: 'none',
 							title: "请求失败"
 						})
-						setTimeout(() => {
-							uni.navigateBack()
-						}, 1000)
 					})
 				}
 

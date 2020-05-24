@@ -17,6 +17,9 @@
 		revenueSearchRevenueList,
 		delRevenueForm
 	} from '../../../api/revenue/revenue.js'
+	import {
+		REFRESH_DELAYED
+	} from '@/config/config.js'
 
 	export default {
 		mixins: [MescrollMixin],
@@ -37,29 +40,29 @@
 				uni.showModal({
 					title: '提示',
 					content: '确定要删除该数据?',
-					success: res=> {
+					success: res => {
 						if (res.confirm) {
 							this.showLoading()
 							delRevenueForm(item.revenueAccountId)
-							.then(res => {
-								if (res.code == 0) {
+								.then(res => {
+									if (res.code == 0) {
+										uni.showToast({
+											title: '删除成功',
+											icon: 'none'
+										})
+										setTimeout(() => {
+											this.dismissLoading()
+											this.reload()
+										}, REFRESH_DELAYED)
+									}
+								})
+								.catch(err => {
+									this.dismissLoading()
 									uni.showToast({
-										title: '删除成功',
+										title: '删除失败',
 										icon: 'none'
 									})
-									setTimeout(()=>{
-										this.dismissLoading()
-										this.reload()
-									},1000)
-								}
-							})
-							.catch(err=>{
-								this.dismissLoading()
-								uni.showToast({
-									title: '删除失败',
-									icon: 'none'
 								})
-							})
 						}
 					}
 				});

@@ -71,9 +71,6 @@
 					url: '../applyDetail/applyDetail?id='+ item.expenseAccountId
 				})
 			}
-		},
-		mounted() {
-
 		}
 	};
 </script>

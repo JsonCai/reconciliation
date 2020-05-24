@@ -13,5 +13,5 @@ export function getMessageList(channelSerialNumber){
 }
 // 读取消息
 export function readMsg(data){
-	return http.get('/message-box/read-message',data)
+	return http.post('/message-box/read-message',data)
 }

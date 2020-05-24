@@ -55,25 +55,6 @@
 			<view class="big-btn-wrap" v-if="detailForm.revenueAccountStatus&&detailForm.revenueAccountStatus.value == 2">
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
 			</view>
-			<view class="title item-wrap" v-if="detailForm.approvals">
-				<image src="../../static/images/progress.png" class="icon-wallet mr-20"></image>
-				<text class="title-text">收款历史</text>
-			</view>
-			<view class="item-cross-line" v-if="detailForm.receiptActions&&detailForm.receiptActions.length" v-for="(item,index) in detailForm.receiptActions"
-			 :key="item.createTime">
-				<view class="item-nowrap">
-					<text>收款意见</text>
-					<text>{{item.receiptOpinion}}</text>
-				</view>
-				<view class="item-nowrap">
-					<text>操作时间</text>
-					<text>{{item.createTime|fmtDate}}</text>
-				</view>
-				<view class="item-nowrap">
-					<text>收款人</text>
-					<text>{{item.receiptPerson.employeeName}}</text>
-				</view>
-			</view>
 		</view>
 		<loading :isShow='isShowLoading'></loading>
 	</view>

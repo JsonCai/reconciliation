@@ -5,9 +5,8 @@
 				<image class="msg-img" :src="item.img"></image>
 				<view class="v-text">
 					<text class="msg-title">{{item.title}}</text>
-					<text class="msg-content">{{item.content}}</text>
+					<text v-if="item.latestMessageTime" class="fc-9">{{item.latestMessageTime}}</text>
 				</view>
-				<text v-if="item.latestMessageTime">{{item.latestMessageTime}}</text>
 				<text class="msg-num" v-if="item.unReadMessageCount">{{item.unReadMessageCount | unreadNum}}</text>
 			</view>
 		</mescroll-body>
@@ -84,6 +83,9 @@
 			}
 		},
 		methods: {
+			reload() {
+				this.mescroll && this.mescroll.resetUpScroll()
+			},
 			onClick(code) {
 				uni.navigateTo({
 					url: '../msgList/msgList?channelSerialNumber=' + code
@@ -118,7 +120,10 @@
 			}
 		},
 		onLoad() {
-			// console.log(bossCode)
+			uni.$on("reloadMsg", () => {
+				console.log('刷新已读')
+				this.reload()
+			})
 		}
 	}
 </script>

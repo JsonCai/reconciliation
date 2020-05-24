@@ -3,8 +3,10 @@
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback">
 			<view class="msg-label" v-for="(item,index) in dataList" :key="item.messageId" @tap="onClick(item)">
 				<image class="msg-icon" :src="item.isRead|readType"></image>
-				<text class="msg-title">{{item.messageTitle}}</text>
-				<text class="t-time">{{item.createTime}}</text>
+				<view>
+					<text class="msg-title">{{item.messageTitle}}</text>
+					<text class="t-time fc-9">{{item.createTime}}</text>
+				</view>
 			</view>
 		</mescroll-body>
 	</view>
@@ -48,11 +50,15 @@
 					channelSerialNumber:item.channelSerialNumber,
 					messageId:item.messageId
 				}).then(res => {
+					console.log(22222222222)
 					if(res.code == '0'){
+						console.log(123123123123)
 						setTimeout(() => {
 							uni.$emit('reloadMsg')
 						}, 1000)
 					}
+				}).catch(err => {
+					console.log(err)
 				})
 				switch (item.channelSerialNumber) {
 					case MessageTypes.purchaseCode:
@@ -100,21 +106,20 @@
 			upCallback(page) {
 				getMessageList(this.channelSerialNumber)
 					.then(res => {
-						console.log(res)
 						this.dataList = res.data.messages
+						this.mescroll.endSuccess(res.data.messages.length);
 					})
 					.catch(err => {
-						console.log(err)
 						this.mescroll.endErr()
 					})
 			}
 		},
 		onLoad(option) {
 			if (option.channelSerialNumber) {
-				console.log(option.channelSerialNumber)
 				this.channelSerialNumber = option.channelSerialNumber
 			}
 			uni.$on("reloadMsg", () => {
+				console.log('刷新已读')
 				this.reload()
 			})
 		}

@@ -21,7 +21,7 @@
 			</view>
 			<view class="item-wrap require1">
 				<text>申报金额:</text>
-				<input class="input-text" placeholder="请输入申报金额" type="digit" placeholder-class="place" v-model="tempamount"/>
+				<input class="input-text" placeholder="请输入申报金额" type="digit" placeholder-class="place" v-model="tempamount" />
 			</view>
 			<view class="item-wrap require1">
 				<text>申报日期:</text>
@@ -33,6 +33,10 @@
 			<view class="img-wrap fc-6 mt-20">
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.imgList" :isDisabled="isDisabled" @changeImgList="changeImgList" />
+			</view>
+			<view class="item-wrap" @tap="showHistory" v-if="approvals && approvals.length">
+				<text>审批意见</text>
+				<text>查看历史</text>
 			</view>
 			<view class="btn-wrap">
 				<view class='btn save-btn' @tap="onSuspendTap">暂存</view>
@@ -60,7 +64,8 @@
 		deepClone,
 		resetDateFormat,
 		dateFtt,
-		fmtMoney2
+		fmtMoney2,
+		accMul
 	} from '@/libs/utils.js'
 	export default {
 		components: {
@@ -69,7 +74,7 @@
 		},
 		data() {
 			return {
-				tempamount:'',
+				tempamount: '',
 				showTimePicker: false,
 				timeCode: 0,
 				isDisabled: false,
@@ -78,10 +83,17 @@
 				},
 				categoryList: [],
 				categoryIndex: 0,
-				category: ""
+				category: "",
+				approvals: []
 			};
 		},
 		methods: {
+			showHistory() {
+				uni.navigateTo({
+					url: '../reasonList/reasonList'
+				})
+				uni.$emit('showHistory', this.approvals)
+			},
 			changeImgList(list) {
 				this.detailForm.imgList = list
 			},
@@ -137,12 +149,12 @@
 							})
 						})
 						.then(res => {
-						
+
 							uni.showToast({
 								icon: 'none',
 								title: "提交成功"
 							})
-							
+
 							setTimeout(() => {
 								uni.$emit('reload')
 								uni.navigateBack()
@@ -163,7 +175,7 @@
 			// 返回报销单id（提交->申请报销）
 			submitApplyForm() {
 				let form = deepClone(this.detailForm)
-				form.amount = Number(this.tempamount) * 100
+				form.amount = accMul(Number(this.tempamount), 100)
 				form.expenseTime = resetDateFormat(form.expenseTime)
 				console.log(form)
 				if (this.detailForm.expenseAccountId) {
@@ -212,12 +224,13 @@
 				applyDetail(options.id).then(res => {
 					this.dismissLoading()
 					// this.detailForm = res.data.expenseAccount
+					this.approvals = res.data.expenseAccount.approvals
 					this.detailForm.expenseAccountId = res.data.expenseAccount.expenseAccountId
 					this.detailForm.expenseAccountTitle = res.data.expenseAccount.expenseAccountTitle
 					this.tempamount = fmtMoney2(res.data.expenseAccount.amount)
 					if (res.data.expenseAccount.costCategory) {
 						this.category = res.data.expenseAccount.costCategory.costCategoryName
-						this.detailForm.costCategoryId =res.data.expenseAccount.costCategory.costCategoryId
+						this.detailForm.costCategoryId = res.data.expenseAccount.costCategory.costCategoryId
 					}
 					this.detailForm.amount = res.data.expenseAccount.amount
 					if (res.data.expenseAccount.expenseTime) {

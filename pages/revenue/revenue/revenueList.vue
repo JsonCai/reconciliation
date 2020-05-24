@@ -37,16 +37,28 @@
 				uni.showModal({
 					title: '提示',
 					content: '确定要删除该数据?',
-					success: function(res) {
+					success: res=> {
 						if (res.confirm) {
-							delRevenueForm(item.revenueAccountId).then(res => {
+							this.showLoading()
+							delRevenueForm(item.revenueAccountId)
+							.then(res => {
 								if (res.code == 0) {
 									uni.showToast({
 										title: '删除成功',
 										icon: 'none'
 									})
-									this.reload()
+									setTimeout(()=>{
+										this.dismissLoading()
+										this.reload()
+									},1000)
 								}
+							})
+							.catch(err=>{
+								this.dismissLoading()
+								uni.showToast({
+									title: '删除失败',
+									icon: 'none'
+								})
 							})
 						}
 					}

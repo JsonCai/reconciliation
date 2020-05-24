@@ -192,7 +192,9 @@
         }
         ,{
             "path" : "pages/reasonList/reasonList",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "原因列表"
+			}
         }
     ],
 	"globalStyle": {

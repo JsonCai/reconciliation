@@ -83,7 +83,7 @@ tabs支持的数据格式： ['全部', '待付款'] 或 [{name:'全部'}, {name
 	
 	/*悬浮*/
 	.app-tabs.tabs-fixed{
-		z-index: 9999;
+		z-index: 1000;
 		position: fixed;
 		top: var(--window-top);
 		left: 0;

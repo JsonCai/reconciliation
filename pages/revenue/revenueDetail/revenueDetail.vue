@@ -8,7 +8,7 @@
 			<view class="item-wrap">
 				<text>名称:</text>
 				<text>{{ detailForm.revenueAccountTitle}}</text>
-				</view>
+			</view>
 			<view class="item-wrap">
 				<text>应收款:</text>
 				<text>{{detailForm.accountReceivable}}</text>
@@ -27,7 +27,7 @@
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.revenueVoucherUrls" :isDisabled="true" />
 			</view>
-			
+
 			<view class="item-wrap mt-20" v-if="detailForm.submitTime">
 				<text>提交日期:</text>
 				<text>{{detailForm.submitTime|fmtDate}}</text>
@@ -65,14 +65,14 @@
 				}
 				return ''
 			},
-			revenueState(stateCode){
-				if(stateCode == 1){
+			revenueState(stateCode) {
+				if (stateCode == 1) {
 					return "未提交"
-				}else if(stateCode == 2){
+				} else if (stateCode == 2) {
 					return "已提交"
-				}else if(stateCode == 3){
+				} else if (stateCode == 3) {
 					return "被拒收"
-				}else if(stateCode == 4){
+				} else if (stateCode == 4) {
 					return "被收款"
 				}
 			}

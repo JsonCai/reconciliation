@@ -55,7 +55,17 @@
 		}, {
 			"path": "pages/msgList/msgList",
 			"style": {
-				"navigationBarTitleText": "消息"
+				"navigationBarTitleText": "消息",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"text": "全部已读",
+							"fontSize": "14",
+							"float": "right",
+							"width": "80px"
+						}]
+					}
+				}
 			}
 		}, {
 			"path": "pages/BossPage/applyDetail/applyDetail",

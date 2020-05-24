@@ -4,16 +4,15 @@
 			<view class="main-wrap">
 				<view class="item-wrap ">
 					<text>{{getLineOneTitle(fromType)}}:</text>
-					<text>{{statement.statementItemType|fromTypeName}}</text>
+					<text>{{statement.statementItemTitle}}</text>
 				</view>
 				<view class="item-wrap " v-if="fromType == StatementTypes.mainBusinessIncome">
 					<text>{{getLineTwoTitle(fromType)}}:</text>
 					<text>{{getLineTwoValue(fromType)}}</text>
 				</view>
 				<view class="item-wrap price-wrap">
-					<text>{{getLineThreeTitle(fromType)}}:</text>
-					<text>{{getLineThreeValue(fromType)}}</text>
-					<text class="apply-time fc-6">{{statement.statementItemTime | fmtTime}}</text>
+					<text>{{getLineThreeTitle(fromType)}}:{{getLineThreeValue(fromType)}}</text>
+					<text class="apply-time fc-6">{{statement.createTime | fmtTime}}</text>
 				</view>
 			</view>
 			<image class="arrow" :src="arrowSrc"></image>
@@ -24,17 +23,22 @@
 <script>
 	import mixin from '../../libs/mixin/listItemMixin.js'
 	import {
-		dateFtt,fmtMoney2
+		dateFtt,
+		fmtMoney2
 	} from '../../libs/utils'
-	import StatementTypes from '@/config/config.js'
+	import {
+		StatementTypes
+	} from '@/config/config.js'
 	export default {
 		mixins: [mixin],
 		props: {
 			statement: Object,
 			fromType: Number
 		},
-		computed: {
-
+		data() {
+			return {
+				StatementTypes
+			}
 		},
 		filters: {
 			formatState(type) {
@@ -48,11 +52,11 @@
 					return '其他收入'
 				}
 				return ''
-			}
-		},
-		fmtTime(val) {
-			if (val) {
-				return val.split(' ')[0]
+			},
+			fmtTime(val) {
+				if (val) {
+					return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val))
+				}
 			}
 		},
 		methods: {
@@ -88,6 +92,7 @@
 				return ''
 			},
 			getLineTwoValue(type) {
+				console.log(type)
 				if (type == StatementTypes.mainBusinessIncome) {
 					return this.statement.accountReceivable
 				}
@@ -105,7 +110,7 @@
 				}
 				return ''
 			},
-			getLineThreeValue() {
+			getLineThreeValue(type) {
 				if (type == StatementTypes.mainBusinessIncome) {
 					return this.statement.fundsReceived
 				} else if (type == StatementTypes.mainBusinessExpenses) {

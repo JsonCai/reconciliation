@@ -63,7 +63,6 @@
 
 				params.offset = offset
 				params.limit = page.size
-				console.log(params)
 				return params
 			},
 			/*下拉刷新的回调 */

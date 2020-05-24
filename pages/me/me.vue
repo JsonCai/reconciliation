@@ -128,7 +128,7 @@
 											_this.userInfo = Object.assign({}, res.data.data.employee, _this.userInfo)
 											_this.$set(_this.userInfo, 'roles', _this.roles.join(','))
 											_this.setUserInfo(_this.userInfo)
-	
+	 
 										}
 									})
 								}

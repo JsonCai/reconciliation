@@ -28,7 +28,7 @@
 			</view>
 			<view class="img-wrap fc-6">
 				<text class="fc-6">凭据：</text>
-				<imgList :list="detailForm.imgList" :isDisabled="isDisabled" @changeImgList="changeImgList" />
+				<imgList :list="detailForm.revenueVoucherUrls" :isDisabled="isDisabled" @changeImgList="changeImgList" />
 			</view>
 			<view class="big-btn-wrap" v-if="isReject">
 				<view class='btn confirm-btn' @tap="onResubmitTap">重新提交</view>
@@ -57,7 +57,8 @@
 	} from '../../api/revenue/revenue.js'
 	import {
 		deepClone,
-		resetDateFormat
+		resetDateFormat,
+		fmtMoney2
 	} from '@/libs/utils.js'
 	export default {
 		components: {
@@ -70,7 +71,7 @@
 				timeCode: 0,
 				isDisabled: false,
 				detailForm: {
-					imgList: []
+					revenueVoucherUrls: []
 				},
 				categoryList,
 				categoryIndex: 0,
@@ -106,7 +107,6 @@
 					this.submitApplyForm()
 						.then(res => {
 							console.log(res)
-							this.dismissLoading()
 							uni.showToast({
 								icon: 'none',
 								title: "暂存成功"
@@ -114,6 +114,7 @@
 							setTimeout(() => {
 								uni.$emit('reload')
 								uni.navigateBack()
+								this.dismissLoading()
 							}, 1000)
 						})
 						.catch(err => {
@@ -138,7 +139,6 @@
 							})
 						})
 						.then(res => {
-							this.dismissLoading()
 							console.log(res)
 							uni.showToast({
 								icon: 'none',
@@ -147,6 +147,7 @@
 							setTimeout(() => {
 								uni.$emit('reload')
 								uni.navigateBack()
+								this.dismissLoading()
 							}, 1000)
 						})
 						.catch(err => {
@@ -165,7 +166,6 @@
 					this.submitApplyForm()
 						.then(res => {
 							console.log(res)
-							this.dismissLoading()
 							uni.showToast({
 								icon: 'none',
 								title: "重新提交成功"
@@ -173,6 +173,7 @@
 							setTimeout(() => {
 								uni.$emit('reload')
 								uni.navigateBack()
+								this.dismissLoading()
 							}, 1000)
 						})
 						.catch(err => {
@@ -188,8 +189,8 @@
 			// 返回报销单id（提交->申请报销）
 			submitApplyForm() {
 				let form = deepClone(this.detailForm)
-				form.accountReceivable = Number(this.detailForm.accountReceivable)
-				form.fundsReceived = Number(this.detailForm.fundsReceived)
+				form.accountReceivable = Number(this.detailForm.accountReceivable) * 100
+				form.fundsReceived = Number(this.detailForm.fundsReceived) * 100
 				form.revenueTime = resetDateFormat(form.revenueTime)
 				if (this.detailForm.revenueAccountId) {
 					return updateRevenueForm(form.revenueAccountId, form)
@@ -247,14 +248,14 @@
 						console.log(res)
 						// this.detailForm = res.data.revenueAccount
 						this.detailForm.revenueAccountId = res.data.revenueAccount.revenueAccountId
-						this.detailForm.fundsReceived = res.data.revenueAccount.fundsReceived
-						this.detailForm.accountReceivable = res.data.revenueAccount.accountReceivable
+						this.detailForm.fundsReceived = fmtMoney2(res.data.revenueAccount.fundsReceived)
+						this.detailForm.accountReceivable = fmtMoney2(res.data.revenueAccount.accountReceivable)
 						this.detailForm.revenueAccountTitle = res.data.revenueAccount.revenueAccountTitle
 						if (res.data.revenueAccount.revenueTime) {
 							this.detailForm.revenueTime = res.data.revenueAccount.revenueTime.split(' ')[0]
 						}
-						if(res.data.revenueAccount.revenueAccountStatus){
-							this.isReject = res.data.revenueAccount.revenueAccountStatus.value == 4
+						if (res.data.revenueAccount.revenueAccountStatus) {
+							this.isReject = res.data.revenueAccount.revenueAccountStatus.value == 3
 						}
 					})
 					.catch(err => {

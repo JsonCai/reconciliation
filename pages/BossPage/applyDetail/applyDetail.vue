@@ -52,6 +52,10 @@
 				<text>审批意见</text>
 				<input placeholder="审批意见" class="input-text" @input="changeReason" v-model="applyParams.approvalOpinion" />
 			</view>
+			<view class="item-wrap" @tap="showHistory" v-if="detailForm.approvals && detailForm.approvals.length">
+				<text>审批意见</text>
+				<text>查看历史</text>
+			</view>
 			<view class="big-btn-wrap" v-if="detailForm.expenseAccountStatus.value == 2">
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
 			</view>
@@ -73,7 +77,9 @@
 		approveExpense
 	} from '@/api/apply/apply.js'
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
-	import {fmtMoney2} from '@/libs/utils'
+	import {
+		fmtMoney2
+	} from '@/libs/utils'
 	export default {
 		components: {
 			imgList,
@@ -121,11 +127,11 @@
 							title: '审批成功',
 							icon: 'none'
 						})
-						setTimeout(()=>{
+						setTimeout(() => {
 							uni.$emit('reload')
 							uni.navigateBack()
-						},1000)
-						
+						}, 1000)
+
 					}).catch(err => {
 						this.dismissLoading()
 						uni.showToast({
@@ -153,7 +159,7 @@
 					return val.split(' ')[0]
 				}
 			},
-			formatMoney(val){
+			formatMoney(val) {
 				return fmtMoney2(val)
 			}
 		},
@@ -167,10 +173,10 @@
 					this.dismissLoading()
 					if (res.code == '0') {
 						this.detailForm = res.data.expenseAccount
-								console.log(this.detailForm)
+						console.log(this.detailForm)
 						this.approvals = this.detailForm.approvals
 					}
-					
+
 				})
 				.catch(err => {
 					this.dismissLoading()

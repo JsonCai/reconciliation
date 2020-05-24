@@ -4,10 +4,11 @@
 		<view class="list-wrap" v-if="isShow">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="120" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList">
-					<specialPayments :specialPayment="listItem" @tap="itemClick(item)"></specialPayments>
+					<specialPayments :specialPayment="listItem" @tap="itemClick(item)" @onDel="onDel"></specialPayments>
 				</view>
 			</mescroll-body>
 		</view>
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
 
@@ -37,6 +38,35 @@
 			this.loadMore()
 		},
 		methods: {
+			onDel(item) {
+				uni.showModal({
+					title: '提示',
+					content: '确定要删除该数据?',
+					success: res => {
+						this.showLoading()
+						if (res.confirm) {
+							delSpecialPaymentsForm(item.specialAccountId)
+								.then(res => {
+									uni.showToast({
+										title: '删除成功',
+										icon: 'none'
+									})
+									setTimeout(() => {
+										this.dismissLoading()
+										this.mescroll.resetUpScroll()
+									}, REFRESH_DELAYED)
+								})
+								.catch(err => {
+									this.dismissLoading()
+									uni.showToast({
+										title: '删除失败',
+										icon: 'none'
+									})
+								})
+						}
+					}
+				});
+			},
 			loadMore() {
 				this.mescroll && this.mescroll.onReachBottom()
 			},
@@ -71,7 +101,7 @@
 			},
 			itemClick(item) {
 				uni.navigateTo({
-					url: '../applyDetail/applyDetail?id=' + item.expenseAccountId
+					url: '../payments/payments?id=' + item.specialAccountId
 				})
 			},
 			cancelKeyword() {

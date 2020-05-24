@@ -55,6 +55,16 @@
 					} else if (val == '4') {
 						return '被收款'
 					}
+				}else if (type == 'teller') {
+					if (val == '1') {
+						return '未提交'
+					} else if (val == '2') {
+						return '待收款'
+					} else if (val == '3') {
+						return '已拒收'
+					} else if (val == '4') {
+						return '已收款'
+					}
 				}
 
 			},

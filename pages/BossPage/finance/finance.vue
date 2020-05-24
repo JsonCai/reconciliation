@@ -75,8 +75,8 @@
 				})
 			}
 		},
-		onLoad() {
-			if(Option.type == 'BossPage'){
+		onLoad(option) {
+			if(option.type == 'BossPage'){
 				this.isSectionShow = true
 			}
 			getStatement()

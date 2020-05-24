@@ -48,12 +48,10 @@
 					offset,
 					limit: page.size,
 				}
-				console.log(params)
 				return params
 			},
 			/*下拉刷新的回调 */
 			downCallback() {
-				console.log(this.mescroll)
 				this.mescroll.resetUpScroll()
 			},
 			/*上拉加载的回调: 其中page.num:当前页 从1开始, page.size:每页数据条数,默认10 */

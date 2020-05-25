@@ -1,21 +1,16 @@
 <template>
 	<view class="list-item" @tap="clickitem(statement)">
-		<view class="main_item_content ">
-			<view class="main-wrap">
-				<view class="item-wrap ">
-					<text>{{getLineOneTitle(fromType)}}:</text>
-					<text>{{statement.statementItemTitle}}</text>
-				</view>
-				<view class="item-wrap " v-if="fromType == StatementTypes.mainBusinessIncome">
-					<text>{{getLineTwoTitle(fromType)}}:</text>
-					<text>{{getLineTwoValue(fromType)}}</text>
-				</view>
-				<view class="item-wrap price-wrap">
-					<text>{{getLineThreeTitle(fromType)}}:{{getLineThreeValue(fromType)}}</text>
-					<text class="apply-time fc-6">{{statement.createTime | fmtTime}}</text>
+		<view class="main-wrap">
+			<view class="inner-wrap">
+				<image src="../../static/images/listItem.png" class="list-image"></image>
+				<view class="ml-10 text-wrap">
+					<text>{{getLineOneTitle(fromType)}}:{{statement.statementItemTitle}}</text>
+					<text>{{getLineThreeTitle(fromType)}}:￥{{getLineThreeValue(fromType)}}</text>
 				</view>
 			</view>
-			<image class="arrow" :src="arrowSrc"></image>
+			<view>
+				<text class="apply-time fc-9 ml-10">{{statement.createTime | fmtTime}}</text>
+			</view>
 		</view>
 	</view>
 </template>
@@ -132,7 +127,25 @@
 <style lang="less">
 	@import url('../../common/list-item.less');
 
-	.main_item_content {
-		padding-top: 20rpx;
+	.main-wrap {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+	}
+
+	.list-image {
+		display: block;
+		width: 60rpx;
+		height: 60rpx;
+	}
+	.inner-wrap{
+		display: flex;
+		align-items: center;
+	}
+	.text-wrap{
+		text{
+			display: block;
+		}
 	}
 </style>

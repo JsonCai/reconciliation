@@ -1,6 +1,5 @@
 <template>
 	<view class="list-item" @tap="clickitem(applyItem)">
-		<view class="main_item_content ">
 			<view class="tag">
 				<text>{{applyItem.expenseAccountStatus | formatState(fromType)}}</text>
 			</view>
@@ -21,12 +20,9 @@
 					<text class="apply-time fc-6">{{applyItem.createTime | fmtTime}}</text>
 				</view>
 			</view>
-			<image class="arrow" :src="arrowSrc"></image>
-		</view>
 		<image src="../../static/images/del.png" class="del" @tap.stop="onDel(applyItem)" v-if="applyItem.expenseAccountStatus==1"></image>
 	</view>
 </template>
-
 <script>
 	import mixin from '../../libs/mixin/listItemMixin.js'
 	import {
@@ -104,4 +100,10 @@
 
 <style lang="less">
 	@import url('../../common/list-item.less');
+	.main-wrap,.price-wrap{
+		width: 100%;;
+	}
+	.main-wrap{
+		margin-top: 20rpx;
+	}
 </style>

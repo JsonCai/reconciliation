@@ -3,7 +3,7 @@
 		<realSearch @cancelKeyword="cancelKeyword" @onCancel="onCancel" @onConfirm="onConfirm"></realSearch>
 		<view class="list-wrap" v-if="isShow">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="120" bottom="10" @down="downCallback" @up="upCallback">
-				<view class="list" v-for="listItem in dataList">
+				<view class="list" v-for="listItem in dataList" :key="listItem.specialAccountId">
 					<specialPayments :specialPayment="listItem" @tap="itemClick(item)" @onDel="onDel"></specialPayments>
 				</view>
 			</mescroll-body>

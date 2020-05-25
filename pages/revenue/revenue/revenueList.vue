@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
-			<view class="list" v-for="listItem in dataList">
+			<view class="list" v-for="listItem in dataList" :key="listItem.revenueAccountId">
 				<revenueItem :revenueItem="listItem" @clickItem="itemClick" fromType='revenue' @onDel="onDel"></revenueItem>
 			</view>
 		</mescroll-body>

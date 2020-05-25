@@ -3,7 +3,7 @@
 		<fakeSearch @onSearch='onSearch' />
 		<view class="list-wrap">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="120" bottom="10" @down="downCallback" @up="upCallback">
-				<view class="list" v-for="listItem in dataList">
+				<view class="list" v-for="listItem in dataList" :key="listItem.specialAccountId">
 					<specialPayments :specialPayment="listItem" @clickItem="itemClick(listItem)" @onDel="onDel"></specialPayments>
 				</view>
 			</mescroll-body>

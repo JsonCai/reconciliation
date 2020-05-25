@@ -3,7 +3,7 @@
 		<fakeSearch  @onSearch="searchClick"></fakeSearch>
 		<view class="list-wrap">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="120" bottom="10" @down="downCallback" @up="upCallback">
-				<view class="list" v-for="listItem in dataList">
+				<view class="list" v-for="listItem in dataList" :key="listItem.expenseAccountId">
 					<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='boss'></applyItem>
 				</view>
 			</mescroll-body>
@@ -80,6 +80,11 @@
 			searchClick() {
 				uni.navigateTo({
 					url:'../searchPage/searchPage'
+				})
+			},
+			clickItem(item) {
+				uni.navigateTo({
+					url: '../../teller/applyDetail/applyDetail?id=' + item.expenseAccountId
 				})
 			}
 		}

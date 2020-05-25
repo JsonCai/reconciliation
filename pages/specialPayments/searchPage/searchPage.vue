@@ -89,11 +89,11 @@
 			upCallback(page) {
 				searchSpecialList(this.getApplyFormData(page))
 					.then(res => {
-						this.mescroll.endSuccess(res.data.expenseAccounts.length);
+						this.mescroll.endSuccess(res.data.specialAccounts.length);
 						if (page.num == 1) {
 							this.dataList = []
 						}
-						this.dataList = this.dataList.concat(res.data.expenseAccounts)
+						this.dataList = this.dataList.concat(res.data.specialAccounts)
 					})
 					.catch(err => {
 						if (page.num == 1) {

@@ -1,6 +1,5 @@
 <template>
 	<view class="list-item" @tap="clickitem(specialPayment)">
-		<view class="main_item_content ">
 			<view class="main-wrap">
 				<view class="item-wrap ">
 					<text>名称：</text>
@@ -18,9 +17,7 @@
 					<text class="apply-time fc-6">{{specialPayment.accountTime | fmtTime}}</text>
 				</view>
 			</view>
-			<image class="arrow" :src="arrowSrc"></image>
 			<image src="../../static/images/del.png" class="del" @tap.stop="onDel(specialPayment)"></image>
-		</view>
 	</view>
 </template>
 
@@ -79,8 +76,10 @@
 
 <style lang="less">
 	@import url('../../common/list-item.less');
-
-	.main_item_content {
-		padding-top: 20rpx;
+	.main-wrap,.price-wrap{
+		width: 100%;;
+	}
+	.main-wrap{
+		margin-top: 20rpx;
 	}
 </style>

@@ -28,7 +28,7 @@
 					<text v-else>{{ detailForm.accountTime}}</text>
 				</view>
 			</view>
-			<view class="img-wrap fc-6" v-if="(detailForm.specialAccountId&&detailForm.voucherUrls&&detailForm.voucherUrls.length)||!detailForm.specialAccountId">
+			<view class="img-wrap fc-6 mt-20" v-if="(detailForm.specialAccountId&&detailForm.voucherUrls&&detailForm.voucherUrls.length)||!detailForm.specialAccountId">
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.voucherUrls" :isDisabled="detailForm.specialAccountId" @changeImgList="changeImgList" />
 			</view>

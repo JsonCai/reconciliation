@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="v-content">
 		<text class="time-label" v-if="isSectionShow">时间区间</text>
 		<view class="v-time-range" v-if="isSectionShow">
 			<text class="time-range" @tap="onStartTimeTap(0,startTime)">

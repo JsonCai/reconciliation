@@ -9,6 +9,7 @@
 				</view>
 			</view>
 		</mescroll-body>
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
 
@@ -23,6 +24,12 @@
 		MessageTypes,
 		REFRESH_DELAYED
 	} from '@/config/config.js'
+	import {
+		applyDetail
+	} from '@/api/apply/apply.js'
+	import {
+		revenueDetail
+	} from '../../api/revenue/revenue.js'
 
 	export default {
 		mixins: [MescrollMixin],
@@ -62,14 +69,55 @@
 				})
 				switch (item.channelSerialNumber) {
 					case MessageTypes.purchaseCode:
-						uni.navigateTo({
-							url: '../buyer/applyDetail/applyDetail?id=' + item.externalResource
-						})
+						this.showLoading()
+						applyDetail(item.externalResource)
+							.then(res => {
+								this.dismissLoading()
+								if (res.data.expenseAccount.expenseAccountStatus.value != 3) {
+									uni.navigateTo({
+										url: '../buyer/applyDetail/applyDetail?id=' + item.externalResource
+									})
+								} else {
+									uni.navigateTo({
+										url: '../applyForm/applyForm?id=' + item.externalResource
+									})
+								}
+							})
+							.catch(err => {
+								this.dismissLoading()
+								console.log(err)
+								uni.showToast({
+									icon: 'none',
+									title: "网络请求错误"
+								})
+							})
+
 						break;
 					case MessageTypes.revenueCode:
-						uni.navigateTo({
-							url: '../revenue/revenueDetail/revenueDetail?id=' + item.externalResource
-						})
+						this.showLoading()
+						revenueDetail(item.externalResource)
+							.then(res => {
+								this.dismissLoading()
+								console.log(res)
+								if (res.data.revenueAccount.revenueAccountStatus.value != 3) {
+									uni.navigateTo({
+										url: '../revenueDetail/revenueDetail?id=' + item.externalResource
+									})
+								} else {
+									uni.navigateTo({
+										url: '../revenueForm/revenueForm?id=' + item.externalResource
+									})
+								}
+							})
+							.catch(err => {
+								this.dismissLoading()
+								console.log(err)
+								uni.showToast({
+									icon: 'none',
+									title: "网络请求错误"
+								})
+							})
+
 						break;
 					case MessageTypes.cashierRemitCode:
 						uni.navigateTo({
@@ -93,7 +141,7 @@
 						break;
 					case MessageTypes.accountantEarningCode:
 						uni.navigateTo({
-							url: '../revenueDetail/revenueDetail?id=' + item.externalResource
+							url: '../revenue/revenueDetail/revenueDetail?id=' + item.externalResource
 						})
 						break;
 				}

@@ -75,7 +75,10 @@
 					} else if (val == '5') {
 						return '已打款'
 					}
+				}else if (type == 'accountant') {
+					return '已通过'
 				}
+
 
 			},
 			fmtTime(val) {

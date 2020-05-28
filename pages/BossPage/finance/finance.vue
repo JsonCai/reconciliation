@@ -9,19 +9,19 @@
 
 		<view class="card yellow">
 			<text class="card-title">总账面利润</text>
-			<text class="card-value">{{grossProfit|formatMoney}}元</text>
+			<text class="card-value">{{grossProfit}}元</text>
 			<text class="card-bg-money">&#xe67c;</text>
 		</view>
 
 		<view class="card blue">
 			<text class="card-title">总账面现金</text>
-			<text class="card-value">{{grossCash|formatMoney}}元</text>
+			<text class="card-value">{{grossCash}}元</text>
 			<text class="card-bg-wallet">&#xe621;</text>
 		</view>
 
 		<view class="card green">
 			<text class="card-title">总未收款</text>
-			<text class="card-value">{{grossUncollected|formatMoney}}元</text>
+			<text class="card-value">{{grossUncollected}}元</text>
 			<text class="card-bg-card">&#xe782;</text>
 		</view>
 	</view>
@@ -31,13 +31,13 @@
 	import {
 		getStatement
 	} from '../../../api/statement/statement.js'
-
+	import {fmtMoney2} from '@/libs/utils'
 	export default {
 		data() {
 			return {
-				grossProfit: 0, // 总账面利润
-				grossCash: 0, // 总账面现金
-				grossUncollected: 0, //	总未收款
+				grossProfit:'', // 总账面利润
+				grossCash: '', // 总账面现金
+				grossUncollected:'', //	总未收款
 				isSectionShow:false
 			}
 		},
@@ -82,9 +82,10 @@
 			getStatement()
 				.then(res => {
 					console.log(res)
-					this.grossCash = res.data.cash
-					this.grossProfit = res.data.profit
-					this.grossUncollected = res.data.uncollected
+					this.grossCash = fmtMoney2(res.data.totalStatementDto.cash)
+					this.grossProfit = fmtMoney2(res.data.totalStatementDto.profit)
+					this.grossUncollected = fmtMoney2(res.data.totalStatementDto.uncollected)
+					console.log(this.grossCash)
 				})
 				.catch(err => {
 

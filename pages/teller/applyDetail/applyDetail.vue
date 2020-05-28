@@ -37,19 +37,17 @@
 				<image src="../../../static/images/progress.png" class="icon-wallet mr-20"></image>
 				<text class="title-text">审批信息</text>
 			</view>
-			<view class="item-cross-line">
-				<view class="item-nowrap" v-if="detailForm.approvals&&detailForm.approvals.length">
-					<text>审批意见</text>
-					<text>{{detailForm.approvals[0].approvalOpinion}}</text>
-				</view>
-				<view class="item-nowrap" v-if="detailForm.approvals">
-					<text>审批时间</text>
-					<text>{{detailForm.approvals[0].createTime}}</text>
-				</view>
-				<view class="item-nowrap" v-if="detailForm.approvals && detailForm.approvals.approvalPerson">
-					<text>审批人</text>
-					<text>{{detailForm.approvals.approvalPerson[0].employeeName}}</text>
-				</view>
+			<view class="item-wrap" v-if="detailForm.approvals&&detailForm.approvals.length">
+				<text>审批意见</text>
+				<text>{{detailForm.approvals[0].approvalOpinion}}</text>
+			</view>
+			<view class="item-wrap" v-if="detailForm.approvals">
+				<text>审批时间</text>
+				<text>{{detailForm.approvals[0].createTime}}</text>
+			</view>
+			<view class="item-wrap" v-if="detailForm.approvals && detailForm.approvals.approvalPerson">
+				<text>审批人</text>
+				<text>{{detailForm.approvals.approvalPerson[0].employeeName}}</text>
 			</view>
 			<view class="title item-wrap" v-if="detailForm.approvals">
 				<image src="../../../static/images/remit.png" class="icon-wallet mr-20"></image>
@@ -111,7 +109,7 @@
 				this.showLoading()
 				paymentExpence({
 						expenseAccountId: this.detailForm.expenseAccountId,
-						paymentTime: this.detailForm.paymentTime+" 00:00:00",
+						paymentTime: this.detailForm.paymentTime + " 00:00:00",
 						paymentVoucherUrls: this.detailForm.paymentVoucherUrls = ['aaa']
 					})
 					.then(res => {
@@ -154,6 +152,7 @@
 				.then(res => {
 					console.log(res)
 					this.$set(this, "detailForm", res.data.expenseAccount)
+					this.$set(this.detailForm, 'amount', this.detailForm.amount / 100)
 				})
 				.catch(err => {
 					console.log(err)
@@ -171,7 +170,6 @@
 
 <style lang="less" scoped>
 	@import url('../../../common/detailForm.less');
-
 	.btn-wrap {
 		justify-content: center;
 

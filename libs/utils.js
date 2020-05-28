@@ -75,10 +75,25 @@ export function fmtMoney(val) {
 }
 
 export function fmtMoney2(val) {
-	const str = '00' + val
-	const s = str.substring(0, str.length - 2)
-	const e = '.' + str.substring(str.length - 2)
-	return Number(s + e)
+	console.log(typeof val)
+	console.log(val)
+	if(val > 0){
+		console.log(11111111111)
+		const str = '00' + val
+		const s = str.substring(0, str.length - 2)
+		const e = '.' + str.substring(str.length - 2)
+		console.log(Number(s + e))
+		return Number(s + e)
+	}else{
+		
+		const str1 = '' + val
+		console.log(str1)
+		 const s1 = str1.substring(1, str1.length - 2)
+		 
+		 const e1 = '.' + str1.substring(str1.length - 2)
+		 console.log(Number(s1 + e1))
+		 return (0 - Number(s1 + e1))
+	}
 }
 
 export function accMul(arg1, arg2) {

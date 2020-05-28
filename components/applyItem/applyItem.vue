@@ -78,8 +78,6 @@
 				}else if (type == 'accountant') {
 					return '已通过'
 				}
-
-
 			},
 			fmtTime(val) {
 				if (val) {

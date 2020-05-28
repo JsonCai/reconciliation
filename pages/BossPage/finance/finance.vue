@@ -3,7 +3,7 @@
 
 		<view class="tab-title" v-if="isSectionShow">
 			<text class="tab" @tap="reportScope">区间财务</text>
-			<view style="width: 1px;height: 40rpx;background-color: #ededed;"></view>
+			<view class="v-line"></view>
 			<text class="tab" @tap="yearReportClick">年度财务</text>
 		</view>
 

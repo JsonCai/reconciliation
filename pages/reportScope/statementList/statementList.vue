@@ -45,15 +45,15 @@
 				// })
 				if (this.requestData.statementItemType == StatementTypes.mainBusinessExpenses) {
 					uni.navigateTo({
-						url: '../../buyer/applyDetail/applyDetail?id=' + statement.statementItemId
+						url: '../../buyer/applyDetail/applyDetail?id=' + statement.externalResource
 					})
-				} else if (this.requestData.statementItemType == StatementTypes.otherExpenses) {
+				} else if (this.requestData.statementItemType == StatementTypes.mainBusinessIncome) {
 					uni.navigateTo({
-						url: '../../revenue/revenueDetail/revenueDetail?id=' + statement.statementItemId
+						url: '../../revenue/revenueDetail/revenueDetail?id=' + statement.externalResource
 					})
 				} else {
 					uni.navigateTo({
-						url: '../../specialPayments/payments/payments?id=' + statement.statementItemId
+						url: '../../specialPayments/payments/payments?id=' + statement.externalResource
 					})
 				}
 			},

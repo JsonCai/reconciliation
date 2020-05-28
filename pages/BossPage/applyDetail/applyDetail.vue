@@ -27,7 +27,7 @@
 			</view>
 			<view class="item-wrap">
 				<text>申请日期:</text>
-				<text>{{detailForm.applyTime | fmtDate}}</text>
+				<text>{{detailForm.applyTime}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.applyPerson">
 				<text>申请人:</text>

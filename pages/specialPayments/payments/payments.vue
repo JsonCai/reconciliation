@@ -97,7 +97,7 @@
 				}
 			},
 			onCatagory(value) {
-				const specialType = this.specialType[this.specialTypeIndex]
+				const specialType = this.specialType[value.detail.value]
 				this.specialTypeName = specialType.name
 				this.detailForm.specialAccountType = specialType.type
 			},
@@ -161,7 +161,7 @@
 							this.detailForm.accountTime = this.detailForm.accountTime.split(' ')[0]
 						}
 						if (this.detailForm.specialAccountType) {
-							if (this.detailForm.specialAccountType == 1) {
+							if (this.detailForm.specialAccountType.value == 1) {
 								this.specialTypeName = "其他收入"
 							} else {
 								this.specialTypeName = "其他支出"

@@ -53,7 +53,10 @@
 	import {
 		revenueDetail
 	} from '@/api/revenue/revenue.js'
-	import getRevenueStateStr from '@/config/config.js'
+	import getRevenueStateStr from '@/config/config.js'	
+	import {
+		fmtMoney2
+	} from '@/libs/utils'
 	export default {
 		components: {
 			imgList
@@ -91,9 +94,19 @@
 				.then(res => {
 					console.log(res)
 					this.$set(this, "detailForm", res.data.revenueAccount)
+					this.detailForm.fundsReceived = fmtMoney2(this.detailForm.fundsReceived)
+					this.detailForm.accountReceivable = fmtMoney2(this.detailForm.accountReceivable)
 				})
 				.catch(err => {
+					this.dismissLoading()
 					console.log(err)
+					uni.showToast({
+						icon: 'none',
+						title: "获取详情失败"
+					})
+					setTimeout(() => {
+						uni.navigateBack()
+					}, 500)
 				})
 		}
 	}

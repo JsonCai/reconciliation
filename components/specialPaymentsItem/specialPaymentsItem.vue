@@ -33,8 +33,8 @@
 			fromType: String
 		},
 		filters: {
-			formatState(val, type) {
-				if (type == 1) {
+			formatState(val) {
+				if (val == 1) {
 					return '其他收入'
 				}
 				return '其他支出'

@@ -161,8 +161,8 @@ export const MessageTypes = {
 export const StatementTypes = {
 	mainBusinessIncome: 1,
 	mainBusinessExpenses: 2,
-	otherExpenses: 3,
-	otherIncome: 4
+	otherIncome: 3,
+	otherExpenses: 4
 }
 
 export const REFRESH_DELAYED = 1500

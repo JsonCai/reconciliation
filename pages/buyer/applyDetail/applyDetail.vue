@@ -27,11 +27,11 @@
 			</view>
 			<view class="item-wrap">
 				<text>申请日期:</text>
-				<text>{{detailForm.applyTime | fmtDate}}</text>
+				<text>{{detailForm.applyTime}}</text>
 			</view>
-			<view class="item-wrap">
+			<view class="item-wrap" v-if="detailForm.endTime">
 				<text>结束日期:</text>
-				<text>{{detailForm.endTime | fmtDate}}</text>
+				<text>{{detailForm.endTime}}</text>
 			</view>
 			<view class="item-wrap">
 				<text>状态:</text>
@@ -53,7 +53,8 @@
 <script>
 	import imgList from '@/components/imgList/imgList.vue'
 	import {
-		dateFtt
+		dateFtt,
+		fmtMoney2
 	} from '@/libs/utils'
 	import {
 		applyDetail
@@ -71,12 +72,12 @@
 			}
 		},
 		methods: {
-			showHistory(){
-				 // this.$refs.popup.open()
-				 uni.navigateTo({
-				 	url:'/pages/reasonList/reasonList'
-				 })
-				 uni.$emit('showHistory',this.detailForm.approvals)
+			showHistory() {
+				// this.$refs.popup.open()
+				uni.navigateTo({
+					url: '/pages/reasonList/reasonList'
+				})
+				uni.$emit('showHistory', this.detailForm.approvals)
 			},
 		},
 		filters: {
@@ -96,7 +97,7 @@
 					return '未通过'
 				} else if (val == 4) {
 					return '已通过'
-				}else{
+				} else {
 					return '已打款'
 				}
 			}
@@ -107,6 +108,7 @@
 				.then(res => {
 					console.log(res)
 					this.$set(this, "detailForm", res.data.expenseAccount)
+					this.detailForm.amount = fmtMoney2(this.detailForm.amount)
 				})
 				.catch(err => {
 					console.log(err)

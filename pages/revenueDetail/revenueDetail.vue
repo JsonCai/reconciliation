@@ -74,6 +74,9 @@
 		getRevenueStateStr,
 		REFRESH_DELAYED
 	} from '@/config/config.js'
+	import {
+		fmtMoney2
+	} from '@/libs/utils'
 	export default {
 		components: {
 			imgList
@@ -160,6 +163,8 @@
 					this.dismissLoading()
 					console.log(res)
 					this.$set(this, "detailForm", res.data.revenueAccount)
+					this.detailForm.fundsReceived = fmtMoney2(this.detailForm.fundsReceived)
+					this.detailForm.accountReceivable = fmtMoney2(this.detailForm.accountReceivable)
 					if (res.data.revenueAccount.receiptActions&&res.data.revenueAccount.receiptActions.length) {
 						this.approvals = res.data.revenueAccount.receiptActions.map(item => {
 							let result =  {

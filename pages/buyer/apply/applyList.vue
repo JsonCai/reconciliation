@@ -2,7 +2,9 @@
 	<view>
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
 			<view class="list" v-for="listItem in dataList" :key="listItem.expenseAccountId">
-				<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='buyer' @onDel="onDel"></applyItem>
+				<view @tap="itemClick(listItem)">
+					<applyItem :applyItem="listItem" fromType='buyer' @onDel="onDel"></applyItem>
+				</view>
 			</view>
 		</mescroll-body>
 		<loading :isShow='isShowLoading'></loading>
@@ -98,6 +100,7 @@
 							this.dataList = []
 						}
 						this.dataList = this.dataList.concat(res.data.expenseAccounts)
+						console.log(this.dataList)
 					})
 					.catch(err => {
 						if (page.num == 1) {

@@ -1,30 +1,33 @@
 <template>
-	<view class="list-item" @tap="clickitem(applyItem)">
-			<view class="tag">
-				<text>{{applyItem.expenseAccountStatus | formatState(fromType)}}</text>
+	<view class="list-item">
+		<view class="tag">
+			<text>{{applyObj.expenseAccountStatus | formatState(fromType)}}</text>
+		</view>
+		<view class="main-wrap">
+			<view class="item-wrap ">
+				<text>名称：</text>
+				<text>{{applyObj.expenseAccountTitle}}</text>
 			</view>
-			<view class="main-wrap">
-				<view class="item-wrap ">
-					<text>名称：</text>
-					<text>{{applyItem.expenseAccountTitle}}</text>
-				</view>
-				<view class="item-wrap ">
-					<text>分类：</text>
-					<text>{{applyItem.costCategoryName}}</text>
-				</view>
-				<view class="item-wrap price-wrap">
-					<view>
-						<text>报销金额：</text>
-						<text class="fc-r">￥{{applyItem.amount | formatMoney}}</text>
-					</view>
-					<text class="apply-time fc-6">{{applyItem.createTime | fmtTime}}</text>
-				</view>
+			<view class="item-wrap ">
+				<text>分类：</text>
+				<text>{{applyObj.costCategoryName}}</text>
 			</view>
-		<image src="../../static/images/del.png" class="del" @tap.stop="onDel(applyItem)" v-if="applyItem.expenseAccountStatus==1"></image>
+			<view class="item-wrap price-wrap">
+				<view>
+					<text>报销金额：</text>
+					<text class="fc-r">￥{{applyObj.amount | formatMoney}}</text>
+				</view>
+				<text class="apply-time fc-6">{{applyObj.createTime | fmtTime}}</text>
+			</view>
+		</view>
+		<image src="../../static/images/del.png" class="del" @tap.stop="onDel" v-if="applyObj.expenseAccountStatus==1"></image>
 	</view>
 </template>
 <script>
 	import mixin from '../../libs/mixin/listItemMixin.js'
+	import {
+		deepClone
+	} from '@/libs/utils'
 	import {
 		dateFtt
 	} from '../../libs/utils'
@@ -36,6 +39,11 @@
 		props: {
 			applyItem: Object,
 			fromType: String
+		},
+		data() {
+			return {
+				applyObj: {}
+			}
 		},
 		filters: {
 			formatState(val, type) {
@@ -75,7 +83,7 @@
 					} else if (val == '5') {
 						return '已打款'
 					}
-				}else if (type == 'accountant') {
+				} else if (type == 'accountant') {
 					return '已通过'
 				}
 
@@ -86,27 +94,50 @@
 					return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val))
 				}
 			},
-			formatMoney(val){
+			formatMoney(val) {
 				return fmtMoney2(val)
 			}
 		},
 		methods: {
 			onDel(item) {
-				this.$emit('onDel', item)
+				this.$emit('onDel', this.applyObj)
 			},
-			clickitem(item) {
-				this.$emit('clickItem', item)
+			clickitem() {
+				console.log(this.applyItem)
+				this.$emit('clickItem', this.applyItem)
 			}
-		}
+		},
+		watch: {
+			applyItem: {
+				handler(val) {
+					console.log(123)
+					console.log(val)
+					if (val) {
+						this.$set(this.applyObj, 'expenseAccountTitle', val.expenseAccountTitle)
+						this.$set(this.applyObj, 'expenseAccountStatus', val.expenseAccountStatus)
+						this.$set(this.applyObj, 'costCategoryName', val.costCategoryName)
+						this.$set(this.applyObj, 'amount', val.amount)
+						this.$set(this.applyObj, 'createTime', val.createTime)
+						this.$set(this.applyObj, 'expenseAccountId', val.expenseAccountId)
+					}
+					// this.applyObj.expenseAccountId = val.expenseAccountId
+				},
+				immediate: true
+			}
+		},
 	}
 </script>
 
 <style lang="less">
 	@import url('../../common/list-item.less');
-	.main-wrap,.price-wrap{
-		width: 100%;;
+
+	.main-wrap,
+	.price-wrap {
+		width: 100%;
+		;
 	}
-	.main-wrap{
+
+	.main-wrap {
 		margin-top: 20rpx;
 	}
 </style>

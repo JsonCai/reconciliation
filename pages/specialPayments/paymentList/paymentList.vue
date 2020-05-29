@@ -4,7 +4,9 @@
 		<view class="list-wrap">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="140" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList" :key="listItem.specialAccountId">
-					<specialPayments :specialPayment="listItem" @clickItem="itemClick(listItem)" @onDel="onDel"></specialPayments>
+					<view @tap="itemClick(listItem)">
+						<specialPayments :specialPayment="listItem" @onDel="onDel(listItem)"></specialPayments>
+					</view>
 				</view>
 			</mescroll-body>
 		</view>
@@ -49,8 +51,8 @@
 					title: '提示',
 					content: '确定要删除该数据?',
 					success: res => {
-						this.showLoading()
 						if (res.confirm) {
+							this.showLoading()
 							delSpecialPaymentsForm(item.specialAccountId)
 								.then(res => {
 									uni.showToast({

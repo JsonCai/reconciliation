@@ -27,7 +27,7 @@
 			</view>
 			<view class="item-wrap">
 				<text>申请日期:</text>
-				<text>{{detailForm.applyTime}}</text>
+				<text>{{detailForm.applyTime | fmtDate}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.applyPerson">
 				<text>申请人:</text>
@@ -97,6 +97,14 @@
 
 			}
 		},
+		filters: {
+			fmtDate(val) {
+				if (val) {
+					return val.split(' ')[0]
+				}
+				return ''
+			},
+		},
 		methods: {
 			onPassTap() {
 				if (!this.detailForm.paymentTime) {
@@ -106,28 +114,40 @@
 					})
 					return
 				}
-				this.showLoading()
-				paymentExpence({
-						expenseAccountId: this.detailForm.expenseAccountId,
-						paymentTime: this.detailForm.paymentTime + " 00:00:00",
-						paymentVoucherUrls: this.detailForm.paymentVoucherUrls = ['aaa']
-					})
-					.then(res => {
-						if (res.code == '0') {
-							uni.showToast({
-								icon: 'none',
-								title: "打款成功"
-							})
-							setTimeout(() => {
-								this.dismissLoading()
-								uni.$emit('reload')
-								uni.navigateBack()
-							}, REFRESH_DELAYED)
+				uni.showModal({
+					title: '提示',
+					content: '是否确认打款?',
+					success: res => {
+						if (res.confirm) {
+							this.showLoading()
+							paymentExpence({
+									expenseAccountId: this.detailForm.expenseAccountId,
+									paymentTime: this.detailForm.paymentTime + " 00:00:00",
+									paymentVoucherUrls: this.detailForm.paymentVoucherUrls = ['aaa']
+								})
+								.then(res => {
+									if (res.code == '0') {
+										uni.showToast({
+											icon: 'none',
+											title: "打款成功"
+										})
+										setTimeout(() => {
+											this.dismissLoading()
+											uni.$emit('reload')
+											uni.navigateBack()
+										}, REFRESH_DELAYED)
+									}
+								})
+								.catch(err => {
+									this.dismissLoading()
+									uni.showToast({
+										icon: 'none',
+										title: "操作失败"
+									})
+								})
 						}
-					})
-					.catch(err => {
-						console.log(err)
-					})
+					}
+				});
 			},
 			changeImgList(list) {
 				console.log(list)
@@ -170,6 +190,7 @@
 
 <style lang="less" scoped>
 	@import url('../../../common/detailForm.less');
+
 	.btn-wrap {
 		justify-content: center;
 

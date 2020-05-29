@@ -31,14 +31,17 @@
 	import {
 		getStatement
 	} from '../../../api/statement/statement.js'
-	import {fmtMoney2} from '@/libs/utils'
+	import {
+		fmtMoney2,
+		fmtMoneyBySeparator
+	} from '@/libs/utils'
 	export default {
 		data() {
 			return {
-				grossProfit:'', // 总账面利润
+				grossProfit: '', // 总账面利润
 				grossCash: '', // 总账面现金
-				grossUncollected:'', //	总未收款
-				isSectionShow:false
+				grossUncollected: '', //	总未收款
+				isSectionShow: false
 			}
 		},
 		filters: {
@@ -69,22 +72,22 @@
 					url: "../../reportScope/reportScope"
 				})
 			},
-			yearReportClick(){
+			yearReportClick() {
 				uni.navigateTo({
-					url:'../../reportScope/yearReportScope/yearReportScope'
+					url: '../../reportScope/yearReportScope/yearReportScope'
 				})
 			}
 		},
 		onLoad(option) {
-			if(option.type == 'BossPage'){
+			if (option.type == 'BossPage') {
 				this.isSectionShow = true
 			}
 			getStatement()
 				.then(res => {
 					console.log(res)
-					this.grossCash = fmtMoney2(res.data.totalStatementDto.cash)
-					this.grossProfit = fmtMoney2(res.data.totalStatementDto.profit)
-					this.grossUncollected = fmtMoney2(res.data.totalStatementDto.uncollected)
+					this.grossCash = fmtMoneyBySeparator(fmtMoney2(res.data.totalStatementDto.cash))
+					this.grossProfit = fmtMoneyBySeparator(fmtMoney2(res.data.totalStatementDto.profit))
+					this.grossUncollected = fmtMoneyBySeparator(fmtMoney2(res.data.totalStatementDto.uncollected))
 					console.log(this.grossCash)
 				})
 				.catch(err => {

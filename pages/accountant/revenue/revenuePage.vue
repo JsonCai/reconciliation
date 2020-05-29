@@ -1,10 +1,12 @@
 <template>
 	<view>
-		<fakeSearch  @onSearch="searchClick"></fakeSearch>
-		<view class="list-wrap" >
+		<fakeSearch @onSearch="searchClick"></fakeSearch>
+		<view class="list-wrap">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="120" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList" :key="listItem.revenueAccountId">
-					<revenueItem :revenueItem="listItem" @clickItem="itemClick" fromType='revenue'></revenueItem>
+					<view @tap="itemClick(listItem)">
+						<revenueItem :revenueItem="listItem" fromType='revenue'></revenueItem>
+					</view>
 				</view>
 			</mescroll-body>
 		</view>
@@ -81,9 +83,9 @@
 					url: '../../revenueDetail/revenueDetail?id=' + item.revenueAccountId
 				})
 			},
-			searchClick(){
+			searchClick() {
 				uni.navigateTo({
-					url:'../revenueSearchPage/revenueSearchPage'
+					url: '../revenueSearchPage/revenueSearchPage'
 				})
 			}
 		}

@@ -93,7 +93,7 @@
 			return {
 				detailForm: {},
 				revenueParams: {},
-				approvals:[]
+				approvals: []
 			}
 		},
 		methods: {
@@ -122,28 +122,35 @@
 			},
 			onPassTap() {
 				if (this.onValidate()) {
-					this.showLoading()
-					console.log(this.revenueParams)
-					receiveRevenueAccounts(this.revenueParams)
-						.then(res => {
-							console.log(res)
-							uni.showToast({
-								icon: 'none',
-								title: '操作成功'
-							})
-							setTimeout(() => {
-								uni.navigateBack()
-								uni.$emit('reload')
-								this.dismissLoading()
-							}, REFRESH_DELAYED)
-						}).catch(err => {
-							this.dismissLoading()
-							console.log(err)
-							uni.showToast({
-								icon: 'none',
-								title: '操作失败'
-							})
-						})
+					uni.showModal({
+						title: '提示',
+						content: '是否确认审核?',
+						success: res => {
+							if (res.confirm) {
+								this.showLoading()
+								receiveRevenueAccounts(this.revenueParams)
+									.then(res => {
+										console.log(res)
+										uni.showToast({
+											icon: 'none',
+											title: '操作成功'
+										})
+										setTimeout(() => {
+											uni.navigateBack()
+											uni.$emit('reload')
+											this.dismissLoading()
+										}, REFRESH_DELAYED)
+									}).catch(err => {
+										this.dismissLoading()
+										console.log(err)
+										uni.showToast({
+											icon: 'none',
+											title: '操作失败'
+										})
+									})
+							}
+						}
+					});
 				}
 			},
 			changeReason(ev) {
@@ -165,9 +172,9 @@
 					this.$set(this, "detailForm", res.data.revenueAccount)
 					this.detailForm.fundsReceived = fmtMoney2(this.detailForm.fundsReceived)
 					this.detailForm.accountReceivable = fmtMoney2(this.detailForm.accountReceivable)
-					if (res.data.revenueAccount.receiptActions&&res.data.revenueAccount.receiptActions.length) {
+					if (res.data.revenueAccount.receiptActions && res.data.revenueAccount.receiptActions.length) {
 						this.approvals = res.data.revenueAccount.receiptActions.map(item => {
-							let result =  {
+							let result = {
 								"approvalOpinion": item.receiptOpinion,
 								"approvalPerson": item.receiptPerson,
 								"approvalType": item.receiptActionType.value,

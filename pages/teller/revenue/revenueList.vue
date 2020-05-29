@@ -1,7 +1,9 @@
 <template>
 	<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
 		<view class="list" v-for="listItem in dataList" :key="listItem.revenueAccountId">
-			<revenueItem :revenueItem="listItem" @clickItem="itemClick" fromType='teller'></revenueItem>
+			<view @tap="itemClick(listItem)">
+				<revenueItem :revenueItem="listItem" fromType='teller'></revenueItem>
+			</view>
 		</view>
 	</mescroll-body>
 </template>
@@ -32,7 +34,7 @@
 			loadMore() {
 				this.mescroll && this.mescroll.onReachBottom()
 			},
-			reload(){
+			reload() {
 				this.mescroll && this.mescroll.resetUpScroll()
 			},
 			getApplyFormData(page) {

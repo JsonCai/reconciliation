@@ -1,28 +1,28 @@
 <template>
-	<view class="list-item" @tap="clickitem(revenueItem)">
+	<view class="list-item">
 			<view class="tag">
-				<text>{{revenueItem.revenueAccountStatus | formatState(fromType)}}</text>
+				<text>{{revenueObj.revenueAccountStatus | formatState(fromType)}}</text>
 			</view>
 			<view class="main-wrap">
 				<view class="item-wrap ">
 					<text>名称：</text>
-					<text>{{revenueItem.revenueAccountTitle}}</text>
+					<text>{{revenueObj.revenueAccountTitle}}</text>
 				</view>
 				<view class="item-wrap price-wrap">
 					<view>
 						<text>应收金额：</text>
-						<text class="fc-r">￥{{revenueItem.accountReceivable | formatMoney}}</text>
+						<text class="fc-r">￥{{revenueObj.accountReceivable | formatMoney}}</text>
 					</view>
 				</view>
 				<view class="item-wrap price-wrap">
 					<view>
 						<text>实收金额：</text>
-						<text class="fc-r">￥{{revenueItem.fundsReceived | formatMoney}}</text>
+						<text class="fc-r">￥{{revenueObj.fundsReceived | formatMoney}}</text>
 					</view>
-					<text class="apply-time fc-6">{{revenueItem.createTime | fmtTime}}</text>
+					<text class="apply-time fc-6">{{revenueObj.createTime | fmtTime}}</text>
 				</view>
 			</view>
-			<image src="../../static/images/del.png" class="del" @tap.stop="onDel(revenueItem)" v-if="revenueItem.revenueAccountStatus==1"></image>
+			<image src="../../static/images/del.png" class="del" @tap.stop="onDel" v-if="revenueObj.revenueAccountStatus==1"></image>
 	</view>
 </template>
 
@@ -39,6 +39,11 @@
 		props: {
 			revenueItem: Object,
 			fromType: String
+		},
+		data(){
+			return{
+				revenueObj:{}
+			}
 		},
 		filters: {
 			formatState(val, type) {
@@ -63,7 +68,6 @@
 						return '已收款'
 					}
 				}
-
 			},
 			fmtTime(val) {
 				return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val))
@@ -86,12 +90,22 @@
 					}
 				});
 			},
-			onDel(item) {
-				this.$emit('onDel', item)
-			},
-			clickitem(item) {
-				console.log(item)
-				this.$emit('clickItem', item)
+			onDel() {
+				this.$emit('onDel')
+			}
+		},
+		watch:{
+			revenueItem:{
+				handler(val) {
+					if (val) {
+						this.$set(this.revenueObj, 'revenueAccountStatus', val.revenueAccountStatus)
+						this.$set(this.revenueObj, 'revenueAccountTitle', val.revenueAccountTitle)
+						this.$set(this.revenueObj, 'accountReceivable', val.accountReceivable)
+						this.$set(this.revenueObj, 'fundsReceived', val.fundsReceived)
+						this.$set(this.revenueObj, 'createTime', val.createTime)
+					}
+				},
+				immediate: true
 			}
 		}
 	}

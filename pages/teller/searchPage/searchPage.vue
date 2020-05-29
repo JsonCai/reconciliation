@@ -4,7 +4,9 @@
 		<view class="list-wrap" v-if="isShow">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="120" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList" :key="listItem.expenseAccountId">
-					<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='teller'></applyItem>
+					<view @tap="clickItem(listItem)">
+						<applyItem :applyItem="listItem" fromType='teller'></applyItem>
+					</view>
 				</view>
 			</mescroll-body>
 		</view>
@@ -99,7 +101,7 @@
 		onBackPress() {
 			uni.hideKeyboard()
 		},
-		onLoad(){
+		onLoad() {
 			uni.$on("reload", () => {
 				this.reload()
 			})

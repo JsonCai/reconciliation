@@ -18,7 +18,7 @@
 			</view>
 			<view class="item-wrap">
 				<text>金额:</text>
-				<input :disabled="detailForm.specialAccountId" class="input-text" placeholder="请输入申报金额" placeholder-class="place"
+				<input :disabled="detailForm.specialAccountId" class="input-text" placeholder="请输入金额" placeholder-class="place"
 				 v-model="detailForm.amount" type="digit" @blur="changeAmount" />
 			</view>
 			<view class="item-wrap">
@@ -103,28 +103,36 @@
 			},
 			onPassTap() {
 				if (this.isFormFill()) {
-					this.showLoading()
-					this.submitApplyForm()
-						.then(res => {
-							console.log(res)
-							setTimeout(() => {
-								uni.showToast({
-									icon: 'none',
-									title: "创建成功"
-								})
-								uni.$emit("reload")
-								uni.navigateBack()
-								this.dismissLoading()
-							}, REFRESH_DELAYED)
-						})
-						.catch(err => {
-							this.dismissLoading()
-							console.log(err)
-							uni.showToast({
-								icon: 'none',
-								title: "请求失败"
-							})
-						})
+					uni.showModal({
+						title: '提示',
+						content: '是否确认提交?',
+						success: res => {
+							if (res.confirm) {
+								this.showLoading()
+								this.submitApplyForm()
+									.then(res => {
+										console.log(res)
+										setTimeout(() => {
+											uni.showToast({
+												icon: 'none',
+												title: "创建成功"
+											})
+											uni.$emit("reload")
+											uni.navigateBack()
+											this.dismissLoading()
+										}, REFRESH_DELAYED)
+									})
+									.catch(err => {
+										this.dismissLoading()
+										console.log(err)
+										uni.showToast({
+											icon: 'none',
+											title: "请求失败"
+										})
+									})
+							}
+						}
+					});
 				}
 			},
 			// 返回报销单id（提交->申请报销）

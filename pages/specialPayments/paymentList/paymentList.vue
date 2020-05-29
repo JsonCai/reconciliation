@@ -51,8 +51,8 @@
 					title: '提示',
 					content: '确定要删除该数据?',
 					success: res => {
-						this.showLoading()
 						if (res.confirm) {
+							this.showLoading()
 							delSpecialPaymentsForm(item.specialAccountId)
 								.then(res => {
 									uni.showToast({

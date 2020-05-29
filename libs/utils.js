@@ -75,18 +75,18 @@ export function fmtMoney(val) {
 }
 
 export function fmtMoney2(val) {
-	if(val > 0){
+	if (val > 0) {
 		const str = '00' + val
 		const s = str.substring(0, str.length - 2)
 		const e = '.' + str.substring(str.length - 2)
 		return Number(s + e)
-	}else{
-		
+	} else {
+
 		const str1 = '' + val
-		 const s1 = str1.substring(1, str1.length - 2)
-		 
-		 const e1 = '.' + str1.substring(str1.length - 2)
-		 return (0 - Number(s1 + e1))
+		const s1 = str1.substring(1, str1.length - 2)
+
+		const e1 = '.' + str1.substring(str1.length - 2)
+		return (0 - Number(s1 + e1))
 	}
 }
 
@@ -101,4 +101,32 @@ export function accMul(arg1, arg2) {
 		m += s2.split(".")[1].length
 	} catch (e) {}
 	return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
+}
+
+export function fmtMoneyBySeparator(float) {
+	var isMinus = false
+	if (float < 0) {
+		float = 0 - float
+		isMinus = true
+	}
+	var result = [],
+		counter = 0,
+		r = '';
+	let num = (float || 0).toString().split('.')[0].split('');
+	for (var i = num.length - 1; i >= 0; i--) {
+		counter++;
+		result.unshift(num[i]);
+		if (!(counter % 3) && i != 0) {
+			result.unshift(',');
+		}
+	}
+	if (float.toString().indexOf('.') != -1) {
+		r = result.join('') + "." + float.toString().split('.')[1];
+	} else {
+		r = result.join('');
+	}
+	if (isMinus) {
+		r = '-' + r
+	}
+	return r
 }

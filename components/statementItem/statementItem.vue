@@ -107,13 +107,13 @@
 			},
 			getLineThreeValue(type) {
 				if (type == StatementTypes.mainBusinessIncome) {
-					return this.statement.fundsReceived
+					return fmtMoney2(this.statement.fundsReceived)
 				} else if (type == StatementTypes.mainBusinessExpenses) {
-					return this.statement.amount
+					return fmtMoney2(this.statement.amount)
 				} else if (type == StatementTypes.otherExpenses) {
-					return this.statement.amount
+					return fmtMoney2(this.statement.amount)
 				} else if (type == StatementTypes.otherIncome) {
-					return this.statement.amount
+					return fmtMoney2(this.statement.amount)
 				}
 				return ''
 			},

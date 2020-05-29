@@ -22,39 +22,39 @@
 			<text class="report-text fc-6">{{realTime.startTime}}</text>
 			<text>&ensp;至&ensp;</text>
 			<text class="fc-6">{{realTime.endTime}}</text>
-			
+
 		</view>
 		<view class="report-label" v-if="isShowReport">
 			<text class="report-text">利润：</text>
-			<text class="report-text fc-6">¥{{reportDetail.profit}}</text>
+			<text class="report-text fc-6">¥{{reportDetail.profit | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport">
 			<text class="report-text">现金：</text>
-			<text class="report-text fc-6">¥{{reportDetail.cash}}</text>
+			<text class="report-text fc-6">¥{{reportDetail.cash | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport">
 			<text class="report-text">未收款：</text>
-			<text class="report-text fc-6">¥{{reportDetail.uncollected}}</text>
+			<text class="report-text fc-6">¥{{reportDetail.uncollected | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport">
 			<text class="report-text">实收款：</text>
-			<text class="report-text fc-6">¥{{reportDetail.fundsReceived}}</text>
+			<text class="report-text fc-6">¥{{reportDetail.fundsReceived | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport" @tap="onItemClick(StatementTypes.mainBusinessExpenses)">
 			<text class="report-text">主营支出：</text>
-			<text class="report-text fc-b">¥{{reportDetail.mainBusinessExpenses}}</text>
+			<text class="report-text fc-b">¥{{reportDetail.mainBusinessExpenses | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport" @tap="onItemClick(StatementTypes.mainBusinessIncome)">
 			<text class="report-text">主营收入：</text>
-			<text class="report-text fc-b">¥{{reportDetail.mainBusinessIncome}}</text>
+			<text class="report-text fc-b">¥{{reportDetail.mainBusinessIncome | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport" @tap="onItemClick(StatementTypes.otherExpenses)">
 			<text class="report-text">其他支出：</text>
-			<text class="report-text fc-b">¥{{reportDetail.otherExpenses}}</text>
+			<text class="report-text fc-b">¥{{reportDetail.otherExpenses | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport" @tap="onItemClick(StatementTypes.otherIncome)">
 			<text class="report-text">其他收入：</text>
-			<text class="report-text fc-b">¥{{reportDetail.otherIncome}}</text>
+			<text class="report-text fc-b">¥{{reportDetail.otherIncome | formatMoney}}</text>
 		</view>
 		<timePicker :requestCode="timeCode" :date="dialogTime" :show="showTimePicker" @onConfirm="timePickConfirm" @onCancel="showTimePicker = false"></timePicker>
 		<monthPicker :show="showMonthPicker" @onConfirm="monthPickConfirm" @onCancel="showMonthPicker = false"></monthPicker>
@@ -70,6 +70,10 @@
 	import {
 		StatementTypes
 	} from '@/config/config.js'
+	import {
+		fmtMoney2,
+		fmtMoneyBySeparator
+	} from '@/libs/utils.js'
 	export default {
 		components: {
 			timePicker,
@@ -78,20 +82,7 @@
 		filters: {
 			formatMoney(val) {
 				if (val) {
-					var result = [],
-						counter = 0;
-					let num = (float || 0).toString().split('.')[0].split('');
-					for (var i = num.length - 1; i >= 0; i--) {
-						counter++;
-						result.unshift(num[i]);
-						if (!(counter % 3) && i != 0) {
-							result.unshift(',');
-						}
-					}
-					if (float.toString().indexOf('.') != -1) {
-						return result.join('') + "." + float.toString().split('.')[1];
-					}
-					return result.join('');
+					return fmtMoneyBySeparator(fmtMoney2(val))
 				} else {
 					return '0'
 				}
@@ -118,7 +109,7 @@
 		onLoad(option) {
 			if (option.year && option.month) {
 				this.isSectionShow = false
-				const date = new Date(option.year,  option.month, 0)
+				const date = new Date(option.year, option.month, 0)
 				this.startTime = option.year + "-" + (option.month < 10 ? ('0' + option.month) : option.month) + "-" + '01'
 				this.endTime = option.year + "-" + (option.month < 10 ? ('0' + option.month) : option.month) + "-" + date.getDate()
 				this.onGetReport()

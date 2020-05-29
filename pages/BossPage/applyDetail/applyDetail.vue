@@ -123,25 +123,33 @@
 			},
 			onPassTap() {
 				if (this.onValidate()) {
-					this.showLoading()
-					approveExpense(this.applyParams).then(res => {
-						uni.showToast({
-							title: '审批成功',
-							icon: 'none'
-						})
-						setTimeout(() => {
-							this.dismissLoading()
-							uni.$emit('reload')
-							uni.navigateBack()
-						}, REFRESH_DELAYED)
+					uni.showModal({
+						title: '提示',
+						content: '是否确认审核?',
+						success: res => {
+							if (res.confirm) {
+								this.showLoading()
+								approveExpense(this.applyParams).then(res => {
+									uni.showToast({
+										title: '审批成功',
+										icon: 'none'
+									})
+									setTimeout(() => {
+										this.dismissLoading()
+										uni.$emit('reload')
+										uni.navigateBack()
+									}, REFRESH_DELAYED)
 
-					}).catch(err => {
-						this.dismissLoading()
-						uni.showToast({
-							icon: 'none',
-							title: "请求失败"
-						})
-					})
+								}).catch(err => {
+									this.dismissLoading()
+									uni.showToast({
+										icon: 'none',
+										title: "请求失败"
+									})
+								})
+							}
+						}
+					});
 				}
 
 			},

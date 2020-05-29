@@ -26,7 +26,7 @@
 					<text v-else>{{ detailForm.revenueTime}}</text>
 				</view>
 			</view>
-			<view class="img-wrap fc-6 mt-20" >
+			<view class="img-wrap fc-6 mt-20">
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.revenueVoucherUrls" :isDisabled="isDisabled" @changeImgList="changeImgList" />
 			</view>
@@ -144,61 +144,77 @@
 			},
 			onSubmitTap() {
 				if (this.isFormFill()) {
-					this.showLoading()
-					this.submitApplyForm()
-						.then(res => {
-							console.log(res)
-							this.detailForm.revenueAccountId = res.data.revenueAccount.revenueAccountId
-							return applyRevenue({
-								revenueAccountId: this.detailForm.revenueAccountId
-							})
-						})
-						.then(res => {
-							console.log(res)
-							uni.showToast({
-								icon: 'none',
-								title: "提交成功"
-							})
-							setTimeout(() => {
-								uni.$emit('reload')
-								uni.navigateBack()
-								this.dismissLoading()
-							}, REFRESH_DELAYED)
-						})
-						.catch(err => {
-							this.dismissLoading()
-							console.log(err)
-							uni.showToast({
-								icon: 'none',
-								title: "请求失败"
-							})
-						})
+					uni.showModal({
+						title: '提示',
+						content: '是否确认提交?',
+						success: res => {
+							if (res.confirm) {
+								this.showLoading()
+								this.submitApplyForm()
+									.then(res => {
+										console.log(res)
+										this.detailForm.revenueAccountId = res.data.revenueAccount.revenueAccountId
+										return applyRevenue({
+											revenueAccountId: this.detailForm.revenueAccountId
+										})
+									})
+									.then(res => {
+										console.log(res)
+										uni.showToast({
+											icon: 'none',
+											title: "提交成功"
+										})
+										setTimeout(() => {
+											uni.$emit('reload')
+											uni.navigateBack()
+											this.dismissLoading()
+										}, REFRESH_DELAYED)
+									})
+									.catch(err => {
+										this.dismissLoading()
+										console.log(err)
+										uni.showToast({
+											icon: 'none',
+											title: "请求失败"
+										})
+									})
+							}
+						}
+					});
 				}
 			},
 			onResubmitTap() {
 				if (this.isFormFill()) {
-					this.showLoading()
-					this.submitApplyForm()
-						.then(res => {
-							console.log(res)
-							uni.showToast({
-								icon: 'none',
-								title: "重新提交成功"
-							})
-							setTimeout(() => {
-								uni.$emit('reload')
-								uni.navigateBack()
-								this.dismissLoading()
-							}, REFRESH_DELAYED)
-						})
-						.catch(err => {
-							this.dismissLoading()
-							console.log(err)
-							uni.showToast({
-								icon: 'none',
-								title: "请求失败"
-							})
-						})
+					uni.showModal({
+						title: '提示',
+						content: '是否确认重新提交?',
+						success: res => {
+							if (res.confirm) {
+								this.showLoading()
+								this.submitApplyForm()
+									.then(res => {
+										console.log(res)
+										uni.showToast({
+											icon: 'none',
+											title: "重新提交成功"
+										})
+										setTimeout(() => {
+											uni.$emit('reload')
+											uni.navigateBack()
+											this.dismissLoading()
+										}, REFRESH_DELAYED)
+									})
+									.catch(err => {
+										this.dismissLoading()
+										console.log(err)
+										uni.showToast({
+											icon: 'none',
+											title: "请求失败"
+										})
+									})
+							}
+						}
+					});
 				}
 			},
 			// 返回报销单id（提交->申请报销）
@@ -262,9 +278,9 @@
 						this.dismissLoading()
 						console.log(res)
 						// this.detailForm = res.data.revenueAccount
-						if (res.data.revenueAccount.receiptActions&&res.data.revenueAccount.receiptActions.length) {
+						if (res.data.revenueAccount.receiptActions && res.data.revenueAccount.receiptActions.length) {
 							this.approvals = res.data.revenueAccount.receiptActions.map(item => {
-								let result =  {
+								let result = {
 									"approvalOpinion": item.receiptOpinion,
 									"approvalPerson": item.receiptPerson,
 									"approvalType": item.receiptActionType.value,

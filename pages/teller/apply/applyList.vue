@@ -1,7 +1,9 @@
 <template>
 	<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
 		<view class="list" v-for="listItem in dataList" :key="listItem.expenseAccountId">
-			<applyItem :applyItem="listItem" @clickItem="clickItem" fromType='teller'></applyItem>
+			<view @tap="clickItem(listItem)">
+				<applyItem :applyItem="listItem" fromType='teller'></applyItem>
+			</view>
 		</view>
 	</mescroll-body>
 </template>

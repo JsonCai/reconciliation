@@ -97,19 +97,13 @@
 			}
 		},
 		methods: {
-			onDel(item) {
-				this.$emit('onDel', this.applyObj)
-			},
-			clickitem() {
-				console.log(this.applyItem)
-				this.$emit('clickItem', this.applyItem)
+			onDel() {
+				this.$emit('onDel')
 			}
 		},
 		watch: {
 			applyItem: {
 				handler(val) {
-					console.log(123)
-					console.log(val)
 					if (val) {
 						this.$set(this.applyObj, 'expenseAccountTitle', val.expenseAccountTitle)
 						this.$set(this.applyObj, 'expenseAccountStatus', val.expenseAccountStatus)
@@ -118,7 +112,6 @@
 						this.$set(this.applyObj, 'createTime', val.createTime)
 						this.$set(this.applyObj, 'expenseAccountId', val.expenseAccountId)
 					}
-					// this.applyObj.expenseAccountId = val.expenseAccountId
 				},
 				immediate: true
 			}

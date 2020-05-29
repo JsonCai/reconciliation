@@ -11,12 +11,12 @@
 			</view>
 			<view class="item-wrap">
 				<text>应收款:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.accountReceivable"
+				<input class="input-text" placeholder="请输入应收款" placeholder-class="place" v-model="detailForm.accountReceivable"
 				 type="digit" @blur="changeReceivable" />
 			</view>
 			<view class="item-wrap">
 				<text>实收款:</text>
-				<input class="input-text" placeholder="请输入申报金额" placeholder-class="place" v-model="detailForm.fundsReceived" type="digit"
+				<input class="input-text" placeholder="请输入实收款" placeholder-class="place" v-model="detailForm.fundsReceived" type="digit"
 				 @blur="changeReceived" />
 			</view>
 			<view class="item-wrap">

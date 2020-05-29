@@ -1,23 +1,23 @@
 <template>
-	<view class="list-item" @tap="clickitem(specialPayment)">
+	<view class="list-item">
 			<view class="main-wrap">
 				<view class="item-wrap ">
 					<text>名称：</text>
-					<text>{{specialPayment.specialAccountTitle}}</text>
+					<text>{{specialObj.specialAccountTitle}}</text>
 				</view>
 				<view class="item-wrap ">
 					<text>分类：</text>
-					<text>{{specialPayment.specialAccountType | formatState}}</text>
+					<text>{{specialObj.specialAccountType | formatState}}</text>
 				</view>
 				<view class="item-wrap price-wrap">
 					<view>
 						<text>金额：</text>
-						<text class="fc-r">￥{{specialPayment.amount | formatMoney}}</text>
+						<text class="fc-r">￥{{specialObj.amount | formatMoney}}</text>
 					</view>
-					<text class="apply-time fc-6">{{specialPayment.accountTime | fmtTime}}</text>
+					<text class="apply-time fc-6">{{specialObj.createTime | fmtTime}}</text>
 				</view>
 			</view>
-			<image src="../../static/images/del.png" class="del" @tap.stop="onDel(specialPayment)"></image>
+			<image src="../../static/images/del.png" class="del" @tap.stop="onDel"></image>
 	</view>
 </template>
 
@@ -32,6 +32,11 @@
 			specialPayment: Object,
 			fromType: String
 		},
+		data(){
+			return{
+				specialObj:{}
+			}
+		},
 		filters: {
 			formatState(val) {
 				if (val == 1) {
@@ -40,7 +45,6 @@
 				return '其他支出'
 			},
 			fmtTime(val) {
-				console.log(val)
 				if (val) {
 					return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val))
 				}
@@ -64,11 +68,21 @@
 					}
 				});
 			},
-			onDel(item) {
-				this.$emit('onDel', item)
-			},
-			clickitem(item) {
-				this.$emit('clickItem', item)
+			onDel() {
+				this.$emit('onDel')
+			}
+		},
+		watch:{
+			specialPayment:{
+				handler(val) {
+					if (val) {
+						this.$set(this.specialObj, 'specialAccountTitle', val.specialAccountTitle)
+						this.$set(this.specialObj, 'specialAccountType', val.specialAccountType)
+						this.$set(this.specialObj, 'amount', val.amount)
+						this.$set(this.specialObj, 'createTime', val.createTime)
+					}
+				},
+				immediate: true
 			}
 		}
 	}

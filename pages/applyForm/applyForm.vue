@@ -123,26 +123,36 @@
 			},
 			onResubmitTap() {
 				if (this.onValidate()) {
-					this.showLoading()
-					this.submitApplyForm()
-						.then(res => {
-							uni.showToast({
-								icon: 'none',
-								title: "重新提交成功"
-							})
-							setTimeout(() => {
-								uni.$emit('reload')
-								uni.navigateBack()
-								this.dismissLoading()
-							}, REFRESH_DELAYED)
-						})
-						.catch(err => {
-							this.dismissLoading()
-							uni.showToast({
-								icon: 'none',
-								title: "请求失败"
-							})
-						})
+					uni.showModal({
+						title: '提示',
+						content: '是否确认重新提交?',
+						success: res => {
+							if (res.confirm) {
+								this.showLoading()
+								this.submitApplyForm()
+									.then(res => {
+										uni.showToast({
+											icon: 'none',
+											title: "重新提交成功"
+										})
+										setTimeout(() => {
+											uni.$emit('reload')
+											uni.navigateBack()
+											this.dismissLoading()
+										}, REFRESH_DELAYED)
+									})
+									.catch(err => {
+										this.dismissLoading()
+										uni.showToast({
+											icon: 'none',
+											title: "请求失败"
+										})
+									})
+							}
+						}
+					});
+
+
 				}
 			},
 			onSuspendTap() {
@@ -171,36 +181,44 @@
 			},
 			onSubmitTap() {
 				if (this.onValidate()) {
-					this.showLoading()
-					this.submitApplyForm()
-						.then(res => {
-							this.detailForm.expenseAccountId = res.data.expenseAccount.expenseAccountId
-							return applyExpense({
-								expenseAccountId: this.detailForm.expenseAccountId
-							})
-						})
-						.then(res => {
+					uni.showModal({
+						title: '提示',
+						content: '是否确认提交?',
+						success: res => {
+							if (res.confirm) {
+								this.showLoading()
+								this.submitApplyForm()
+									.then(res => {
+										this.detailForm.expenseAccountId = res.data.expenseAccount.expenseAccountId
+										return applyExpense({
+											expenseAccountId: this.detailForm.expenseAccountId
+										})
+									})
+									.then(res => {
 
-							uni.showToast({
-								icon: 'none',
-								title: "提交成功"
-							})
+										uni.showToast({
+											icon: 'none',
+											title: "提交成功"
+										})
 
-							setTimeout(() => {
-								uni.$emit('reload')
-								uni.navigateBack()
-								this.dismissLoading()
-							}, REFRESH_DELAYED)
+										setTimeout(() => {
+											uni.$emit('reload')
+											uni.navigateBack()
+											this.dismissLoading()
+										}, REFRESH_DELAYED)
 
-						})
-						.catch(err => {
-							console.log(err)
-							this.dismissLoading()
-							uni.showToast({
-								icon: 'none',
-								title: "请求失败"
-							})
-						})
+									})
+									.catch(err => {
+										console.log(err)
+										this.dismissLoading()
+										uni.showToast({
+											icon: 'none',
+											title: "请求失败"
+										})
+									})
+							}
+						}
+					});
 				}
 			},
 			// 返回报销单id（提交->申请报销）

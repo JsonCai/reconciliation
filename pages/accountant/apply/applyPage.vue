@@ -1,10 +1,12 @@
 <template>
 	<view>
-		<fakeSearch  @onSearch="searchClick"></fakeSearch>
+		<fakeSearch @onSearch="searchClick"></fakeSearch>
 		<view class="list-wrap">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="140" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList" :key="listItem.expenseAccountId">
-					<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='accountant'></applyItem>
+					<view @tap="clickItem(listItem)">
+						<applyItem :applyItem="listItem" fromType='accountant'></applyItem>
+					</view>
 				</view>
 			</mescroll-body>
 		</view>
@@ -79,10 +81,10 @@
 			},
 			searchClick() {
 				uni.navigateTo({
-					url:'../searchPage/searchPage'
+					url: '../searchPage/searchPage'
 				})
 			},
-			itemClick(item) {
+			clickItem(item) {
 				uni.navigateTo({
 					url: '../../teller/applyDetail/applyDetail?id=' + item.expenseAccountId
 				})

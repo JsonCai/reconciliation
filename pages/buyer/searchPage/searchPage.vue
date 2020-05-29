@@ -4,7 +4,9 @@
 		<view class="list-wrap" v-if="isShow">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="120" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList" :key="listItem.expenseAccountId">
-					<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='buyer'></applyItem>
+					<view @tap="clickItem(listItem)">
+						<applyItem :applyItem="listItem" fromType='buyer'></applyItem>
+					</view>
 				</view>
 			</mescroll-body>
 		</view>

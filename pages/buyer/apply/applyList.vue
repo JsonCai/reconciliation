@@ -3,7 +3,7 @@
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" top="240" bottom="10" @down="downCallback" @up="upCallback">
 			<view class="list" v-for="listItem in dataList" :key="listItem.expenseAccountId">
 				<view @tap="itemClick(listItem)">
-					<applyItem :applyItem="listItem" fromType='buyer' @onDel="onDel"></applyItem>
+					<applyItem :applyItem="listItem" fromType='buyer' @onDel="onDel(listItem)"></applyItem>
 				</view>
 			</view>
 		</mescroll-body>
@@ -39,7 +39,6 @@
 		},
 		methods: {
 			onDel(item) {
-				console.log(REFRESH_DELAYED)
 				uni.showModal({
 					title: '提示',
 					content: '确定要删除该数据?',

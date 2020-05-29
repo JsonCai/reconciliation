@@ -4,7 +4,9 @@
 		<view class="list-wrap" v-if="isShow">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="120" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList" :key="listItem.expenseAccountId">
-					<applyItem :applyItem="listItem" @clickItem="itemClick" fromType='boss'></applyItem>
+					<view @tap="clickItem(listItem)">
+						<applyItem :applyItem="listItem" fromType='boss'></applyItem>
+					</view>
 				</view>
 			</mescroll-body>
 		</view>
@@ -82,7 +84,7 @@
 						console.log(err)
 					})
 			},
-			itemClick(item) {
+			clickItem(item) {
 				uni.navigateTo({
 					url: '../../teller/applyDetail/applyDetail?id=' + item.expenseAccountId
 				})
@@ -102,12 +104,12 @@
 		onBackPress() {
 			uni.hideKeyboard()
 		},
-		onLoad(){
+		onLoad() {
 			uni.$on("reload", () => {
 				this.reload()
 			})
 		}
-		
+
 	}
 </script>
 

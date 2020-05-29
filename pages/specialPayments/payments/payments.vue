@@ -18,7 +18,7 @@
 			</view>
 			<view class="item-wrap">
 				<text>金额:</text>
-				<input :disabled="detailForm.specialAccountId" class="input-text" placeholder="请输入申报金额" placeholder-class="place"
+				<input :disabled="detailForm.specialAccountId" class="input-text" placeholder="请输入金额" placeholder-class="place"
 				 v-model="detailForm.amount" type="digit" @blur="changeAmount" />
 			</view>
 			<view class="item-wrap">

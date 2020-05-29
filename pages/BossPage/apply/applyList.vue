@@ -4,7 +4,9 @@
 	 bottom="10" @down="downCallback"
 	  @up="upCallback">
 		<view class="list" v-for="listItem in dataList" :key="listItem.expenseAccountId">
-			<applyItem :applyItem="listItem" @clickItem="clickItem" fromType='boss'></applyItem>
+			<view @tap="clickItem(listItem)">
+				<applyItem :applyItem="listItem" fromType='boss'></applyItem>
+			</view>
 		</view>
 	</mescroll-body>
 </template>

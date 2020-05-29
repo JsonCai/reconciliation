@@ -27,7 +27,7 @@
 			</view>
 			<view class="item-wrap">
 				<text>申请日期:</text>
-				<text>{{detailForm.applyTime}}</text>
+				<text>{{detailForm.applyTime | fmtDate}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.applyPerson">
 				<text>申请人:</text>
@@ -96,6 +96,14 @@
 				timeCode: 0,
 
 			}
+		},
+		filters:{
+			fmtDate(val) {
+				if (val) {
+					return val.split(' ')[0]
+				}
+				return ''
+			},
 		},
 		methods: {
 			onPassTap() {

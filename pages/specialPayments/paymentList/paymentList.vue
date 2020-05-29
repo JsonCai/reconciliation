@@ -4,7 +4,9 @@
 		<view class="list-wrap">
 			<mescroll-body ref="mescrollRef" @init="mescrollInit" top="140" bottom="10" @down="downCallback" @up="upCallback">
 				<view class="list" v-for="listItem in dataList" :key="listItem.specialAccountId">
-					<specialPayments :specialPayment="listItem" @clickItem="itemClick(listItem)" @onDel="onDel"></specialPayments>
+					<view @tap="itemClick(listItem)">
+						<specialPayments :specialPayment="listItem" @onDel="onDel(listItem)"></specialPayments>
+					</view>
 				</view>
 			</mescroll-body>
 		</view>

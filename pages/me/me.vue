@@ -106,6 +106,8 @@
 									console.log(_this.userInfo)
 									const p = getCompany(openId)
 									const p1 = p.then(res => {
+											console.log(123123)
+											console.log(res)
 										if (res.data.code == 0) {
 											const tenants = res.data.data.tenants
 											return login({
@@ -113,6 +115,10 @@
 												wechatNumber: openId
 											})
 										}
+									})
+									.catch(err=>{
+										console.log('err')
+										console.log(err)
 									})
 									p1.then(res => {
 										if (res.header['Set-Authorization']) {
@@ -128,7 +134,7 @@
 											_this.userInfo = Object.assign({}, res.data.data.employee, _this.userInfo)
 											_this.$set(_this.userInfo, 'roles', _this.roles.join(','))
 											_this.setUserInfo(_this.userInfo)
-	 
+
 										}
 									})
 								}

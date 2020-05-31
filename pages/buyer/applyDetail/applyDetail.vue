@@ -21,9 +21,9 @@
 				<text>报销日期:</text>
 				<text>{{detailForm.expenseTime | fmtDate}}</text>
 			</view>
-			<view class="img-wrap fc-6" v-if="detailForm.expenseVoucherUrls&&detailForm.expenseVoucherUrls.length">
+			<view class="img-wrap fc-6 mt-20" v-if="detailForm.expenseVoucherUrls&&detailForm.expenseVoucherUrls.length">
 				<text class="fc-30 fc-6">凭据：</text>
-				<imgList :list="detailForm.imgList" :isDisabled="true" />
+				<imgList :list="detailForm.expenseVoucherUrls" :isDisabled="true" />
 			</view>
 			<view class="item-wrap">
 				<text>申请日期:</text>
@@ -88,7 +88,6 @@
 				return ''
 			},
 			fmtState(val) {
-				console.log(val)
 				if (val == 1) {
 					return '未提交'
 				} else if (val == 2) {
@@ -107,7 +106,8 @@
 			applyDetail(option.id)
 				.then(res => {
 					console.log(res)
-					this.$set(this, "detailForm", res.data.expenseAccount)
+					// this.$set(this, "detailForm", res.data.expenseAccount)
+					this.detailForm = res.data.expenseAccount
 					this.detailForm.amount = fmtMoney2(this.detailForm.amount)
 				})
 				.catch(err => {

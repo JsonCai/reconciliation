@@ -19,15 +19,15 @@
 			</view>
 			<view class="item-wrap">
 				<text>报销日期:</text>
-				<text>{{detailForm.expenseTime}}</text>
+				<text>{{detailForm.expenseTime | fmtDate}}</text>
 			</view>
-			<view class="img-wrap fc-6" v-if="detailForm.expenseVoucherUrls&&detailForm.expenseVoucherUrls.length">
+			<view class="img-wrap fc-6 mt-20" v-if="detailForm.expenseVoucherUrls&&detailForm.expenseVoucherUrls.length">
 				<text class="fc-30 fc-6">凭据：</text>
-				<imgList :list="detailForm.imgList" :isDisabled="true" />
+				<imgList :list="detailForm.expenseVoucherUrls" :isDisabled="true" />
 			</view>
 			<view class="item-wrap">
 				<text>申请日期:</text>
-				<text>{{detailForm.applyTime | fmtDate}}</text>
+				<text>{{detailForm.applyTime}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.applyPerson">
 				<text>申请人:</text>
@@ -84,6 +84,9 @@
 	import {
 		REFRESH_DELAYED
 	} from '@/config/config.js'
+	import {
+		fmtMoney2
+	} from '@/libs/utils.js'
 	export default {
 		components: {
 			imgList,
@@ -120,10 +123,16 @@
 					success: res => {
 						if (res.confirm) {
 							this.showLoading()
+							// var imgList = []
+							// this.detailForm.paymentVoucherUrls.forEach((item)=>{
+							// 	imgList.push("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3637291396,2809005554&fm=26&gp=0.jpg")
+							// })
 							paymentExpence({
 									expenseAccountId: this.detailForm.expenseAccountId,
 									paymentTime: this.detailForm.paymentTime + " 00:00:00",
-									paymentVoucherUrls: this.detailForm.paymentVoucherUrls = ['aaa']
+									paymentVoucherUrls: [
+										'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3637291396,2809005554&fm=26&gp=0.jpg'
+									]
 								})
 								.then(res => {
 									if (res.code == '0') {
@@ -172,7 +181,9 @@
 				.then(res => {
 					console.log(res)
 					this.$set(this, "detailForm", res.data.expenseAccount)
-					this.$set(this.detailForm, 'amount', this.detailForm.amount / 100)
+					this.$set(this.detailForm, 'amount', fmtMoney2(this.detailForm.amount))
+					this.$set(this.detailForm, 'expenseVoucherUrls', this.detailForm.amount.expenseVoucherUrls)
+					this.$set(this.detailForm, 'paymentVoucherUrls', this.detailForm.amount.paymentVoucherUrls)
 				})
 				.catch(err => {
 					console.log(err)

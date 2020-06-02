@@ -224,6 +224,11 @@
 				let form = deepClone(this.detailForm)
 				form.amount = accMul(Number(this.tempamount), 100)
 				form.expenseTime = resetDateFormat(form.expenseTime)
+				var  imgList = []
+				this.detailForm.imgList.forEach((item)=>{
+					imgList.push("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3637291396,2809005554&fm=26&gp=0.jpg")
+				})
+				form.expenseVoucherUrls = imgList
 				console.log(form)
 				if (this.detailForm.expenseAccountId) {
 					return updateApplyForm(this.detailForm.expenseAccountId, form)
@@ -283,6 +288,7 @@
 					if (res.data.expenseAccount.expenseTime) {
 						this.detailForm.expenseTime = res.data.expenseAccount.expenseTime.split(' ')[0]
 					}
+					this.detailForm.imgList = res.data.expenseAccount.expenseVoucherUrls
 				}).catch(err => {
 					this.dismissLoading()
 					uni.showToast({

@@ -18,18 +18,40 @@
 				</view>
 			</view>
 		</view>
+		<!-- #ifdef APP-PLUS -->
 		<view class="big-btn" @tap="onLogin" v-if="!isLogin">微信授权登录</view>
 		<view class="big-btn" @tap="logout" v-else>退出</view>
+		<!-- #endif -->
+		<!-- #ifdef MP-WEIXIN -->
+		<button class='login_bottom' type='primary' open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo">
+			授权登录
+		</button>
+		<!-- #endif -->
+
+		<uni-popup ref="popup" type="center">
+			<selectCompany :tenants="tenants" @selCompany="selCompany" />
+		</uni-popup>
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
+
 <script>
 	import {
 		login,
 		getCompany
 	} from '@/api/login/login';
+	import uniPopup from '@/components/uni-popup/uni-popup.vue'
+	import selectCompany from '@/components/selectCompany/selectCompany'
 	export default {
+		components: {
+			uniPopup,
+			selectCompany
+		},
 		data() {
 			return {
+				openId:'',
+				cid: '',
+				tenants: [],
 				userInfo: {},
 				defaultAvatarSrc: '../../static/images/avatar.png',
 				loginParams: {},
@@ -42,6 +64,47 @@
 			};
 		},
 		methods: {
+			selCompany(id) {
+				this.cid = id
+				this.$refs.popup.close()
+				login({
+					tenantId: this.cid,
+					wechatNumber: this.openId
+				}).then(res => {
+					if (res.header['Set-Authorization']) {
+						const token = res.header['Set-Authorization']
+						this.setToken(token)
+					}
+					if (res.data.data.roles) {
+						console.log(res.data.data.roles)
+						this.setRoles(res.data.data.roles)
+						this.roles = res.data.data.roles.map(v => v.roleName)
+					}
+					if (res.data.data.employee) {
+						this.userInfo = Object.assign({}, res.data.data.employee, this.userInfo)
+						this.$set(this.userInfo, 'roles', this.roles.join(','))
+						this.setUserInfo(this.userInfo)
+					}
+				})
+			},
+			wxGetUserInfo() {
+				let _this = this;
+				uni.getUserInfo({
+					provider: 'weixin',
+					success: function(infoRes) {
+						console.log(infoRes)
+						let nickName = infoRes.userInfo.nickName; //昵称
+						let avatarUrl = infoRes.userInfo.avatarUrl; //头像
+						uni.login({
+							provider: 'weixin',
+							success: (res) => {
+								console.log(res)
+							},
+						})
+					},
+					fail(res) {}
+				});
+			},
 			logout() {
 				let _this = this
 				uni.showModal({
@@ -92,6 +155,7 @@
 			},
 			onLogin() {
 				let _this = this
+				_this.showLoading()
 				uni.login({
 					provider: 'weixin',
 					success: function(loginRes) {
@@ -101,44 +165,40 @@
 							provider: 'weixin',
 							success: function(res) {
 								if (res.errMsg == 'getUserInfo:ok') {
-									const openId = res.userInfo.openId;
+									this.openId = res.userInfo.openId;
 									_this.userInfo = res.userInfo
-									console.log(_this.userInfo)
-									const p = getCompany(openId)
+									const p = getCompany(this.openId)
 									const p1 = p.then(res => {
 										if (res.data.code == 0) {
-											const tenants = res.data.data.tenants
-											return login({
-												tenantId: tenants[0].tenantId,
-												wechatNumber: openId
-											})
+											_this.dismissLoading()
+											_this.tenants = res.data.data.tenants
+											if(_this.tenants.length > 1){
+												_this.$refs.popup.open()
+											}
 										}
-									})
-									p1.then(res => {
-										if (res.header['Set-Authorization']) {
-											const token = res.header['Set-Authorization']
-											_this.setToken(token)
-										}
-										if (res.data.data.roles) {
-											console.log(res.data.data.roles)
-											_this.setRoles(res.data.data.roles)
-											_this.roles = res.data.data.roles.map(v => v.roleName)
-										}
-										if (res.data.data.employee) {
-											_this.userInfo = Object.assign({}, res.data.data.employee, _this.userInfo)
-											_this.$set(_this.userInfo, 'roles', _this.roles.join(','))
-											_this.setUserInfo(_this.userInfo)
-	 
-										}
+									}).catch((err) => {
+										console.log(err)
+										_this.dismissLoading()
 									})
 								}
+							},
+							fail: () => {
+								_this.dismissLoading()
 							}
 						});
+					},
+					fail: () => {
+						_this.dismissLoading()
 					}
 				});
 			}
 		},
 		onLoad() {
+			// #ifdef MP-WEIXIN
+			this.onLogin()
+			// #endif
+
+			// #ifdef APP-PLUS
 			if (this.checkLogin()) {
 				this.isLogin = true
 				try {
@@ -154,6 +214,7 @@
 					// error
 				}
 			}
+			// #endif
 		}
 	};
 </script>
@@ -232,5 +293,10 @@
 		color: #fff;
 		line-height: 90rpx;
 		background: #06bebe;
+	}
+
+	.login_bottom {
+		width: 650rpx;
+		margin-top: 400rpx;
 	}
 </style>

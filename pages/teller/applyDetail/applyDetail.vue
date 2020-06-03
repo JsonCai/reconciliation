@@ -21,7 +21,7 @@
 				<text>报销日期:</text>
 				<text>{{detailForm.expenseTime | fmtDate}}</text>
 			</view>
-			<view class="img-wrap fc-6 mt-20" v-if="detailForm.expenseVoucherUrls&&detailForm.expenseVoucherUrls.length">
+			<view class="img-wrap fc-6 mt-20">
 				<text class="fc-30 fc-6">凭据：</text>
 				<imgList :list="detailForm.expenseVoucherUrls" :isDisabled="true" />
 			</view>
@@ -94,7 +94,10 @@
 		},
 		data() {
 			return {
-				detailForm: {},
+				detailForm: {
+					expenseVoucherUrls:[],
+					paymentVoucherUrls:[]
+				},
 				showTimePicker: false,
 				timeCode: 0,
 
@@ -180,10 +183,11 @@
 			applyDetail(option.id)
 				.then(res => {
 					console.log(res)
+					this.detailForm = res.data.expenseAccount
 					this.$set(this, "detailForm", res.data.expenseAccount)
-					this.$set(this.detailForm, 'amount', fmtMoney2(this.detailForm.amount))
-					this.$set(this.detailForm, 'expenseVoucherUrls', this.detailForm.amount.expenseVoucherUrls)
-					this.$set(this.detailForm, 'paymentVoucherUrls', this.detailForm.amount.paymentVoucherUrls)
+					// this.$set(this.detailForm, 'amount', fmtMoney2(this.detailForm.amount))
+					// this.$set(this.detailForm, 'expenseVoucherUrls', this.detailForm.expenseVoucherUrls)
+					// this.$set(this.detailForm, 'paymentVoucherUrls', this.detailForm.paymentVoucherUrls)
 				})
 				.catch(err => {
 					console.log(err)

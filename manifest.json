@@ -1,5 +1,5 @@
 {
-    "name" : "reconciliation",
+    "name" : "com.zxwl.fzg",
     "appid" : "__UNI__7C3077B",
     "description" : "",
     "versionName" : "1.0.0",
@@ -55,8 +55,8 @@
             "sdkConfigs" : {
                 "oauth" : {
                     "weixin" : {
-                        "appid" : "wx1e5098620a2f6e59",
-                        "appsecret" : "73d932ced8a770dc24234b38cd672367",
+                        "appid" : "wx27706f9af5bbd7e6",
+                        "appsecret" : "ad19e716d08187ff466e7e8e99acc563",
                         "UniversalLinks" : ""
                     }
                 },

@@ -1,7 +1,7 @@
 import {
 	baseUrl
 } from '../../config/config'
-import store from '@/store'
+import store from '../../store'
 
 function getAuthorization(){
 	return store.state.token

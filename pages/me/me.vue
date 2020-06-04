@@ -64,9 +64,7 @@
 			};
 		},
 		methods: {
-			selCompany(id) {
-				this.cid = id
-				this.$refs.popup.close()
+			doLogin(){
 				login({
 					tenantId: this.cid,
 					wechatNumber: this.openId
@@ -86,6 +84,11 @@
 						this.setUserInfo(this.userInfo)
 					}
 				})
+			},
+			selCompany(id) {
+				this.cid = id
+				this.$refs.popup.close()
+				this.doLogin()
 			},
 			wxGetUserInfo() {
 				let _this = this;
@@ -174,15 +177,17 @@
 											_this.tenants = res.data.data.tenants
 											if(_this.tenants.length > 1){
 												_this.$refs.popup.open()
+											}else{
+												_this.cid = _this.tenants[0].tenantId
+												_this.doLogin()
 											}
 										}
 									}).catch((err) => {
-										console.log(err)
 										_this.dismissLoading()
 									})
 								}
 							},
-							fail: () => {
+							fail: (err) => {
 								_this.dismissLoading()
 							}
 						});

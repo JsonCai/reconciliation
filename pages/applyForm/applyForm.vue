@@ -56,6 +56,9 @@
 	import timePicker from '@/components/timePicker/timePicker';
 	import imgList from '@/components/imgList/imgList.vue'
 	import {
+		getCos
+	} from '@/libs/getCos'
+	import {
 		createApplyForm,
 		applyExpense,
 		updateApplyForm,
@@ -74,6 +77,7 @@
 	import {
 		REFRESH_DELAYED
 	} from '@/config/config.js'
+	const  C = getCos()
 	export default {
 		components: {
 			timePicker,
@@ -103,6 +107,17 @@
 			},
 			changeImgList(list) {
 				this.detailForm.imgList = list
+				C.postObject({
+					Bucket: 'zg-1300449266',
+					Region: 'ap-shanghai',
+					Key: 'filename',
+					FilePath: this.detailForm.imgList[0],
+					onProgress: function(info) {
+						console.log(JSON.stringify(info));
+					}
+				}, function(err, data) {
+					console.log(err || data);
+				});
 			},
 			onStartTimeTap(code) {
 				this.timeCode = code;
@@ -224,8 +239,8 @@
 				let form = deepClone(this.detailForm)
 				form.amount = accMul(Number(this.tempamount), 100)
 				form.expenseTime = resetDateFormat(form.expenseTime)
-				var  imgList = []
-				this.detailForm.imgList.forEach((item)=>{
+				var imgList = []
+				this.detailForm.imgList.forEach((item) => {
 					imgList.push("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3637291396,2809005554&fm=26&gp=0.jpg")
 				})
 				form.expenseVoucherUrls = imgList
@@ -270,6 +285,7 @@
 			},
 		},
 		onLoad(options) {
+			
 			//因为修改的是data里面的绑定数据，所以返回后页面数据会直接显示修改后的
 			if (options.id) {
 				this.showLoading()

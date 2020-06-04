@@ -130,3 +130,4 @@ export function fmtMoneyBySeparator(float) {
 	}
 	return r
 }
+

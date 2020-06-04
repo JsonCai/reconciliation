@@ -5,7 +5,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
 		token: '',
-		roles:[]
+		roles:[],
+		cid:''
 	},
 	mutations:{
 		setToken(state,token){
@@ -13,7 +14,10 @@ const store = new Vuex.Store({
 		},
 		setRoles(state,roles){
 			state.roles = roles
-		}
+		},
+		setCid(state,cid){
+			state.cid = cid
+		},
 	}
 })
 export default store

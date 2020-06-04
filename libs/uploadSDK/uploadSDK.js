@@ -2668,6 +2668,9 @@ var request = function (params, callback) {
     var filePath = params.filePath;
     var headers = params.headers || {};
     var url = params.url;
+	console.log(111111111111111111)
+	console.log(22222222222222)
+	console.log(url)
     var method = params.method;
     var onProgress = params.onProgress;
     var requestTask;
@@ -2711,6 +2714,7 @@ var request = function (params, callback) {
         !formData['Content-Type'] && (formData['Content-Type'] = '');
 
         var responseHeader = {};
+		
         requestTask = wx.uploadFile({
             url: url,
             method: method,

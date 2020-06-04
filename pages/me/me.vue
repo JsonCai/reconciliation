@@ -49,7 +49,7 @@
 		},
 		data() {
 			return {
-				openId:'',
+				unionId:'',
 				cid: '',
 				tenants: [],
 				userInfo: {},
@@ -67,7 +67,7 @@
 			doLogin(){
 				login({
 					tenantId: this.cid,
-					wechatNumber: this.openId
+					wechatNumber: this.unionId
 				}).then(res => {
 					if (res.header['Set-Authorization']) {
 						const token = res.header['Set-Authorization']
@@ -87,6 +87,7 @@
 			},
 			selCompany(id) {
 				this.cid = id
+				_this.$store.commit('setCid', this.cid)
 				this.$refs.popup.close()
 				this.doLogin()
 			},
@@ -162,15 +163,18 @@
 				uni.login({
 					provider: 'weixin',
 					success: function(loginRes) {
+						console.log(loginRes)
 						_this.isLogin = true
 						// 获取用户信息
 						uni.getUserInfo({
 							provider: 'weixin',
 							success: function(res) {
 								if (res.errMsg == 'getUserInfo:ok') {
-									this.openId = res.userInfo.openId;
+								
+									_this.unionId = res.userInfo.unionId;
+									console.log(res)
 									_this.userInfo = res.userInfo
-									const p = getCompany(this.openId)
+									const p = getCompany(_this.unionId)
 									const p1 = p.then(res => {
 										if (res.data.code == 0) {
 											_this.dismissLoading()
@@ -179,15 +183,18 @@
 												_this.$refs.popup.open()
 											}else{
 												_this.cid = _this.tenants[0].tenantId
+												_this.$store.commit('setCid', _this.cid)
 												_this.doLogin()
 											}
 										}
 									}).catch((err) => {
+										console.log(err)
 										_this.dismissLoading()
 									})
 								}
 							},
 							fail: (err) => {
+								console.log(err)
 								_this.dismissLoading()
 							}
 						});

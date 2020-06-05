@@ -58,6 +58,7 @@
 		</view>
 		<timePicker :requestCode="timeCode" :date="dialogTime" :show="showTimePicker" @onConfirm="timePickConfirm" @onCancel="showTimePicker = false"></timePicker>
 		<monthPicker :show="showMonthPicker" @onConfirm="monthPickConfirm" @onCancel="showMonthPicker = false"></monthPicker>
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
 
@@ -141,16 +142,19 @@
 					// this.isShowReport = true
 					this.realTime.startTime = this.startTime;
 					this.realTime.endTime = this.endTime;
+					this.showLoading()
 					getSectionStatement({
 							sectionStartTime: this.startTime + " 00:00:00",
 							sectionEndTime: this.endTime + " 23:59:59"
 						})
 						.then(res => {
+							this.dismissLoading()
 							console.log(res)
 							this.reportDetail = res.data.sectionStatementDto
 							this.isShowReport = true
 						})
 						.catch(err => {
+							this.dismissLoading()
 							console.log(err)
 						})
 				}

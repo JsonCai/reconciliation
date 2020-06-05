@@ -1,6 +1,7 @@
 <template>
 	<view class="container">
 		<view class="bg">
+			<text>{{result}}</text>
 			<view class="info-wrap">
 				<image class="avatar" :src="isLogin ? userInfo.avatarUrl : defaultAvatarSrc"></image>
 				<text class="tips" v-if="!isLogin">登录获取更多信息</text>
@@ -60,7 +61,8 @@
 				boySrc: '../../static/images/boy.png',
 				girlSrc: '../../static/images/girl.png',
 				permissions: [],
-				roles: []
+				roles: [],
+				result:""
 			};
 		},
 		methods: {
@@ -162,6 +164,8 @@
 				uni.login({
 					provider: 'weixin',
 					success: function(loginRes) {
+						console.log(loginRes)
+						_this.result = loginRes.authResult.unionid
 						_this.isLogin = true
 						// 获取用户信息
 						uni.getUserInfo({

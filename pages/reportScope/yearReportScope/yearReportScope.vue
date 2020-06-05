@@ -29,7 +29,7 @@
 					var month = 12
 					if (item == currentYaer) {
 						const date = new Date()
-						month = date.getMonth();
+						month = date.getMonth()+1;
 					}
 					this.month = []
 					for (var i = 1; i <= month; i++) {

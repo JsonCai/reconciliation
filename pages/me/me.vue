@@ -49,25 +49,25 @@
 		},
 		data() {
 			return {
-				unionId:'',
+				unionId: '',
 				cid: '',
 				tenants: [],
 				userInfo: {},
 				defaultAvatarSrc: '../../static/images/avatar.png',
 				loginParams: {},
 				isLogin: false,
-				userInfo: {},
 				boySrc: '../../static/images/boy.png',
 				girlSrc: '../../static/images/girl.png',
 				permissions: [],
 			};
 		},
 		methods: {
-			doLogin(){
+			doLogin() {
 				login({
 					tenantId: this.cid,
 					wechatNumber: this.unionId
 				}).then(res => {
+					this.isLogin = true
 					if (res.header['Set-Authorization']) {
 						const token = res.header['Set-Authorization']
 						this.setToken(token)
@@ -82,11 +82,19 @@
 						this.$set(this.userInfo, 'roles', this.roles.join(','))
 						this.setUserInfo(this.userInfo)
 					}
+					if (res.data.data.tenantId) {
+						this.setCompanyId(res.data.data.tenantId)
+					}
+				}).catch(err => {
+					uni.showToast({
+						icon: 'none',
+						title: '登录失败'
+					})
 				})
 			},
 			selCompany(id) {
 				this.cid = id
-				_this.$store.commit('setCid', this.cid)
+				this.$store.commit('setCid', this.cid)
 				this.$refs.popup.close()
 				this.doLogin()
 			},
@@ -115,8 +123,8 @@
 					content: '确定退出登录?',
 					success: function(res) {
 						if (res.confirm) {
-							_this.isLogin = false
 							try {
+								_this.isLogin = false
 								uni.clearStorageSync();
 							} catch (e) {
 								// error
@@ -156,39 +164,55 @@
 
 				}
 			},
+			setCompanyId(companyId) {
+				this.$store.commit('setCid', companyId)
+				try {
+					uni.setStorageSync('companyId', companyId);
+				} catch (e) {
+
+				}
+			},
 			onLogin() {
 				let _this = this
-				_this.showLoading()
+				this.showLoading()
 				uni.login({
 					provider: 'weixin',
 					success: function(loginRes) {
-						console.log(loginRes)
-						_this.isLogin = true
 						// 获取用户信息
 						uni.getUserInfo({
 							provider: 'weixin',
 							success: function(res) {
 								if (res.errMsg == 'getUserInfo:ok') {
-								
 									_this.unionId = res.userInfo.unionId;
 									console.log(res)
 									_this.userInfo = res.userInfo
 									const p = getCompany(_this.unionId)
 									const p1 = p.then(res => {
+										console.log(res)
+										_this.dismissLoading()
 										if (res.data.code == 0) {
-											_this.dismissLoading()
 											_this.tenants = res.data.data.tenants
-											if(_this.tenants.length > 1){
+											if (_this.tenants.length > 1) {
 												_this.$refs.popup.open()
-											}else{
+											} else {
 												_this.cid = _this.tenants[0].tenantId
 												_this.$store.commit('setCid', _this.cid)
 												_this.doLogin()
 											}
+										} else {
+											_this.dismissLoading()
+											uni.showToast({
+												title: res.data.msg,
+												icon: 'none'
+											})
 										}
 									}).catch((err) => {
 										console.log(err)
 										_this.dismissLoading()
+										uni.showToast({
+											title: res.data.msg,
+											icon: 'none'
+										})
 									})
 								}
 							},
@@ -218,6 +242,8 @@
 					this.$store.commit('setToken', token)
 					const roles = uni.getStorageSync('roles')
 					this.$store.commit('setRoles', roles)
+					const cid = uni.getStorageSync('companyId')
+					this.$store.commit('setCid', cid)
 					if (userInfo) {
 						this.userInfo = userInfo
 					}

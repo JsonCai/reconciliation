@@ -131,3 +131,60 @@ export function fmtMoneyBySeparator(float) {
 	return r
 }
 
+function compressAndUploadImgs(file) {
+	return new Promise((reslove, reject) => {
+		var path = file;
+		var parent_file_path = path.substring(0, path.lastIndexOf('/') + 1);
+		var file_name = path.substring(path.lastIndexOf('/') + 1, path.length);
+		var file_pure_name = file_name.substring(0, file_name.indexOf('.'));
+		var file_type = file_name.substring(file_name.indexOf('.'));
+		var random_num = new Date().getTime();
+		var file_compress_name = random_num + file_type;
+		plus.zip.compressImage({
+				src: path,
+				dst: 'compresspic/' + file_compress_name,
+				quality: '20',
+				overwrite: true
+			},
+			function() {
+				// console.log('压缩成功');
+				var relativePath = "compresspic/" + file_compress_name;
+				console.log('compresspic')
+				console.log(relativePath)
+				//检查图片是否已存在
+				plus.io.resolveLocalFileSystemURL(relativePath, function(entry) {
+					console.log('压缩成功本地存在:'+entry.toLocalURL());
+					reslove(entry.toLocalURL())
+				}, function(e) {
+					console.log('图片不存在')
+					console.log(e)
+					reslove(path)
+				});
+			},
+			function(error) {
+				console.log('图片压缩失败')
+				console.log(error)
+				reslove(path)
+			});
+	})
+}
+
+export async function compressImgs(files) {
+	var compressPaths = []
+	if (files && files.length) {
+		for(var i in files){
+			let path = await compressAndUploadImgs(files[i])
+			console.log(path)
+			compressPaths.push(path)
+		}
+		return compressPaths
+	}
+	return files
+}
+
+export async function testRequest() {
+	let res = await new Promise((resolve, reject) => {
+		reslove("11111")
+	})
+	return res;
+}

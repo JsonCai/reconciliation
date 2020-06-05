@@ -72,12 +72,13 @@
 		resetDateFormat,
 		dateFtt,
 		fmtMoney2,
-		accMul
+		accMul,
+		compressImgs
 	} from '@/libs/utils.js'
 	import {
 		REFRESH_DELAYED
 	} from '@/config/config.js'
-	const  C = getCos()
+	const C = getCos()
 	export default {
 		components: {
 			timePicker,
@@ -98,8 +99,8 @@
 				approvals: []
 			};
 		},
-		computed:{
-			cid(){
+		computed: {
+			cid() {
 				return this.$store.state.cid
 			}
 		},
@@ -111,6 +112,17 @@
 				uni.$emit('showHistory', this.approvals)
 			},
 			changeImgList(list) {
+				// console.log(list)
+				// compressImgs(list)
+				// .then(res=>{
+				// 	console.log('压缩完成')
+				// 	console.log(res)
+				// 	this.detailForm.imgList = res
+				// })
+				// .catch(err=>{
+				// 	console.log('压缩失败')
+				// 	console.log(err)
+				// })
 				this.detailForm.imgList = list
 				 var filePath = this.detailForm.imgList[0].path;
 				 var filename = filePath.substr(filePath.lastIndexOf('/') + 1);
@@ -293,7 +305,7 @@
 			},
 		},
 		onLoad(options) {
-			
+
 			//因为修改的是data里面的绑定数据，所以返回后页面数据会直接显示修改后的
 			if (options.id) {
 				this.showLoading()

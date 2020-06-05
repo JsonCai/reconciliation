@@ -27,7 +27,7 @@
 		},
 		computed:{
 			iconSrc(){
-				if(this.text == '审核采购单据' || this.text == '提交采购单据' || this.text == '确认查看采购单据' || this.text == '打款采购单据'){
+				if(this.text == '审核报销单据' || this.text == '提交报销单据' || this.text == '确认查看报销单据' || this.text == '打款报销单据'){
 					return this.applySrc
 				}else if(this.text == '查看财务报表' || this.text == '查看财务情况' || this.text == '查看财务'){
 					return this.financeSrc

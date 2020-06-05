@@ -1,7 +1,7 @@
 <template>
 	<view class="img-list">
 		<view class="img-box" v-for="(img, index) in dataList" :key="index">
-			<image class="item-img" :src="img" @tap="onPrevies(index)"></image>
+			<!-- <image class="item-img" :src="img" @tap="onPrevies(index)"></image> -->
 			<view class="del-img font-icon" @tap="ondel(index)">&#xe635;</view>
 		</view>
 		<view class="img-box">
@@ -66,7 +66,7 @@
 					sourceType: ['album', 'camera'],
 					success(res) {
 						// tempFilePath可以作为img标签的src属性显示图片
-						const tempFilePaths = res.tempFilePaths;
+						const tempFilePaths = res.tempFiles
 						let arr = _this.dataList;
 						arr.push(...tempFilePaths);
 						if (arr.length > 9) {

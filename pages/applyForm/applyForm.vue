@@ -98,6 +98,11 @@
 				approvals: []
 			};
 		},
+		computed:{
+			cid(){
+				return this.$store.state.cid
+			}
+		},
 		methods: {
 			showHistory() {
 				uni.navigateTo({
@@ -107,11 +112,14 @@
 			},
 			changeImgList(list) {
 				this.detailForm.imgList = list
+				 var filePath = this.detailForm.imgList[0].path;
+				 var filename = filePath.substr(filePath.lastIndexOf('/') + 1);
+				 console.log(this.cid)
 				C.postObject({
-					Bucket: 'zg-1300449266',
+					Bucket: 'fzg-1300449266',
 					Region: 'ap-shanghai',
-					Key: 'filename',
-					FilePath: this.detailForm.imgList[0],
+					Key: this.cid + '/' + filename,
+					FilePath: filePath,
 					onProgress: function(info) {
 						console.log(JSON.stringify(info));
 					}

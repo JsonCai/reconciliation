@@ -7,8 +7,7 @@
 			</view>
 			<view class="item-wrap">
 				<text class="fc-6">名称:</text>
-				<input class="input-text fc-3" placeholder="请输入名称" 
-				placeholder-class="place" v-model="detailForm.revenueAccountTitle" />
+				<input class="input-text fc-3" placeholder="请输入名称" placeholder-class="place" v-model="detailForm.revenueAccountTitle" />
 			</view>
 			<view class="item-wrap">
 				<text class="fc-6">应收款:</text>
@@ -17,8 +16,8 @@
 			</view>
 			<view class="item-wrap">
 				<text class="fc-6">实收款:</text>
-				<input class="input-text fc-3" placeholder="请输入实收款" placeholder-class="place" v-model="detailForm.fundsReceived" type="digit"
-				 @blur="changeReceived" />
+				<input class="input-text fc-3" placeholder="请输入实收款" placeholder-class="place" v-model="detailForm.fundsReceived"
+				 type="digit" @blur="changeReceived" />
 			</view>
 			<view class="item-wrap">
 				<text class="fc-6">营收日期:</text>
@@ -33,8 +32,8 @@
 			</view>
 			<view class="textarea-wrap">
 				<text class="fc-6">描述:</text>
-				<textarea  placeholder="请输入描述"　v-model.trim="detailForm.revenueAccountDescription"  class="fc-3 ml-20" />
-			</view>
+				<textarea placeholder="请输入描述" 　v-model.trim="detailForm.revenueAccountDescription" class="fc-3 ml-20" />
+				</view>
 			<view class="item-wrap" @tap="showHistory" v-if="isReject">
 				<text>审批意见</text>
 				<text>查看历史</text>
@@ -53,6 +52,9 @@
 </template>
 
 <script>
+	import {
+		uploadImage
+	} from '@/libs/getCos'
 	import {
 		categoryList
 	} from '@/libs/testDates';
@@ -101,14 +103,12 @@
 				uni.$emit('showHistory', this.approvals)
 			},
 			changeImgList(list) {
-				console.log(list)
-				this.detailForm.imgList = list
+				this.detailForm.revenueVoucherUrls = list
 			},
 			onStartTimeTap(code) {
 				this.timeCode = code;
 				this.showTimePicker = true;
 			},
-			changeName(val) {},
 			timePickConfirm(time) {
 				this.showTimePicker = false;
 				if (time.code == 1) {
@@ -124,7 +124,7 @@
 			onSuspendTap() {
 				if (this.isFormFill()) {
 					this.showLoading()
-					this.submitApplyForm()
+					this.submitRevenueForm()
 						.then(res => {
 							console.log(res)
 							uni.showToast({
@@ -155,7 +155,7 @@
 						success: res => {
 							if (res.confirm) {
 								this.showLoading()
-								this.submitApplyForm()
+								this.submitRevenueForm()
 									.then(res => {
 										console.log(res)
 										this.detailForm.revenueAccountId = res.data.revenueAccount.revenueAccountId
@@ -196,7 +196,7 @@
 						success: res => {
 							if (res.confirm) {
 								this.showLoading()
-								this.submitApplyForm()
+								this.submitRevenueForm()
 									.then(res => {
 										console.log(res)
 										uni.showToast({
@@ -222,17 +222,21 @@
 					});
 				}
 			},
-			// 返回报销单id（提交->申请报销）
-			submitApplyForm() {
+			submitRevenueForm() {
 				let form = deepClone(this.detailForm)
 				form.accountReceivable = accMul(Number(this.detailForm.accountReceivable), 100)
 				form.fundsReceived = accMul(Number(this.detailForm.fundsReceived), 100)
 				form.revenueTime = resetDateFormat(form.revenueTime)
-				if (this.detailForm.revenueAccountId) {
-					return updateRevenueForm(form.revenueAccountId, form)
-				} else {
-					return createRevenueAccounts(form)
-				}
+				console.log(this.detailForm.revenueVoucherUrls)
+				return uploadImage(this.detailForm.revenueVoucherUrls,this.$store.state.cid)
+				.then(res=>{
+					form.revenueVoucherUrls = res
+					if (this.detailForm.revenueAccountId) {
+						return updateRevenueForm(form.revenueAccountId, form)
+					} else {
+						return createRevenueAccounts(form)
+					}
+				})
 			},
 			isFormFill() {
 				if (!this.detailForm.revenueAccountTitle) {
@@ -299,6 +303,7 @@
 						this.detailForm.accountReceivable = fmtMoney2(res.data.revenueAccount.accountReceivable)
 						this.detailForm.revenueAccountTitle = res.data.revenueAccount.revenueAccountTitle
 						this.detailForm.revenueAccountDescription = res.data.revenueAccount.revenueAccountDescription
+						this.detailForm.revenueVoucherUrls = res.data.revenueAccount.revenueVoucherUrls
 						if (res.data.revenueAccount.revenueTime) {
 							this.detailForm.revenueTime = res.data.revenueAccount.revenueTime.split(' ')[0]
 						}

@@ -182,10 +182,3 @@ export async function compressImgs(files) {
 	}
 	return files
 }
-
-export async function testRequest() {
-	let res = await new Promise((resolve, reject) => {
-		reslove("11111")
-	})
-	return res;
-}

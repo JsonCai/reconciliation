@@ -1,7 +1,7 @@
 <template>
 	<view class="img-list">
 		<view class="img-box" v-for="(img, index) in dataList" :key="index">
-			<!-- <image class="item-img" :src="img" @tap="onPrevies(index)"></image> -->
+			<image class="item-img" :src="img" @tap="onPrevies(index)"></image>
 			<view class="del-img font-icon" @tap="ondel(index)">&#xe635;</view>
 		</view>
 		<view class="img-box">

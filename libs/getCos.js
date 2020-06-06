@@ -51,24 +51,37 @@ export function getCos() {
 	return cos
 }
 
-export function doUploadImage(C, cid, files, index, netPaths) {
-	let filePath = files[index]
-	var filename = filePath.substr(filePath.lastIndexOf('/') + 1);
-	C.postObject({
-		Bucket: 'fzg-1300449266',
-		Region: 'ap-shanghai',
-		Key: cid + '/' + filename,
-		FilePath: filePath,
-		onProgress: function(info) {
-			console.log(JSON.stringify(info));
+export async function doUploadImages(C, cid, files) {
+	var netPaths = []
+	if (files && files.length) {
+		for (var i in files) {
+			let path = await doUploadImage(C, cid, files[i])
+			console.log(path)
+			netPaths.push(path)
 		}
-	}, function(err, data) {
-		console.log(err || data);
-		if (data.Location) {
-			netPaths.push(data.Location)
-		}
-		if (index + 1 < files.length) {
-			doUploadImage(C, cid, files, index + 1, netPaths)
-		}
-	});
+		return netPaths
+	}
+	return files
+}
+
+function doUploadImage(C, cid, filePath) {
+	return new Promise((reslove, reject) => {
+		var filename = filePath.substr(filePath.lastIndexOf('/') + 1);
+		C.postObject({
+			Bucket: 'fzg-1300449266',
+			Region: 'ap-shanghai',
+			Key: cid + '/' + filename,
+			FilePath: filePath,
+			onProgress: function(info) {
+				console.log(JSON.stringify(info));
+			}
+		}, function(err, data) {
+			console.log(err || data);
+			if (data.Location) {
+				reslove("https://" + data.Location)
+			} else {
+				reject(err)
+			}
+		});
+	})
 }

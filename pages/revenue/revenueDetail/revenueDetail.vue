@@ -6,43 +6,46 @@
 				<text class="title-text">订单信息</text>
 			</view>
 			<view class="item-wrap">
-				<text>名称:</text>
-				<text>{{ detailForm.revenueAccountTitle}}</text>
+				<text class="fc-6">名称:</text>
+				<text class="fc-3">{{ detailForm.revenueAccountTitle}}</text>
 			</view>
 			<view class="item-wrap">
-				<text>应收款:</text>
-				<text>{{detailForm.accountReceivable}}</text>
+				<text class="fc-6">应收款:</text>
+				<text class="fc-3">{{detailForm.accountReceivable}}</text>
 			</view>
 			<view class="item-wrap">
-				<text>实收款:</text>
-				<text>{{detailForm.fundsReceived}}</text>
+				<text class="fc-6">实收款:</text>
+				<text class="fc-3">{{detailForm.fundsReceived}}</text>
 			</view>
 			<view class="item-wrap">
-				<text>营收日期:</text>
+				<text class="fc-6">营收日期:</text>
 				<view class="inner-wrap">
-					<text>{{ detailForm.revenueTime|fmtDate}}</text>
+					<text class="fc-3">{{ detailForm.revenueTime|fmtDate}}</text>
 				</view>
 			</view>
 			<view class="img-wrap fc-6 mt-20" v-if="detailForm.revenueVoucherUrls && detailForm.revenueVoucherUrls.length">
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.revenueVoucherUrls" :isDisabled="true" />
 			</view>
-
+			<view class="item-wrap">
+				<text class="fc-6">描述</text>
+				<text class="fc-3 ml-20">{{detailForm.revenueAccountDescription}}</text>
+			</view>
 			<view class="item-wrap mt-20" v-if="detailForm.submitTime">
-				<text>提交日期:</text>
-				<text>{{detailForm.submitTime|fmtDate}}</text>
+				<text class="fc-6">提交日期:</text>
+				<text class="fc-3">{{detailForm.submitTime|fmtDate}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.endTime">
-				<text>结束日期:</text>
-				<text>{{detailForm.endTime}}</text>
+				<text class="fc-6">结束日期:</text>
+				<text class="fc-3">{{detailForm.endTime}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.revenuePerson">
-				<text>营业员:</text>
-				<text>{{detailForm.revenuePerson.employeeName}}</text>
+				<text class="fc-6">营业员:</text>
+				<text class="fc-3">{{detailForm.revenuePerson.employeeName}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.revenueAccountStatus">
-				<text>状态:</text>
-				<text>{{detailForm.revenueAccountStatus.value|revenueState}}</text>
+				<text class="fc-6">状态:</text>
+				<text class="fc-3">{{detailForm.revenueAccountStatus.value|revenueState}}</text>
 			</view>
 		</view>
 	</view>
@@ -53,7 +56,7 @@
 	import {
 		revenueDetail
 	} from '@/api/revenue/revenue.js'
-	import getRevenueStateStr from '@/config/config.js'	
+	import getRevenueStateStr from '@/config/config.js'
 	import {
 		fmtMoney2
 	} from '@/libs/utils'

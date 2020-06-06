@@ -6,29 +6,34 @@
 				<text class="title-text">订单信息</text>
 			</view>
 			<view class="item-wrap">
-				<text>名称:</text>
-				<input class="input-text" placeholder="请输入名称" placeholder-class="place" v-model="detailForm.revenueAccountTitle" />
+				<text class="fc-6">名称:</text>
+				<input class="input-text fc-3" placeholder="请输入名称" 
+				placeholder-class="place" v-model="detailForm.revenueAccountTitle" />
 			</view>
 			<view class="item-wrap">
-				<text>应收款:</text>
-				<input class="input-text" placeholder="请输入应收款" placeholder-class="place" v-model="detailForm.accountReceivable"
+				<text class="fc-6">应收款:</text>
+				<input class="input-text fc-3" placeholder="请输入应收款" placeholder-class="place" v-model="detailForm.accountReceivable"
 				 type="digit" @blur="changeReceivable" />
 			</view>
 			<view class="item-wrap">
-				<text>实收款:</text>
-				<input class="input-text" placeholder="请输入实收款" placeholder-class="place" v-model="detailForm.fundsReceived" type="digit"
+				<text class="fc-6">实收款:</text>
+				<input class="input-text fc-3" placeholder="请输入实收款" placeholder-class="place" v-model="detailForm.fundsReceived" type="digit"
 				 @blur="changeReceived" />
 			</view>
 			<view class="item-wrap">
-				<text>营收日期:</text>
+				<text class="fc-6">营收日期:</text>
 				<view class="inner-wrap" @tap="onStartTimeTap(1)">
 					<text v-if="!detailForm.revenueTime" class="fc-9">请选择营收日期</text>
-					<text v-else>{{ detailForm.revenueTime}}</text>
+					<text v-else class="fc-3">{{ detailForm.revenueTime}}</text>
 				</view>
 			</view>
 			<view class="img-wrap fc-6 mt-20">
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.revenueVoucherUrls" :isDisabled="isDisabled" @changeImgList="changeImgList" />
+			</view>
+			<view class="textarea-wrap">
+				<text class="fc-6">描述:</text>
+				<textarea  placeholder="请输入描述"　v-model.trim="detailForm.revenueAccountDescription"  class="fc-3 ml-20" />
 			</view>
 			<view class="item-wrap" @tap="showHistory" v-if="isReject">
 				<text>审批意见</text>
@@ -293,6 +298,7 @@
 						this.detailForm.fundsReceived = fmtMoney2(res.data.revenueAccount.fundsReceived)
 						this.detailForm.accountReceivable = fmtMoney2(res.data.revenueAccount.accountReceivable)
 						this.detailForm.revenueAccountTitle = res.data.revenueAccount.revenueAccountTitle
+						this.detailForm.revenueAccountDescription = res.data.revenueAccount.revenueAccountDescription
 						if (res.data.revenueAccount.revenueTime) {
 							this.detailForm.revenueTime = res.data.revenueAccount.revenueTime.split(' ')[0]
 						}
@@ -301,7 +307,6 @@
 						}
 					})
 					.catch(err => {
-						console.log(err)
 						this.dismissLoading()
 						uni.navigateBack()
 					})

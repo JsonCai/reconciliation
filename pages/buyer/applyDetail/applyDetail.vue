@@ -6,40 +6,44 @@
 				<text class="title-text">订单信息</text>
 			</view>
 			<view class="item-wrap">
-				<text>名称:</text>
-				<text>{{detailForm.expenseAccountTitle}}</text>
+				<text class="fc-6">名称:</text>
+				<text class="fc-3">{{detailForm.expenseAccountTitle}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.costCategory">
-				<text>分类:</text>
-				<text>{{detailForm.costCategory.costCategoryName}}</text>
+				<text class="fc-6">分类:</text>
+				<text class="fc-3">{{detailForm.costCategory.costCategoryName}}</text>
 			</view>
 			<view class="item-wrap">
-				<text>金额:</text>
-				<text>{{detailForm.amount}}元</text>
+				<text class="fc-6">金额:</text>
+				<text class="fc-3">{{detailForm.amount}}元</text>
 			</view>
 			<view class="item-wrap">
-				<text>报销日期:</text>
-				<text>{{detailForm.expenseTime | fmtDate}}</text>
+				<text class="fc-6">报销日期:</text>
+				<text class="fc-3">{{detailForm.expenseTime | fmtDate}}</text>
 			</view>
 			<view class="img-wrap fc-6 mt-20" v-if="detailForm.expenseVoucherUrls&&detailForm.expenseVoucherUrls.length">
 				<text class="fc-30 fc-6">凭据：</text>
 				<imgList :list="detailForm.expenseVoucherUrls" :isDisabled="true" />
 			</view>
 			<view class="item-wrap">
-				<text>申请日期:</text>
-				<text>{{detailForm.applyTime}}</text>
-			</view>
-			<view class="item-wrap" v-if="detailForm.endTime">
-				<text>结束日期:</text>
-				<text>{{detailForm.endTime}}</text>
+				<text class="fc-6">描述:</text>
+				<text class="fc-3">{{detailForm.expenseAccountDescription}}</text>
 			</view>
 			<view class="item-wrap">
-				<text>状态:</text>
-				<text>{{detailForm.expenseAccountStatus.value | fmtState}}</text>
+				<text class="fc-6">申请日期:</text>
+				<text class="fc-3">{{detailForm.applyTime}}</text>
+			</view>
+			<view class="item-wrap" v-if="detailForm.endTime">
+				<text class="fc-6">结束日期:</text>
+				<text class="fc-3">{{detailForm.endTime}}</text>
+			</view>
+			<view class="item-wrap">
+				<text class="fc-6">状态:</text>
+				<text class="fc-3">{{detailForm.expenseAccountStatus.value | fmtState}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.applyPerson">
-				<text>申请人:</text>
-				<text>{{detailForm.applyPerson.employeeName}}</text>
+				<text class="fc-6">申请人:</text>
+				<text class="fc-3">{{detailForm.applyPerson.employeeName}}</text>
 			</view>
 			<view class="item-wrap" @tap="showHistory" v-if="detailForm.approvals && detailForm.approvals.length">
 				<text>审批意见:</text>
@@ -108,6 +112,7 @@
 					console.log(res)
 					// this.$set(this, "detailForm", res.data.expenseAccount)
 					this.detailForm = res.data.expenseAccount
+					console.log()
 					this.detailForm.amount = fmtMoney2(this.detailForm.amount)
 				})
 				.catch(err => {

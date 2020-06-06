@@ -6,51 +6,55 @@
 				<text class="title-text">订单信息</text>
 			</view>
 			<view class="item-wrap">
-				<text>名称:</text>
-				<text>{{detailForm.expenseAccountTitle}}</text>
+				<text class="fc-6">名称:</text>
+				<text class="fc-3">{{detailForm.expenseAccountTitle}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.costCategory">
-				<text>分类:</text>
-				<text>{{detailForm.costCategory.costCategoryName}}</text>
+				<text class="fc-6">分类:</text>
+				<text class="fc-3">{{detailForm.costCategory.costCategoryName}}</text>
 			</view>
 			<view class="item-wrap">
-				<text>金额:</text>
-				<text>￥{{detailForm.amount | formatMoney}}</text>
+				<text class="fc-6">金额:</text>
+				<text class="fc-3">￥{{detailForm.amount | formatMoney}}</text>
 			</view>
 			<view class="item-wrap">
-				<text>报销日期:</text>
-				<text>{{detailForm.expenseTime | fmtDate}}</text>
+				<text class="fc-6">报销日期:</text>
+				<text class="fc-3">{{detailForm.expenseTime | fmtDate}}</text>
 			</view>
 			<view class="img-wrap fc-6 mt-20" v-if="detailForm.expenseVoucherUrls&&detailForm.expenseVoucherUrls.length">
 				<text class="fc-30 fc-6">凭据：</text>
 				<imgList :list="detailForm.expenseVoucherUrls" :isDisabled="true" />
 			</view>
 			<view class="item-wrap">
-				<text>申请日期:</text>
-				<text>{{detailForm.applyTime}}</text>
+				<text class="fc-6">描述:</text>
+				<text>{{detailForm.expenseAccountDescription}}</text>
+			</view>
+			<view class="item-wrap">
+				<text class="fc-6">申请日期:</text>
+				<text class="fc-3">{{detailForm.applyTime}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.applyPerson">
-				<text>申请人:</text>
-				<text>{{detailForm.applyPerson.employeeName}}</text>
+				<text class="fc-6">申请人:</text>
+				<text class="fc-3">{{detailForm.applyPerson.employeeName}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.expenseAccountStatus.value == 2 ">
-				<text>是否通过:</text>
+				<text class="fc-6">是否通过:</text>
 				<radio-group @change="radioChange">
 					<view>
 						<label class="radio">
 							<radio color="#06bebe" value="2" />
-							<text class="r-text" style="margin-right: 10rpx;">通过</text>
+							<text class="r-text fc-3" style="margin-right: 10rpx;">通过</text>
 						</label>
 						<label class="radio">
 							<radio color="#06bebe" value="1" />
-							<text class="r-text">拒绝</text>
+							<text class="r-text fc-3">拒绝</text>
 						</label>
 					</view>
 				</radio-group>
 			</view>
 			<view class="item-wrap" v-if="detailForm.expenseAccountStatus.value == 2">
-				<text>审批意见</text>
-				<input placeholder="审批意见" class="input-text" @input="changeReason" v-model="applyParams.approvalOpinion" />
+				<text class="fc-6">审批意见</text>
+				<input placeholder="审批意见" class="input-text fc-3" @input="changeReason" v-model="applyParams.approvalOpinion" />
 			</view>
 			<view class="item-wrap" @tap="showHistory" v-if="detailForm.approvals && detailForm.approvals.length">
 				<text>审批意见</text>

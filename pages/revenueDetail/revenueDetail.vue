@@ -6,55 +6,61 @@
 				<text class="title-text">订单信息</text>
 			</view>
 			<view class="item-wrap">
-				<text>名称:</text>
-				<text>{{ detailForm.revenueAccountTitle}}</text>
+				<text class="fc-6">名称:</text>
+				<text class="fc-3">{{ detailForm.revenueAccountTitle}}</text>
 			</view>
 			<view class="item-wrap">
-				<text>应收款:</text>
-				<text>{{detailForm.accountReceivable}}</text>
+				<text class="fc-6">应收款:</text>
+				<text class="fc-3">{{detailForm.accountReceivable}}</text>
 			</view>
 			<view class="item-wrap">
-				<text>实收款:</text>
-				<text>{{detailForm.fundsReceived}}</text>
+				<text class="fc-6">实收款:</text>
+				<text class="fc-3">{{detailForm.fundsReceived}}</text>
 			</view>
 			<view class="item-wrap">
-				<text>营收日期:</text>
-				<text>{{ detailForm.revenueTime|fmtDate}}</text>
+				<text class="fc-6">营收日期:</text>
+				<text class="fc-3">{{ detailForm.revenueTime|fmtDate}}</text>
 			</view>
 			<view class="img-wrap fc-6 mt-20" v-if="detailForm.revenueVoucherUrls && detailForm.revenueVoucherUrls.length">
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.revenueVoucherUrls" :isDisabled="true" />
 			</view>
+			<view class="item-wrap">
+				<text class="fc-6">描述:</text>
+				<text class="fc-3 ml-20" >
+					{{detailForm.revenueAccountDescription}}
+				</text>
+			</view>
 			<view class="item-wrap" v-if="detailForm.revenuePerson">
-				<text>营业员:</text>
-				<text>{{detailForm.revenuePerson.employeeName}}</text>
+				<text class="fc-6">营业员:</text>
+				<text class="fc-3">{{detailForm.revenuePerson.employeeName}}</text>
 			</view>
 			<view class="item-wrap">
-				<text>提交日期:</text>
-				<text>{{ detailForm.createTime}}</text>
+				<text class="fc-6">提交日期:</text>
+				<text class="fc-3">{{ detailForm.createTime}}</text>
 			</view>
 			<view class="item-wrap" @tap="showHistory" v-if="this.approvals && this.approvals.length">
 				<text>审批意见:</text>
 				<text>查看历史</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.revenueAccountStatus&&detailForm.revenueAccountStatus.value == 2 ">
-				<text>是否通过:</text>
+				<text class="fc-6">是否通过:</text>
 				<radio-group @change="radioChange">
 					<view>
 						<label class="radio">
 							<radio color="#06bebe" value="2" />
-							<text class="r-text" style="margin-right: 10rpx;">通过</text>
+							<text class="r-text fc-3" style="margin-right: 10rpx;">通过</text>
 						</label>
 						<label class="radio">
 							<radio color="#06bebe" value="1" />
-							<text class="r-text">拒绝</text>
+							<text class="r-text fc-3">拒绝</text>
 						</label>
 					</view>
 				</radio-group>
 			</view>
 			<view class="item-wrap" v-if="detailForm.revenueAccountStatus&&detailForm.revenueAccountStatus.value == 2">
-				<text>收款意见</text>
-				<input placeholder="收款意见" class="input-text" @input="changeReason" v-model="revenueParams.receiptOpinion" />
+				<text class="fc-6">收款意见</text>
+				<input placeholder="收款意见" class="input-text fc-3" @input="changeReason" v-model="revenueParams.receiptOpinion" />
 			</view>
 			<view class="big-btn-wrap" v-if="detailForm.revenueAccountStatus&&detailForm.revenueAccountStatus.value == 2">
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>

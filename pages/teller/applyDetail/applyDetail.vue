@@ -6,48 +6,48 @@
 				<text class="title-text">订单信息</text>
 			</view>
 			<view class="item-wrap">
-				<text>名称:</text>
-				<text>{{detailForm.expenseAccountTitle}}</text>
+				<text class="fc-6">名称:</text>
+				<text class="fc-3">{{detailForm.expenseAccountTitle}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.costCategory">
-				<text>分类:</text>
-				<text>{{detailForm.costCategory.costCategoryName}}</text>
+				<text class="fc-6">分类:</text>
+				<text class="fc-3">{{detailForm.costCategory.costCategoryName}}</text>
 			</view>
 			<view class="item-wrap">
-				<text>金额:</text>
-				<text>{{detailForm.amount}}元</text>
+				<text class="fc-6">金额:</text>
+				<text class="fc-3">{{detailForm.amount}}元</text>
 			</view>
 			<view class="item-wrap">
-				<text>报销日期:</text>
-				<text>{{detailForm.expenseTime | fmtDate}}</text>
+				<text class="fc-6">报销日期:</text>
+				<text class="fc-3">{{detailForm.expenseTime | fmtDate}}</text>
 			</view>
 			<view class="img-wrap fc-6 mt-20">
 				<text class="fc-30 fc-6">凭据：</text>
 				<imgList :list="detailForm.expenseVoucherUrls" :isDisabled="true" />
 			</view>
 			<view class="item-wrap">
-				<text>申请日期:</text>
-				<text>{{detailForm.applyTime}}</text>
+				<text class="fc-6">申请日期:</text>
+				<text class="fc-3">{{detailForm.applyTime}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.applyPerson">
-				<text>申请人:</text>
-				<text>{{detailForm.applyPerson.employeeName}}</text>
+				<text class="fc-6">申请人:</text>
+				<text class="fc-3">{{detailForm.applyPerson.employeeName}}</text>
 			</view>
 			<view class="title item-wrap" v-if="detailForm.approvals">
 				<image src="../../../static/images/progress.png" class="icon-wallet mr-20"></image>
 				<text class="title-text">审批信息</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.approvals&&detailForm.approvals.length">
-				<text>审批意见</text>
-				<text>{{detailForm.approvals[0].approvalOpinion}}</text>
+				<text class="fc-6">审批意见</text>
+				<text class="fc-3">{{detailForm.approvals[0].approvalOpinion}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.approvals">
-				<text>审批时间</text>
-				<text>{{detailForm.approvals[0].createTime}}</text>
+				<text class="fc-6">审批时间</text>
+				<text class="fc-3">{{detailForm.approvals[0].createTime}}</text>
 			</view>
 			<view class="item-wrap" v-if="detailForm.approvals && detailForm.approvals.approvalPerson">
-				<text>审批人</text>
-				<text>{{detailForm.approvals.approvalPerson[0].employeeName}}</text>
+				<text class="fc-6">审批人</text>
+				<text class="fc-3">{{detailForm.approvals.approvalPerson[0].employeeName}}</text>
 			</view>
 			<view class="title item-wrap" v-if="detailForm.approvals">
 				<image src="../../../static/images/remit.png" class="icon-wallet mr-20"></image>
@@ -57,11 +57,15 @@
 				<text class="fc-30 fc-6">凭据：</text>
 				<imgList :list="detailForm.paymentVoucherUrls" :isDisabled="detailForm.expenseAccountStatus&&detailForm.expenseAccountStatus.value == 5" />
 			</view>
+			<view class="textarea-wrap">
+				<text class="fc-6">描述:</text>
+				<text  class="fc-3" />{{detailForm.expenseAccountDescription}}</text>
+			</view>
 			<view class="item-wrap">
-				<text>打款日期:</text>
+				<text class="fc-6">打款日期:</text>
 				<view class="inner-wrap" @tap="onStartTimeTap(1)">
 					<text v-if="!detailForm.paymentTime" class="fc-9">请选择打款日期</text>
-					<text v-else>{{ detailForm.paymentTime}}</text>
+					<text v-else class="fc-3">{{ detailForm.paymentTime}}</text>
 				</view>
 			</view>
 			<view class="big-btn-wrap" v-if="detailForm.expenseAccountStatus&&detailForm.expenseAccountStatus.value == 4">
@@ -126,10 +130,6 @@
 					success: res => {
 						if (res.confirm) {
 							this.showLoading()
-							// var imgList = []
-							// this.detailForm.paymentVoucherUrls.forEach((item)=>{
-							// 	imgList.push("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3637291396,2809005554&fm=26&gp=0.jpg")
-							// })
 							paymentExpence({
 									expenseAccountId: this.detailForm.expenseAccountId,
 									paymentTime: this.detailForm.paymentTime + " 00:00:00",

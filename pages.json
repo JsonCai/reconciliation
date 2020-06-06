@@ -77,12 +77,7 @@
 			"style": {
 				"navigationBarTitleText": "详情"
 			}
-		}, {
-			"path": "pages/teller/remit/remit",
-			"style": {
-				"navigationBarTitleText": "打款"
-			}
-		}, {
+		},  {
 			"path": "pages/teller/applyDetail/applyDetail",
 			"style": {
 				"navigationBarTitleText": "详情"

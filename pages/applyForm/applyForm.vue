@@ -61,7 +61,8 @@
 	import timePicker from '@/components/timePicker/timePicker';
 	import imgList from '@/components/imgList/imgList.vue'
 	import {
-		getCos
+		getCos,
+		doUploadImage
 	} from '@/libs/getCos'
 	import {
 		createApplyForm,
@@ -77,12 +78,13 @@
 		resetDateFormat,
 		dateFtt,
 		fmtMoney2,
-		accMul
+		accMul,
+		compressImgs
 	} from '@/libs/utils.js'
 	import {
 		REFRESH_DELAYED
 	} from '@/config/config.js'
-	const  C = getCos()
+	const C = getCos()
 	export default {
 		components: {
 			timePicker,
@@ -103,8 +105,8 @@
 				approvals: []
 			};
 		},
-		computed:{
-			cid(){
+		computed: {
+			cid() {
 				return this.$store.state.cid
 			}
 		},
@@ -115,22 +117,57 @@
 				})
 				uni.$emit('showHistory', this.approvals)
 			},
+			uploadImage() {
+				const localImages = this.detailForm.imgList.filter(it => {
+					return !it.startsWith('http')
+				})
+				const netImages = this.detailForm.imgList.filter(it => {
+					return it.startsWith('http')
+				})
+				console.log('筛选图片')
+				console.log(localImages)
+				var index = 0
+				return compressImgs(localImages)
+					.then(res => {
+						console.log('压缩完成')
+						console.log(res)
+						var netPaths = []
+						doUploadImage(C, this.cid, res, 0, netPaths)
+						netPaths.forEach(it => {
+							netImages.push(it)
+						})
+						return netImages
+					})
+
+			},
 			changeImgList(list) {
 				this.detailForm.imgList = list
-				 var filePath = this.detailForm.imgList[0].path;
-				 var filename = filePath.substr(filePath.lastIndexOf('/') + 1);
-				 console.log(this.cid)
-				C.postObject({
-					Bucket: 'fzg-1300449266',
-					Region: 'ap-shanghai',
-					Key: this.cid + '/' + filename,
-					FilePath: filePath,
-					onProgress: function(info) {
-						console.log(JSON.stringify(info));
-					}
-				}, function(err, data) {
-					console.log(err || data);
-				});
+				// console.log(list)
+				// compressImgs(list)
+				// .then(res=>{
+				// 	console.log('压缩完成')
+				// 	console.log(res)
+				// 	this.detailForm.imgList = res
+				// })
+				// .catch(err=>{
+				// 	console.log('压缩失败')
+				// 	console.log(err)
+				// })
+				// this.detailForm.imgList = list
+				//  var filePath = this.detailForm.imgList[0].path;
+				//  var filename = filePath.substr(filePath.lastIndexOf('/') + 1);
+				//  console.log(this.cid)
+				// C.postObject({
+				// 	Bucket: 'fzg-1300449266',
+				// 	Region: 'ap-shanghai',
+				// 	Key: this.cid + '/' + filename,
+				// 	FilePath: filePath,
+				// 	onProgress: function(info) {
+				// 		console.log(JSON.stringify(info));
+				// 	}
+				// }, function(err, data) {
+				// 	console.log(err || data);
+				// });
 			},
 			onStartTimeTap(code) {
 				this.timeCode = code;
@@ -252,18 +289,20 @@
 				let form = deepClone(this.detailForm)
 				form.amount = accMul(Number(this.tempamount), 100)
 				form.expenseTime = resetDateFormat(form.expenseTime)
-				var imgList = []
-				this.detailForm.imgList.forEach((item) => {
-					imgList.push("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3637291396,2809005554&fm=26&gp=0.jpg")
-				})
-				form.expenseVoucherUrls = imgList
 				console.log(form)
-				if (this.detailForm.expenseAccountId) {
-					return updateApplyForm(this.detailForm.expenseAccountId, form)
-				} else {
-					console.log(form)
-					return createApplyForm(form)
-				}
+				return this.uploadImage()
+					.then(res => {
+						console.log('图片上传成功')
+						console.log(res)
+						form.expenseVoucherUrls = res
+						console.log(form)
+						if (this.detailForm.expenseAccountId) {
+							return updateApplyForm(this.detailForm.expenseAccountId, form)
+						} else {
+							console.log(form)
+							return createApplyForm(form)
+						}
+					})
 			},
 			onValidate() {
 				if (!this.detailForm.expenseAccountTitle) {
@@ -298,7 +337,7 @@
 			},
 		},
 		onLoad(options) {
-			
+
 			//因为修改的是data里面的绑定数据，所以返回后页面数据会直接显示修改后的
 			if (options.id) {
 				this.showLoading()

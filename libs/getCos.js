@@ -26,16 +26,14 @@ export function getCos() {
 					console.log(res)
 					if (res.data.code == '0') {
 						const sessionToken = res.data.data.cosFederationToken.credentials.sessionToken
-						console.log(JSON.stringify(
-						{
-							TmpSecretId:res.data.data.cosFederationToken.credentials.tmpSecretId,
+						console.log(JSON.stringify({
+							TmpSecretId: res.data.data.cosFederationToken.credentials.tmpSecretId,
 							TmpSecretKey: res.data.data.cosFederationToken.credentials.tmpSecretKey,
 							XCosSecurityToken: res.data.data.cosFederationToken.credentials.sessionToken,
 							ExpiredTime: res.data.data.cosFederationToken.expiredTime
-						}
-						))
+						}))
 						callback({
-							TmpSecretId:res.data.data.cosFederationToken.credentials.tmpSecretId,
+							TmpSecretId: res.data.data.cosFederationToken.credentials.tmpSecretId,
 							TmpSecretKey: res.data.data.cosFederationToken.credentials.tmpSecretKey,
 							XCosSecurityToken: res.data.data.cosFederationToken.credentials.sessionToken,
 							ExpiredTime: res.data.data.cosFederationToken.expiredTime
@@ -51,4 +49,26 @@ export function getCos() {
 		}
 	});
 	return cos
+}
+
+export function doUploadImage(C, cid, files, index, netPaths) {
+	let filePath = files[index]
+	var filename = filePath.substr(filePath.lastIndexOf('/') + 1);
+	C.postObject({
+		Bucket: 'fzg-1300449266',
+		Region: 'ap-shanghai',
+		Key: cid + '/' + filename,
+		FilePath: filePath,
+		onProgress: function(info) {
+			console.log(JSON.stringify(info));
+		}
+	}, function(err, data) {
+		console.log(err || data);
+		if (data.Location) {
+			netPaths.push(data.Location)
+		}
+		if (index + 1 < files.length) {
+			doUploadImage(C, cid, files, index + 1, netPaths)
+		}
+	});
 }

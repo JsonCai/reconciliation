@@ -24,6 +24,7 @@
 			<text class="card-value">{{grossUncollected}}元</text>
 			<text class="card-bg-card">&#xe782;</text>
 		</view>
+		<loading :isShow='isShowLoading'></loading>
 	</view>
 </template>
 
@@ -82,8 +83,10 @@
 			if (option.type == 'BossPage') {
 				this.isSectionShow = true
 			}
+			this.showLoading()
 			getStatement()
 				.then(res => {
+					this.dismissLoading()
 					console.log(res)
 					this.grossCash = fmtMoneyBySeparator(fmtMoney2(res.data.totalStatementDto.cash))
 					this.grossProfit = fmtMoneyBySeparator(fmtMoney2(res.data.totalStatementDto.profit))
@@ -91,7 +94,11 @@
 					console.log(this.grossCash)
 				})
 				.catch(err => {
-
+					this.dismissLoading()
+					uni.showToast({
+						title: err.msg,
+						icon: 'none'
+					})
 				})
 		}
 	}

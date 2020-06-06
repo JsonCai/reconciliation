@@ -57,7 +57,7 @@
 	import imgList from '@/components/imgList/imgList.vue'
 	import {
 		getCos,
-		doUploadImage
+		doUploadImages
 	} from '@/libs/getCos'
 	import {
 		createApplyForm,
@@ -119,50 +119,23 @@
 				const netImages = this.detailForm.imgList.filter(it => {
 					return it.startsWith('http')
 				})
-				console.log('筛选图片')
-				console.log(localImages)
 				var index = 0
 				return compressImgs(localImages)
 					.then(res => {
-						console.log('压缩完成')
-						console.log(res)
 						var netPaths = []
-						doUploadImage(C, this.cid, res, 0, netPaths)
-						netPaths.forEach(it => {
+						return doUploadImages(C, this.cid, res)
+					})
+					.then(res=>{
+						console.log(res)
+						res.forEach(it => {
 							netImages.push(it)
 						})
+						console.log(netImages)
 						return netImages
 					})
-
 			},
 			changeImgList(list) {
 				this.detailForm.imgList = list
-				// console.log(list)
-				// compressImgs(list)
-				// .then(res=>{
-				// 	console.log('压缩完成')
-				// 	console.log(res)
-				// 	this.detailForm.imgList = res
-				// })
-				// .catch(err=>{
-				// 	console.log('压缩失败')
-				// 	console.log(err)
-				// })
-				// this.detailForm.imgList = list
-				//  var filePath = this.detailForm.imgList[0].path;
-				//  var filename = filePath.substr(filePath.lastIndexOf('/') + 1);
-				//  console.log(this.cid)
-				// C.postObject({
-				// 	Bucket: 'fzg-1300449266',
-				// 	Region: 'ap-shanghai',
-				// 	Key: this.cid + '/' + filename,
-				// 	FilePath: filePath,
-				// 	onProgress: function(info) {
-				// 		console.log(JSON.stringify(info));
-				// 	}
-				// }, function(err, data) {
-				// 	console.log(err || data);
-				// });
 			},
 			onStartTimeTap(code) {
 				this.timeCode = code;

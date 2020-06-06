@@ -6,31 +6,38 @@
 				<text class="title-text">订单信息</text>
 			</view>
 			<view class="item-wrap">
-				<text>名称:</text>
-				<input :disabled="detailForm.specialAccountId" class="input-text" placeholder="请输入名称" placeholder-class="place"
+				<text class="fc-6">名称:</text>
+				<input :disabled="detailForm.specialAccountId" class="input-text fc-3" placeholder="请输入名称" placeholder-class="place"
 				 v-model="detailForm.specialAccountTitle" />
 			</view>
 			<view class="item-wrap">
-				<text>分类:</text>
+				<text class="fc-6">分类:</text>
 				<picker :value="specialTypeIndex" :disabled="isDisabled" range-key="name" :range="specialType" @change="onCatagory">
-					<view class="picker"><text class="fc-9">{{specialTypeName?specialTypeName:'请选择分类'}}</text></view>
+					<view class="picker">
+						<text v-if="specialTypeName" class="fc-3">{{specialTypeName}}</text>
+						<text v-else class="fc-9">请选择分类</text>
+					</view>
 				</picker>
 			</view>
 			<view class="item-wrap">
-				<text>金额:</text>
-				<input :disabled="detailForm.specialAccountId" class="input-text" placeholder="请输入金额" placeholder-class="place"
+				<text class="fc-6">金额:</text>
+				<input :disabled="detailForm.specialAccountId" class="input-text fc-3" placeholder="请输入金额" placeholder-class="place"
 				 v-model="detailForm.amount" type="digit" @blur="changeAmount" />
 			</view>
 			<view class="item-wrap">
-				<text>日期:</text>
+				<text class="fc-6">日期:</text>
 				<view class="inner-wrap" @tap="onStartTimeTap(1)">
 					<text v-if="!detailForm.accountTime" class="fc-9">请选择申报日期</text>
-					<text v-else>{{ detailForm.accountTime}}</text>
+					<text v-else class="fc-3">{{ detailForm.accountTime}}</text>
 				</view>
 			</view>
 			<view class="img-wrap fc-6 mt-20" v-if="(detailForm.specialAccountId&&detailForm.voucherUrls&&detailForm.voucherUrls.length)||!detailForm.specialAccountId">
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.voucherUrls" :isDisabled="detailForm.specialAccountId" @changeImgList="changeImgList" />
+			</view>
+			<view class="textarea-wrap">
+				<text class="fc-6">描述:</text>
+				<textarea  placeholder="请输入描述"　v-model.trim="detailForm.specialAccountDescription"  class="fc-3 ml-20" />
 			</view>
 			<view class="btn-wrap" v-if="!detailForm.specialAccountId">
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
@@ -112,11 +119,11 @@
 								this.submitApplyForm()
 									.then(res => {
 										console.log(res)
-										setTimeout(() => {
-											uni.showToast({
+										uni.showToast({
 												icon: 'none',
 												title: "创建成功"
-											})
+										})
+										setTimeout(() => {
 											uni.$emit("reload")
 											uni.navigateBack()
 											this.dismissLoading()
@@ -193,14 +200,11 @@
 
 <style lang="less" scoped>
 	@import url('@/common/detailForm.less');
-
 	.btn-wrap {
 		justify-content: center;
-
 		.btn {
 			width: 60%;
 		}
-
 		margin-top: 100rpx;
 		margin-bottom: 50rpx;
 	}

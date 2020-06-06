@@ -6,39 +6,44 @@
 				<text class="title-text">订单信息</text>
 			</view>
 			<view class="item-wrap require1">
-				<text class="item-label">名称:</text>
-				<input class="input-text" placeholder="请输入名称" placeholder-class="place" v-model.trim="detailForm.expenseAccountTitle" />
+				<text class="item-label fc-6">名称:</text>
+				<input class="input-text fc-3" placeholder="请输入名称" placeholder-class="place" 
+				v-model.trim="detailForm.expenseAccountTitle" />
 			</view>
 			<view class="item-wrap require1">
-				<text>分类:</text>
+				<text class="fc-6">分类:</text>
 				<picker :value="categoryIndex" :disabled="isDisabled" mode='selector' range-key="costCategoryName" :range="categoryList"
 				 @change="onCatagory">
 					<view class="picker">
-						<text v-if="category">{{category}}</text>
+						<text v-if="category" class="fc-3">{{category}}</text>
 						<text class="fc-9" v-else>请选择分类</text>
 					</view>
 				</picker>
 			</view>
 			<view class="item-wrap require1">
-				<text>申报金额:</text>
-				<input class="input-text" placeholder="请输入申报金额" type="digit" placeholder-class="place" v-model="tempamount" />
+				<text class="fc-6">申报金额:</text>
+				<input class="input-text fc-3" placeholder="请输入申报金额" type="digit" placeholder-class="place" v-model="tempamount" />
 			</view>
 			<view class="item-wrap require1">
-				<text>申报日期:</text>
+				<text class="fc-6">申报日期:</text>
 				<view class="inner-wrap" @tap="onStartTimeTap(1)">
 					<text v-if="!detailForm.expenseTime" class="fc-9">请选择申报日期</text>
-					<text v-else>{{ detailForm.expenseTime}}</text>
+					<text v-else class="fc-3">{{ detailForm.expenseTime}}</text>
 				</view>
 			</view>
-			<view class="img-wrap fc-6 mt-20">
+			<view class="img-wrap mt-20">
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.imgList" :isDisabled="isDisabled" @changeImgList="changeImgList" />
+			</view>
+			<view class="textarea-wrap">
+				<text class="fc-6">描述:</text>
+				<textarea  placeholder="请输入描述"　v-model.trim="detailForm.expenseAccountDescription"  class="fc-3 ml-20" />
 			</view>
 			<view class="item-wrap" @tap="showHistory" v-if="approvals && approvals.length">
 				<text>审批意见</text>
 				<text>查看历史</text>
 			</view>
-
+			
 			<view class="big-btn-wrap" v-if="approvals && approvals.length">
 				<view class='btn confirm-btn' @tap="onResubmitTap">重新提交</view>
 			</view>
@@ -298,11 +303,13 @@
 			if (options.id) {
 				this.showLoading()
 				applyDetail(options.id).then(res => {
+					console.log(res.data)
 					this.dismissLoading()
 					// this.detailForm = res.data.expenseAccount
 					this.approvals = res.data.expenseAccount.approvals
 					this.detailForm.expenseAccountId = res.data.expenseAccount.expenseAccountId
 					this.detailForm.expenseAccountTitle = res.data.expenseAccount.expenseAccountTitle
+					this.detailForm.expenseAccountDescription = res.data.expenseAccount.expenseAccountDescription
 					this.tempamount = fmtMoney2(res.data.expenseAccount.amount)
 					if (res.data.expenseAccount.costCategory) {
 						this.category = res.data.expenseAccount.costCategory.costCategoryName

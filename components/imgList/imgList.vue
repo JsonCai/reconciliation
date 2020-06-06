@@ -62,7 +62,7 @@
 				const _this = this;
 				uni.chooseImage({
 					count: 9,
-					sizeType: ['original', 'compressed'],
+					sizeType: ['compressed'],
 					sourceType: ['album', 'camera'],
 					success(res) {
 						// tempFilePath可以作为img标签的src属性显示图片

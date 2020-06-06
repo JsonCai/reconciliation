@@ -1,6 +1,9 @@
 import {
 	baseUrl
 } from '../config/config'
+import{
+	compressImgs
+}from './utils.js'
 import store from '../store'
 const COS = require('./uploadSDK/uploadSDK');
 
@@ -13,7 +16,6 @@ export function getCos() {
 	// 初始化实例
 	var cos = new COS({
 		getAuthorization: function(options, callback) {
-			console.log(baseUrl + '/tencent-cloud/sts/cos/federation-token')
 			// 异步获取签名
 			uni.request({
 				url: baseUrl + '/tencent-cloud/sts/cos/federation-token',
@@ -22,8 +24,6 @@ export function getCos() {
 					Authorization: getAuthorization()
 				},
 				success: (res) => {
-					console.log(123123123123123)
-					console.log(res)
 					if (res.data.code == '0') {
 						const sessionToken = res.data.data.cosFederationToken.credentials.sessionToken
 						console.log(JSON.stringify({
@@ -42,7 +42,6 @@ export function getCos() {
 
 				},
 				fail: (err) => {
-					console.log(22222222222222)
 					reject(err)
 				}
 			});
@@ -84,4 +83,27 @@ function doUploadImage(C, cid, filePath) {
 			}
 		});
 	})
+}
+
+
+export async function uploadImage(imgList, cid) {
+	const C = getCos()
+	const localImages = imgList.filter(it => {
+		return !it.startsWith('http')
+	})
+	const netImages = imgList.filter(it => {
+		return it.startsWith('http')
+	})
+	return await compressImgs(localImages)
+		.then(res => {
+			var netPaths = []
+			return doUploadImages(C, cid, res)
+		})
+		.then(res => {
+			res.forEach(it => {
+				netImages.push(it)
+			})
+			console.log(netImages)
+			return netImages
+		})
 }

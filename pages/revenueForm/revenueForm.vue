@@ -298,6 +298,7 @@
 						this.detailForm.fundsReceived = fmtMoney2(res.data.revenueAccount.fundsReceived)
 						this.detailForm.accountReceivable = fmtMoney2(res.data.revenueAccount.accountReceivable)
 						this.detailForm.revenueAccountTitle = res.data.revenueAccount.revenueAccountTitle
+						this.detailForm.revenueAccountDescription = res.data.revenueAccount.revenueAccountDescription
 						if (res.data.revenueAccount.revenueTime) {
 							this.detailForm.revenueTime = res.data.revenueAccount.revenueTime.split(' ')[0]
 						}
@@ -306,7 +307,6 @@
 						}
 					})
 					.catch(err => {
-						console.log(err)
 						this.dismissLoading()
 						uni.navigateBack()
 					})

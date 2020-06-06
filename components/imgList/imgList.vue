@@ -2,7 +2,7 @@
 	<view class="img-list">
 		<view class="img-box" v-for="(img, index) in dataList" :key="index">
 			<image class="item-img" :src="img" @tap="onPrevies(index)"></image>
-			<view class="del-img font-icon" @tap="ondel(index)">&#xe635;</view>
+			<view class="del-img font-icon" v-if="!isDisabled" @tap="ondel(index)">&#xe635;</view>
 		</view>
 		<view class="img-box">
 			<image src="../../static/images/add.png" v-if="!isDisabled" @tap="addImg" class="item-img"></image>

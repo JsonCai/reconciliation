@@ -162,7 +162,13 @@
 			},
 			radioChange(ev) {
 				console.log(ev.target.value)
-				this.$set(this.applyParams, 'approvalType', Number(ev.target.value))
+				let value =  Number(ev.target.value)
+				this.$set(this.applyParams, 'approvalType', value)
+				if(value == 2){
+					this.$set(this.applyParams, 'approvalOpinion', "同意")
+				}else{
+					this.$set(this.applyParams, 'approvalOpinion', "不同意")
+				}
 			}
 		},
 		filters: {

@@ -82,8 +82,8 @@
 						this.$set(this.userInfo, 'roles', this.roles.join(','))
 						this.setUserInfo(this.userInfo)
 					}
-					if (res.data.data.tenantId) {
-						this.setCompanyId(res.data.data.tenantId)
+					if (res.data.data.employee.tenantId) {
+						this.setCompanyId(res.data.data.employee.tenantId)
 					}
 				}).catch(err => {
 					uni.showToast({
@@ -243,6 +243,7 @@
 					const roles = uni.getStorageSync('roles')
 					this.$store.commit('setRoles', roles)
 					const cid = uni.getStorageSync('companyId')
+					console.log(cid)
 					this.$store.commit('setCid', cid)
 					if (userInfo) {
 						this.userInfo = userInfo

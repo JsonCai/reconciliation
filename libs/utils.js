@@ -133,6 +133,7 @@ export function fmtMoneyBySeparator(float) {
 
 function compressAndUploadImgs(file) {
 	return new Promise((reslove, reject) => {
+		console.log('压缩图片开始'+file)
 		var path = file;
 		var parent_file_path = path.substring(0, path.lastIndexOf('/') + 1);
 		var file_name = path.substring(path.lastIndexOf('/') + 1, path.length);

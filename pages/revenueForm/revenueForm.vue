@@ -267,6 +267,13 @@
 					})
 					return
 				}
+				if (!(this.detailForm.revenueVoucherUrls&&this.detailForm.revenueVoucherUrls.length)) {
+					uni.showToast({
+						title: '请添加凭证',
+						icon: 'none'
+					})
+					return false
+				}
 				return true
 			},
 			changeReceivable(e) {

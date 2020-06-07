@@ -37,8 +37,8 @@
 			</view>
 			<view class="textarea-wrap">
 				<text class="fc-6">描述:</text>
-				<textarea  placeholder="请输入描述"　v-model.trim="detailForm.specialAccountDescription"  class="fc-3 ml-20" />
-			</view>
+				<textarea placeholder="请输入描述" 　v-model.trim="detailForm.specialAccountDescription" class="fc-3 ml-20" />
+				</view>
 			<view class="btn-wrap" v-if="!detailForm.specialAccountId">
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
 			</view>
@@ -48,7 +48,10 @@
 	</view>
 </template>
 
-<script>
+<script>	
+	import {
+		uploadImage
+	} from '@/libs/getCos'
 	import {
 		specialType
 	} from '../../../config/config.js'
@@ -89,7 +92,6 @@
 		},
 		methods: {
 			changeImgList(list) {
-				console.log(list)
 				this.detailForm.voucherUrls = list
 			},
 			onStartTimeTap(code) {
@@ -147,13 +149,52 @@
 				let form = deepClone(this.detailForm)
 				form.amount = accMul(Number(this.detailForm.amount), 100)
 				form.accountTime = resetDateFormat(form.accountTime)
-				if (this.detailForm.expenseAccountId) {
-					return updateSpecialForm(form.expenseAccountId, form)
-				} else {
-					return createSpecialAccounts(form)
-				}
+				return uploadImage(this.detailForm.voucherUrls,this.$store.state.cid)
+				.then(res=>{
+					form.voucherUrls = res
+					if (this.detailForm.expenseAccountId) {
+						return updateSpecialForm(form.expenseAccountId, form)
+					} else {
+						return createSpecialAccounts(form)
+					}
+				})
 			},
 			isFormFill() {
+				if (!this.detailForm.specialAccountTitle) {
+					uni.showToast({
+						title: '请输入名称',
+						icon: 'none'
+					})
+					return false
+				}
+				if (!this.detailForm.specialTypeName) {
+					uni.showToast({
+						title: '请选择分类',
+						icon: 'none'
+					})
+					return false
+				}
+				if (!this.detailForm.amount) {
+					uni.showToast({
+						title: '请输入金额',
+						icon: 'none'
+					})
+					return false
+				}
+				if (!this.detailForm.accountTime) {
+					uni.showToast({
+						title: '请选择申报日期',
+						icon: 'none'
+					})
+					return false
+				}
+				if (!(this.detailForm.voucherUrls&&this.detailForm.voucherUrls.length)) {
+					uni.showToast({
+						title: '请添加凭证',
+						icon: 'none'
+					})
+					return false
+				}
 				return true
 			},
 			changeAmount(e) {

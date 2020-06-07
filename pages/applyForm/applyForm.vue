@@ -306,6 +306,13 @@
 					})
 					return false
 				}
+				if (!(this.detailForm.imgList&&this.detailForm.imgList.length)) {
+					uni.showToast({
+						title: '请添加凭证',
+						icon: 'none'
+					})
+					return false
+				}
 				return true
 			},
 		},

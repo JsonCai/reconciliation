@@ -110,7 +110,7 @@
         ,{
             "path" : "pages/specialPayments/payments/payments",
             "style" : {
-				"navigationBarTitleText": "新增收支"
+				"navigationBarTitleText": "特殊收支"
 			}
         }
         ,{

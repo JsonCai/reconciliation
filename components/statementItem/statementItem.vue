@@ -1,17 +1,15 @@
 <template>
 	<view class="list-item" @tap="clickitem(statement)">
-		<view class="main-wrap">
 			<view class="inner-wrap">
 				<image src="../../static/images/listItem.png" class="list-image"></image>
 				<view class="ml-10 text-wrap">
 					<text>{{getLineOneTitle(fromType)}}:{{statement.statementItemTitle}}</text>
-					<text>{{getLineThreeTitle(fromType)}}:￥{{getLineThreeValue(fromType)}}</text>
+					<view class="inner-wrap1">
+						<text>{{getLineThreeTitle(fromType)}}:￥{{getLineThreeValue(fromType)}}</text>
+						<text class="apply-time fc-9 ml-10">{{statement.createTime | fmtTime}}</text>
+					</view>
 				</view>
 			</view>
-			<view>
-				<text class="apply-time fc-9 ml-10">{{statement.createTime | fmtTime}}</text>
-			</view>
-		</view>
 	</view>
 </template>
 
@@ -127,23 +125,23 @@
 <style lang="less">
 	@import url('../../common/list-item.less');
 
-	.main-wrap {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		width: 100%;
-	}
-
 	.list-image {
 		display: block;
 		width: 60rpx;
 		height: 60rpx;
 	}
 	.inner-wrap{
+		width: 100%;
 		display: flex;
 		align-items: center;
 	}
+	.inner-wrap1{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
 	.text-wrap{
+		flex:1;
 		text{
 			display: block;
 		}

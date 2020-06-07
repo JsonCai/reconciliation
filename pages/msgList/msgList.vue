@@ -3,9 +3,12 @@
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback">
 			<view class="msg-label" v-for="(item,index) in dataList" :key="item.messageId" @tap="onClick(item)">
 				<image class="msg-icon" :src="item.isRead|readType"></image>
-				<view>
-					<text class="msg-title">{{item.messageTitle}}</text>
-					<text class="t-time fc-9">{{item.createTime}}</text>
+				<view style="flex:1">
+					<text class="msg-title">{{item.messagePublisherName}}</text>
+					<view class="inner-wrap">
+						<text class="t-time fc-6">{{item.messageContent}}</text>
+						<text class="t-time fc-9">{{item.createTime}}</text>
+					</view>
 				</view>
 			</view>
 		</mescroll-body>
@@ -67,84 +70,92 @@
 				}).catch(err => {
 					console.log(err)
 				})
-				switch (item.channelSerialNumber) {
-					case MessageTypes.purchaseCode:
-						this.showLoading()
-						applyDetail(item.externalResource)
-							.then(res => {
-								this.dismissLoading()
-								if (res.data.expenseAccount.expenseAccountStatus.value != 3) {
-									uni.navigateTo({
-										url: '../buyer/applyDetail/applyDetail?id=' + item.externalResource
-									})
-								} else {
-									uni.navigateTo({
-										url: '../applyForm/applyForm?id=' + item.externalResource
-									})
-								}
-							})
-							.catch(err => {
-								this.dismissLoading()
-								console.log(err)
-								uni.showToast({
-									icon: 'none',
-									title: "网络请求错误"
-								})
-							})
-
-						break;
-					case MessageTypes.revenueCode:
-						this.showLoading()
-						revenueDetail(item.externalResource)
-							.then(res => {
-								this.dismissLoading()
-								console.log(res)
-								if (res.data.revenueAccount.revenueAccountStatus.value != 3) {
-									uni.navigateTo({
-										url: '../revenueDetail/revenueDetail?id=' + item.externalResource
-									})
-								} else {
-									uni.navigateTo({
-										url: '../revenueForm/revenueForm?id=' + item.externalResource
-									})
-								}
-							})
-							.catch(err => {
-								this.dismissLoading()
-								console.log(err)
-								uni.showToast({
-									icon: 'none',
-									title: "网络请求错误"
-								})
-							})
-
-						break;
-					case MessageTypes.cashierRemitCode:
-						uni.navigateTo({
-							url: '../teller/applyDetail/applyDetail?id=' + item.externalResource
-						})
-						break;
-					case MessageTypes.cashierCollectCode:
-						uni.navigateTo({
-							url: '../revenueDetail/revenueDetail?id=' + item.externalResource
-						})
-						break;
-					case MessageTypes.bossCode:
-						uni.navigateTo({
-							url: '../BossPage/applyDetail/applyDetail?id=' + item.externalResource
-						})
-						break;
-					case MessageTypes.accountantExpanseCode:
-						uni.navigateTo({
-							url: '../teller/applyDetail/applyDetail?id=' + item.externalResource
-						})
-						break;
-					case MessageTypes.accountantEarningCode:
-						uni.navigateTo({
-							url: '../revenue/revenueDetail/revenueDetail?id=' + item.externalResource
-						})
-						break;
+				if(item.externalResourceType == 3){
+					uni.navigateTo({
+						url: '/pages/specialPayments/payments/payments?id=' + item.externalResource
+					})
 				}
+				else{
+					switch (item.channelSerialNumber) {
+						case MessageTypes.purchaseCode:
+							this.showLoading()
+							applyDetail(item.externalResource)
+								.then(res => {
+									this.dismissLoading()
+									if (res.data.expenseAccount.expenseAccountStatus.value != 3) {
+										uni.navigateTo({
+											url: '../buyer/applyDetail/applyDetail?id=' + item.externalResource
+										})
+									} else {
+										uni.navigateTo({
+											url: '../applyForm/applyForm?id=' + item.externalResource
+										})
+									}
+								})
+								.catch(err => {
+									this.dismissLoading()
+									console.log(err)
+									uni.showToast({
+										icon: 'none',
+										title: "网络请求错误"
+									})
+								})
+					
+							break;
+						case MessageTypes.revenueCode:
+							this.showLoading()
+							revenueDetail(item.externalResource)
+								.then(res => {
+									this.dismissLoading()
+									console.log(res)
+									if (res.data.revenueAccount.revenueAccountStatus.value != 3) {
+										uni.navigateTo({
+											url: '../revenueDetail/revenueDetail?id=' + item.externalResource
+										})
+									} else {
+										uni.navigateTo({
+											url: '../revenueForm/revenueForm?id=' + item.externalResource
+										})
+									}
+								})
+								.catch(err => {
+									this.dismissLoading()
+									console.log(err)
+									uni.showToast({
+										icon: 'none',
+										title: "网络请求错误"
+									})
+								})
+					
+							break;
+						case MessageTypes.cashierRemitCode:
+							uni.navigateTo({
+								url: '../teller/applyDetail/applyDetail?id=' + item.externalResource
+							})
+							break;
+						case MessageTypes.cashierCollectCode:
+							uni.navigateTo({
+								url: '../revenueDetail/revenueDetail?id=' + item.externalResource
+							})
+							break;
+						case MessageTypes.bossCode:
+							uni.navigateTo({
+								url: '../BossPage/applyDetail/applyDetail?id=' + item.externalResource
+							})
+							break;
+						case MessageTypes.accountantExpanseCode:
+							uni.navigateTo({
+								url: '../teller/applyDetail/applyDetail?id=' + item.externalResource
+							})
+							break;
+						case MessageTypes.accountantEarningCode:
+							uni.navigateTo({
+								url: '../revenue/revenueDetail/revenueDetail?id=' + item.externalResource
+							})
+							break;
+					}
+				}
+			
 			},
 			/*下拉刷新的回调 */
 			downCallback() {
@@ -155,6 +166,7 @@
 				getMessageList(this.channelSerialNumber)
 					.then(res => {
 						this.dataList = res.data.messages
+						console.log(this.dataList)
 						this.mescroll.endSuccess(res.data.messages.length);
 					})
 					.catch(err => {

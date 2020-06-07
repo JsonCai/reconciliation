@@ -59,7 +59,7 @@
 			</view>
 			<view class="textarea-wrap">
 				<text class="fc-6">描述:</text>
-				<text  class="fc-3" />{{detailForm.expenseAccountDescription}}</text>
+				<text class="fc-3" />{{detailForm.expenseAccountDescription}}</text>
 			</view>
 			<view class="item-wrap">
 				<text class="fc-6">打款日期:</text>
@@ -82,6 +82,9 @@
 	import imgList from '@/components/imgList/imgList.vue'
 
 	import {
+		uploadImage
+	} from '@/libs/getCos'
+	import {
 		applyDetail,
 		paymentExpence
 	} from '@/api/apply/apply.js'
@@ -99,8 +102,8 @@
 		data() {
 			return {
 				detailForm: {
-					expenseVoucherUrls:[],
-					paymentVoucherUrls:[]
+					expenseVoucherUrls: [],
+					paymentVoucherUrls: []
 				},
 				showTimePicker: false,
 				timeCode: 0,
@@ -124,33 +127,41 @@
 					})
 					return
 				}
+				if (!(this.detailForm.paymentVoucherUrls && this.detailForm.paymentVoucherUrls.length)) {
+					uni.showToast({
+						title: '请添加凭证',
+						icon: 'none'
+					})
+					return
+				}
 				uni.showModal({
 					title: '提示',
 					content: '是否确认打款?',
 					success: res => {
 						if (res.confirm) {
 							this.showLoading()
-							paymentExpence({
-									expenseAccountId: this.detailForm.expenseAccountId,
-									paymentTime: this.detailForm.paymentTime + " 00:00:00",
-									paymentVoucherUrls: [
-										'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3637291396,2809005554&fm=26&gp=0.jpg'
-									]
+							uploadImage(this.detailForm.paymentVoucherUrls, this.$store.state.cid)
+								.then(res => {
+									return paymentExpence({
+										expenseAccountId: this.detailForm.expenseAccountId,
+										paymentTime: this.detailForm.paymentTime + " 00:00:00",
+										paymentVoucherUrls: res
+									})
 								})
 								.then(res => {
-									if (res.code == '0') {
-										uni.showToast({
-											icon: 'none',
-											title: "打款成功"
-										})
-										setTimeout(() => {
-											this.dismissLoading()
-											uni.$emit('reload')
-											uni.navigateBack()
-										}, REFRESH_DELAYED)
-									}
+									console.log(res)
+									uni.showToast({
+										icon: 'none',
+										title: "打款成功"
+									})
+									setTimeout(() => {
+										this.dismissLoading()
+										uni.$emit('reload')
+										uni.navigateBack()
+									}, REFRESH_DELAYED)
 								})
 								.catch(err => {
+									console.log(err)
 									this.dismissLoading()
 									uni.showToast({
 										icon: 'none',

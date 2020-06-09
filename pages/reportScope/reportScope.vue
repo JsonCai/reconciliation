@@ -18,42 +18,42 @@
 		</view>
 
 		<view class="report-label" v-if="isShowReport">
-			<text class="report-text">报表区间</text>
-			<text class="report-text fc-6">{{realTime.startTime}}</text>
+			<text class="report-text fc-6">报表区间</text>
+			<text class="report-text fc-3">{{realTime.startTime}}</text>
 			<text>&ensp;至&ensp;</text>
-			<text class="fc-6">{{realTime.endTime}}</text>
+			<text class="fc-3">{{realTime.endTime}}</text>
 
 		</view>
 		<view class="report-label" v-if="isShowReport">
-			<text class="report-text">利润：</text>
-			<text class="report-text fc-6">¥{{reportDetail.profit | formatMoney}}</text>
+			<text class="report-text fc-6">利润：</text>
+			<text class="report-text fc-3">¥{{reportDetail.profit | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport">
-			<text class="report-text">现金：</text>
-			<text class="report-text fc-6">¥{{reportDetail.cash | formatMoney}}</text>
+			<text class="report-text fc-6">现金：</text>
+			<text class="report-text fc-3">¥{{reportDetail.cash | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport">
-			<text class="report-text">未收款：</text>
-			<text class="report-text fc-6">¥{{reportDetail.uncollected | formatMoney}}</text>
+			<text class="report-text fc-6">未收款：</text>
+			<text class="report-text fc-3">¥{{reportDetail.uncollected | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport">
-			<text class="report-text">实收款：</text>
-			<text class="report-text fc-6">¥{{reportDetail.fundsReceived | formatMoney}}</text>
+			<text class="report-text fc-6">实收款：</text>
+			<text class="report-text fc-3">¥{{reportDetail.fundsReceived | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport" @tap="onItemClick(StatementTypes.mainBusinessExpenses)">
-			<text class="report-text">主营支出：</text>
+			<text class="report-text fc-6">主营支出：</text>
 			<text class="report-text fc-b">¥{{reportDetail.mainBusinessExpenses | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport" @tap="onItemClick(StatementTypes.mainBusinessIncome)">
-			<text class="report-text">主营收入：</text>
+			<text class="report-text fc-6">主营收入：</text>
 			<text class="report-text fc-b">¥{{reportDetail.mainBusinessIncome | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport" @tap="onItemClick(StatementTypes.otherExpenses)">
-			<text class="report-text">其他支出：</text>
+			<text class="report-text fc-6">其他支出：</text>
 			<text class="report-text fc-b">¥{{reportDetail.otherExpenses | formatMoney}}</text>
 		</view>
 		<view class="report-label" v-if="isShowReport" @tap="onItemClick(StatementTypes.otherIncome)">
-			<text class="report-text">其他收入：</text>
+			<text class="report-text fc-6">其他收入：</text>
 			<text class="report-text fc-b">¥{{reportDetail.otherIncome | formatMoney}}</text>
 		</view>
 		<timePicker :requestCode="timeCode" :date="dialogTime" :show="showTimePicker" @onConfirm="timePickConfirm" @onCancel="showTimePicker = false"></timePicker>

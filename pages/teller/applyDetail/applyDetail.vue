@@ -55,9 +55,9 @@
 			</view>
 			<view class="img-wrap fc-6 mt-20">
 				<text class="fc-30 fc-6">凭据：</text>
-				<imgList :list="detailForm.paymentVoucherUrls" :isDisabled="detailForm.expenseAccountStatus&&detailForm.expenseAccountStatus.value == 5" />
+				<imgList :list="detailForm.paymentVoucherUrls" @changeImgList="changeImgList" :isDisabled="detailForm.expenseAccountStatus&&detailForm.expenseAccountStatus.value == 5" />
 			</view>
-			<view class="textarea-wrap">
+			<view class="textarea-wrap" v-if="detailForm.expenseAccountDescription">
 				<text class="fc-6">描述:</text>
 				<text class="fc-3" />{{detailForm.expenseAccountDescription}}</text>
 			</view>

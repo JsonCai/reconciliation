@@ -35,10 +35,14 @@
 				<text class="fc-6">凭据：</text>
 				<imgList :list="detailForm.voucherUrls" :isDisabled="detailForm.specialAccountId" @changeImgList="changeImgList" />
 			</view>
-			<view class="textarea-wrap">
-				<text class="fc-6">描述:</text>
-				<textarea placeholder="请输入描述" 　v-model.trim="detailForm.specialAccountDescription" class="fc-3 ml-20" />
+			<view class="textarea-wrap" v-if="!detailForm.specialAccountId">
+				<text class="fc-6">描述:{{detailForm.specialAccountDescription}}</text>
+				<textarea placeholder="请输入描述" v-model.trim="detailForm.specialAccountDescription" class="fc-3 ml-20" />
 				</view>
+				<view class="textarea-wrap" v-if="detailForm.specialAccountId && detailForm.specialAccountDescription">
+					<text class="fc-6">描述:</text>
+					<text>{{detailForm.specialAccountDescription}}</text>
+					</view>
 			<view class="btn-wrap" v-if="!detailForm.specialAccountId">
 				<view class='btn confirm-btn' @tap="onPassTap">保存</view>
 			</view>

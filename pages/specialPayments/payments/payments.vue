@@ -167,7 +167,7 @@
 					})
 					return false
 				}
-				if (!this.detailForm.specialTypeName) {
+				if (!this.specialTypeName) {
 					uni.showToast({
 						title: '请选择分类',
 						icon: 'none'

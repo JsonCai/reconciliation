@@ -43,7 +43,7 @@
 		},
 		onReachBottom() {
 			console.log(this.tabIndex)
-			this.$refs.list.loadMore()
+			this.loadMore()
 		},
 		methods: {
 			onDel(item) {

@@ -114,6 +114,9 @@
 					this.detailForm = res.data.expenseAccount
 					console.log()
 					this.detailForm.amount = fmtMoney2(this.detailForm.amount)
+					if(this.detailForm.endTime){
+						this.detailForm.endTime = this.detailForm.endTime.split(' ')[0]
+					}
 				})
 				.catch(err => {
 					console.log(err)

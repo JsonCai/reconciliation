@@ -1,9 +1,9 @@
 import {
 	baseUrl
 } from '../config/config'
-import{
+import {
 	compressImgs
-}from './utils.js'
+} from './utils.js'
 import store from '../store'
 const COS = require('./uploadSDK/uploadSDK');
 
@@ -76,7 +76,7 @@ function doUploadImage(C, cid, filePath) {
 			}
 		}, function(err, data) {
 			console.log(err || data);
-			if (data.Location) {
+			if (data && data.Location) {
 				reslove("https://" + data.Location)
 			} else {
 				reject(err)
@@ -96,7 +96,6 @@ export async function uploadImage(imgList, cid) {
 	})
 	return await compressImgs(localImages)
 		.then(res => {
-			var netPaths = []
 			return doUploadImages(C, cid, res)
 		})
 		.then(res => {

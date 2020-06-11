@@ -61,6 +61,12 @@
                     }
                 },
                 "ad" : {}
+            },
+            "icons" : {
+                "android" : {
+                    "xhdpi" : "static/images/icon_96.png",
+                    "xxhdpi" : "static/images/icon_144.png"
+                }
             }
         }
     },

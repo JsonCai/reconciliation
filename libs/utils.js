@@ -154,7 +154,6 @@ function compressAndUploadImgs(file) {
 				console.log(relativePath)
 				//检查图片是否已存在
 				plus.io.resolveLocalFileSystemURL(relativePath, function(entry) {
-					console.log('压缩成功本地存在:'+entry.toLocalURL());
 					reslove(entry.toLocalURL())
 				}, function(e) {
 					console.log('图片不存在')

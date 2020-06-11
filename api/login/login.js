@@ -4,6 +4,7 @@ import {
 } from '../../config/config'
 
 export function getCompany(openId){
+	console.log(baseUrl + '/employees/bind-wechat-number/tenants')
 	return new Promise((resolve, reject) => {
 		uni.request({
 			url: baseUrl + '/employees/bind-wechat-number/tenants',
@@ -15,6 +16,7 @@ export function getCompany(openId){
 				resolve(res)
 			},
 			fail: (err) => {
+				console.log(err)
 				reject(err)
 			}
 		});

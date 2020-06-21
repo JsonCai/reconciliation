@@ -11,7 +11,7 @@
 					</view>
 					<view class="info-item">
 						<text class="roleName fc-c">
-							职位:
+							角色:
 							<text class="ml-20">{{userInfo.roles}}</text>
 						</text>
 					</view>

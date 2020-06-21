@@ -36,7 +36,7 @@
 				<imgList :list="detailForm.voucherUrls" :isDisabled="detailForm.specialAccountId" @changeImgList="changeImgList" />
 			</view>
 			<view class="textarea-wrap" v-if="!detailForm.specialAccountId">
-				<text class="fc-6">描述:{{detailForm.specialAccountDescription}}</text>
+				<text class="fc-6">描述:</text>
 				<textarea placeholder="请输入描述" v-model.trim="detailForm.specialAccountDescription" class="fc-3 ml-20" />
 				</view>
 				<view class="textarea-wrap" v-if="detailForm.specialAccountId && detailForm.specialAccountDescription">

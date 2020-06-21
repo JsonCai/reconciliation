@@ -83,7 +83,7 @@
 						console.log(err)
 					})
 			},
-			itemClick(item) {
+			clickItem(item) {
 				if (item.expenseAccountStatus == 3 || item.expenseAccountStatus == 1) {
 					uni.navigateTo({
 						url: '../../applyForm/applyForm?id=' + item.expenseAccountId

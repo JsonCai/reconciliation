@@ -165,6 +165,11 @@
 			radioChange(ev) {
 				console.log(ev.target.value)
 				this.$set(this.revenueParams, 'receiptActionType', Number(ev.target.value))
+				if(value == 2){
+					this.$set(this.revenueParams, 'receiptOpinion', "同意")
+				}else{
+					this.$set(this.revenueParams, 'receiptOpinion', "不同意")
+				}
 			}
 		},
 		onLoad(option) {

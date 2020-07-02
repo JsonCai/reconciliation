@@ -3,7 +3,6 @@
 		<view class="bg">
 			<view class="info-wrap">
 				<image class="avatar" :src="isLogin ? userInfo.avatarUrl : defaultAvatarSrc"></image>
-				<textarea v-model.trim="unionId"></textarea>
 				<text class="tips" v-if="!isLogin">登录获取更多信息</text>
 				<view class="info" v-else>
 					<view class="info-item">
@@ -24,11 +23,14 @@
 		<view class="big-btn" @tap="logout" v-else>退出</view>
 		<!-- #endif -->
 		<!-- #ifdef MP-WEIXIN -->
-		<button class='login_bottom' type='primary' open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo">
+		<button class='login_bottom' type='primary' open-type="getUserInfo" withCredentials="true" v-if="!isLogin" lang="zh_CN"
+		 @getuserinfo="wxGetUserInfo">
 			授权登录
 		</button>
+		
+		<view class="big-btn" @tap="logout" v-else>退出</view>
+		
 		<!-- #endif -->
-
 		<uni-popup ref="popup" type="center">
 			<selectCompany :tenants="tenants" @selCompany="selCompany" />
 		</uni-popup>
@@ -37,12 +39,15 @@
 </template>
 
 <script>
+	const crypto = require('crypto')
 	import {
 		login,
-		getCompany
+		getCompany,
+		getWxUid
 	} from '@/api/login/login';
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import selectCompany from '@/components/selectCompany/selectCompany'
+
 	export default {
 		components: {
 			uniPopup,
@@ -50,6 +55,7 @@
 		},
 		data() {
 			return {
+				sessionKey:'',
 				unionId: '',
 				cid: '',
 				tenants: [],
@@ -60,9 +66,27 @@
 				boySrc: '../../static/images/boy.png',
 				girlSrc: '../../static/images/girl.png',
 				permissions: [],
+				wxCode: '',
 			};
 		},
 		methods: {
+			decryptData(sessionKey, encryptedData, iv) {
+				sessionKey = new Buffer(sessionKey, 'base64')
+				encryptedData = new Buffer(encryptedData, 'base64')
+				iv = new Buffer(iv, 'base64')
+				let userInfo = null
+				try {
+					let decipher = crypto.createDecipheriv('aes-128-cbc', sessionKey, iv)
+					decipher.setAutoPadding(true)
+					let decoded = decipher.update(encryptedData, 'binary', 'utf8')
+					decoded += decipher.final('utf8')
+					userInfo = JSON.parse(decoded)
+				} catch (err) {
+					console.log(err)
+				}
+	
+				return userInfo
+			},
 			doLogin() {
 				login({
 					tenantId: this.cid,
@@ -99,20 +123,18 @@
 				this.$refs.popup.close()
 				this.doLogin()
 			},
-			wxGetUserInfo() {
+			wxGetUserInfo(re) {
 				let _this = this;
+				console.log(re)
+				const encryptedData = re.detail.encryptedData
+				const iv = re.detail.iv
+				const uInfo = this.decryptData(this.sessionKey,encryptedData,iv)
+				console.log(uInfo)
 				uni.getUserInfo({
 					provider: 'weixin',
 					success: function(infoRes) {
-						console.log(infoRes)
-						let nickName = infoRes.userInfo.nickName; //昵称
-						let avatarUrl = infoRes.userInfo.avatarUrl; //头像
-						uni.login({
-							provider: 'weixin',
-							success: (res) => {
-								console.log(res)
-							},
-						})
+						_this.userInfo = infoRes.userInfo
+						
 					},
 					fail(res) {}
 				});
@@ -230,11 +252,24 @@
 			}
 		},
 		onLoad() {
-			// #ifdef MP-WEIXIN
-			this.onLogin()
-			// #endif
-
-			// #ifdef APP-PLUS
+			uni.login({
+				provider: 'weixin',
+				success: (res) => {
+					console.log(res)
+					if (res.errMsg == 'login:ok') {
+						this.wxCode = res.code
+						console.log(this.wxCode)
+						getWxUid({
+							code:this.wxCode
+						}).then(r => {
+							console.log(r)
+							console.log(typeof r)
+							this.sessionKey = r.data.data.unionid
+							console.log(this.sessionKey)
+						})
+					}
+				},
+			})
 			if (this.checkLogin()) {
 				this.isLogin = true
 				try {
@@ -253,7 +288,6 @@
 					// error
 				}
 			}
-			// #endif
 		}
 	};
 </script>

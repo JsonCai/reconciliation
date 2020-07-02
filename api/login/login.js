@@ -38,3 +38,18 @@ export function login(data) {
 		});
 	})
 }
+export function getWxUid(data){
+	return new Promise((resolve, reject) => {
+		uni.request({
+			url: baseUrl + '/we-chat/mini-program/unionid',
+			method: 'GET',
+			data,
+			success: (res) => {
+				resolve(res)
+			},
+			fail: (err) => {
+				reject(err)
+			}
+		});
+	})
+}

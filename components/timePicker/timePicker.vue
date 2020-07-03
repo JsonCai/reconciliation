@@ -2,6 +2,8 @@
 	<view v-if="show" class="v-time-picker">
 		<view @tap.stop="onCancel" style="height: 100%;width: 100%;"></view>
 		<!-- 时间选择器 -->
+		
+		<!-- #ifdef APP-PLUS  -->
 		<view class="v-title">
 			<text class="sel-btn" @tap.stop="onCancel">取消</text>
 			<text class="time-picker-title">选择时间</text>
@@ -18,6 +20,18 @@
 				<view class="item" v-for="(item,index) in currentDays" :key="index">{{item}}日</view>
 			</picker-view-column>
 		</picker-view>
+		<!-- #endif   -->
+		<!-- #ifdef MP-WEIXIN  -->
+			<view class="section">
+			  <view class="section__title">日期选择器</view>
+			  <picker mode="date" :value="date" start="2015-09-01" end="2030-09-01" @change="bindChange">
+			    <view class="picker">
+			      当前选择: {{date}}
+			    </view>
+			  </picker>
+			 <view />
+		<!-- #endif   -->
+	</view>
 	</view>
 </template>
 

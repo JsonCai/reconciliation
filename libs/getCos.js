@@ -65,6 +65,7 @@ export async function doUploadImages(C, cid, files) {
 
 function doUploadImage(C, cid, filePath) {
 	return new Promise((reslove, reject) => {
+		console.log(filePath)
 		var filename = filePath.substr(filePath.lastIndexOf('/') + 1);
 		C.postObject({
 			Bucket: 'fzg-1300449266',

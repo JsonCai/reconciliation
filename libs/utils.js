@@ -133,7 +133,7 @@ export function fmtMoneyBySeparator(float) {
 
 function compressAndUploadImgs(file) {
 	return new Promise((reslove, reject) => {
-		console.log('压缩图片开始'+file)
+		console.log('压缩图片开始' + file)
 		var path = file;
 		var parent_file_path = path.substring(0, path.lastIndexOf('/') + 1);
 		var file_name = path.substring(path.lastIndexOf('/') + 1, path.length);
@@ -141,6 +141,7 @@ function compressAndUploadImgs(file) {
 		var file_type = file_name.substring(file_name.indexOf('.'));
 		var random_num = new Date().getTime();
 		var file_compress_name = random_num + file_type;
+		// #ifdef APP-PLUS
 		plus.zip.compressImage({
 				src: path,
 				dst: 'compresspic/' + file_compress_name,
@@ -166,13 +167,30 @@ function compressAndUploadImgs(file) {
 				console.log(error)
 				reslove(path)
 			});
+		// #endif
+		// #ifdef MP-WEIXIN
+		uni.compressImage({
+			src: path,
+			quality: 20,
+			success: (res) => {
+				if (res.tempFilePath) {
+					reslove(res.tempFilePath)
+				} else {
+					reslove(path)
+				}
+			},
+			fail: (err) => {
+				reslove(path)
+			}
+		})
+		// #endif
 	})
 }
 
 export async function compressImgs(files) {
 	var compressPaths = []
 	if (files && files.length) {
-		for(var i in files){
+		for (var i in files) {
 			let path = await compressAndUploadImgs(files[i])
 			console.log(path)
 			compressPaths.push(path)

@@ -124,17 +124,18 @@
 				this.doLogin()
 			},
 			wxGetUserInfo(re) {
+				this.showLoading()
 				let _this = this;
 				console.log(re)
 				const encryptedData = re.detail.encryptedData
 				const iv = re.detail.iv
 				const uInfo = this.decryptData(this.sessionKey,encryptedData,iv)
-				console.log(uInfo)
+				this.unionId = uInfo.unionId
 				uni.getUserInfo({
 					provider: 'weixin',
 					success: function(infoRes) {
 						_this.userInfo = infoRes.userInfo
-						
+						_this.getCompany()
 					},
 					fail(res) {}
 				});
@@ -149,6 +150,25 @@
 							try {
 								_this.isLogin = false
 								uni.clearStorageSync();
+								// #ifdef MP-WEIXIN
+									this.showLoading()
+									uni.login({
+										provider: 'weixin',
+										success: (res) => {
+											console.log(res)
+											if (res.errMsg == 'login:ok') {
+												this.wxCode = res.code
+												console.log(this.wxCode)
+												getWxUid({
+													code:this.wxCode
+												}).then(r => {
+													this.sessionKey = r.data.data.unionid
+													this.dismissLoading()
+												})
+											}
+										},
+									})
+								// #endif  
 							} catch (e) {
 								// error
 							}
@@ -195,6 +215,36 @@
 
 				}
 			},
+			getCompany(){
+				const p = getCompany(this.unionId)
+				const p1 = p.then(res => {
+					console.log(res)
+					this.dismissLoading()
+					if (res.data.code == 0) {
+						this.tenants = res.data.data.tenants
+						if (this.tenants.length > 1) {
+							this.$refs.popup.open()
+						} else {
+							this.cid = this.tenants[0].tenantId
+							this.$store.commit('setCid', this.cid)
+							this.doLogin()
+						}
+					} else {
+						this.dismissLoading()
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none'
+						})
+					}
+				}).catch((err) => {
+					console.log(err)
+					this.dismissLoading()
+					uni.showToast({
+						title: err,
+						icon: 'none'
+					})
+				})
+			},
 			onLogin() {
 				let _this = this
 				this.showLoading()
@@ -209,34 +259,7 @@
 									_this.unionId = res.userInfo.unionId;
 									console.log(res)
 									_this.userInfo = res.userInfo
-									const p = getCompany(_this.unionId)
-									const p1 = p.then(res => {
-										console.log(res)
-										_this.dismissLoading()
-										if (res.data.code == 0) {
-											_this.tenants = res.data.data.tenants
-											if (_this.tenants.length > 1) {
-												_this.$refs.popup.open()
-											} else {
-												_this.cid = _this.tenants[0].tenantId
-												_this.$store.commit('setCid', _this.cid)
-												_this.doLogin()
-											}
-										} else {
-											_this.dismissLoading()
-											uni.showToast({
-												title: res.data.msg,
-												icon: 'none'
-											})
-										}
-									}).catch((err) => {
-										console.log(err)
-										_this.dismissLoading()
-										uni.showToast({
-											title: res.data.msg,
-											icon: 'none'
-										})
-									})
+									_this.getCompany()
 								}
 							},
 							fail: (err) => {
@@ -252,24 +275,7 @@
 			}
 		},
 		onLoad() {
-			uni.login({
-				provider: 'weixin',
-				success: (res) => {
-					console.log(res)
-					if (res.errMsg == 'login:ok') {
-						this.wxCode = res.code
-						console.log(this.wxCode)
-						getWxUid({
-							code:this.wxCode
-						}).then(r => {
-							console.log(r)
-							console.log(typeof r)
-							this.sessionKey = r.data.data.unionid
-							console.log(this.sessionKey)
-						})
-					}
-				},
-			})
+			
 			if (this.checkLogin()) {
 				this.isLogin = true
 				try {
@@ -287,6 +293,26 @@
 				} catch (e) {
 					// error
 				}
+			}else{
+				// #ifdef MP-WEIXIN  
+					this.showLoading()
+					uni.login({
+						provider: 'weixin',
+						success: (res) => {
+							console.log(res)
+							if (res.errMsg == 'login:ok') {
+								this.wxCode = res.code
+								console.log(this.wxCode)
+								getWxUid({
+									code:this.wxCode
+								}).then(r => {
+									this.sessionKey = r.data.data.unionid
+									this.dismissLoading()
+								})
+							}
+						},
+					})
+				// #endif  
 			}
 		}
 	};

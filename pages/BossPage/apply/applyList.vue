@@ -58,6 +58,7 @@
 			upCallback(page) {
 				getApprovalApplyrForm(this.getApplyFormData(page))
 					.then(res => {
+						console.log(res)
 						this.mescroll.endSuccess(res.data.expenseAccounts.length);
 						if (page.num == 1) {
 							this.dataList = []

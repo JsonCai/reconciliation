@@ -195,11 +195,11 @@
 				.then(res => {
 					console.log(res)
 					this.detailForm = res.data.expenseAccount
+					this.$set(this.detailForm, 'amount', fmtMoney2(this.detailForm.amount))
 					this.$set(this, "detailForm", res.data.expenseAccount)
 					if(this.detailForm.paymentTime){
 						this.detailForm.paymentTime = this.detailForm.paymentTime.split(' ')[0]
 					}
-					// this.$set(this.detailForm, 'amount', fmtMoney2(this.detailForm.amount))
 					// this.$set(this.detailForm, 'expenseVoucherUrls', this.detailForm.expenseVoucherUrls)
 					// this.$set(this.detailForm, 'paymentVoucherUrls', this.detailForm.paymentVoucherUrls)
 				})

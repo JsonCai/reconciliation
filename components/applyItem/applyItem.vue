@@ -89,7 +89,7 @@
 			},
 			fmtTime(val) {
 				if (val) {
-					return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val))
+					return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val+" CCT"))
 				}
 			},
 			formatMoney(val) {

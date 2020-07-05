@@ -55,9 +55,15 @@
 		},
 		mounted() {
 			const date = new Date()
-			this.value[0] = date.getFullYear();
-			this.value[1] = date.getMonth();
-			this.value[2] = date.getDate()-1;
+			// this.value[0] = date.getFullYear();
+			// this.value[1] = date.getMonth();
+			// this.value[2] = date.getDate()-1;
+			this.$set(this.value, 0, date.getFullYear());
+			this.$set(this.value, 1, date.getMonth());
+			this.$set(this.value, 2, date.getDate() - 1);
+			const daySize = new Date(this.value[0], this.value[1] + 1, 0).getDate();
+			this.currentDays = this.days.slice(0, daySize);
+			console.log(this.currentDays)
 		},
 		methods: {
 			bindChange(e) {

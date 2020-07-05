@@ -2,7 +2,6 @@
 	<view class="container">
 		<view class="bg">
 			<view class="info-wrap">
-				<textarea v-model.trim="unionId"></textarea>
 				<image class="avatar" :src="isLogin ? userInfo.avatarUrl : defaultAvatarSrc"></image>
 				<text class="tips" v-if="!isLogin">登录获取更多信息</text>
 				<view class="info" v-else>

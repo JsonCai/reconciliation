@@ -27,11 +27,11 @@
 		},
 		computed:{
 			iconSrc(){
-				if(this.text == '审核报销单据' || this.text == '提交报销单据' || this.text == '确认查看报销单据' || this.text == '打款报销单据'){
+				if(this.text == '审核报销单据' || this.text == '提交报销单据' || this.text == '查看已完成报销单据' || this.text == '打款报销单据'){
 					return this.applySrc
 				}else if(this.text == '查看财务报表' || this.text == '查看财务情况' || this.text == '查看财务'){
 					return this.financeSrc
-				}else if(this.text == '提交营收单据' || this.text == '接收营收单据' || this.text == '确认查看营收单据'){
+				}else if(this.text == '提交营收单据' || this.text == '接收营收单据' || this.text == '查看已完成营收单据'){
 					return this.revenueSrc
 				}else if(this.text == '操作特殊单据'){
 					return this.tsSrc

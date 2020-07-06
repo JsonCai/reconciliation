@@ -1,7 +1,7 @@
 <template>
 	<view class="selectCompany">
 		<text class="title fc-3">请选择企业</text>
-		<text class="c-item fc-6" v-for="item in tenants" :key="item.tenantId" @click="selCompany(item.tenantId)">{{item.enterpriseInfo.name}}</text>
+		<text class="c-item fc-6" v-for="item in tenants" :key="item.tenantId" @click="selCompany(item.tenantId)">{{item.enterpriseName}}</text>
 	</view>
 </template>
 <script>

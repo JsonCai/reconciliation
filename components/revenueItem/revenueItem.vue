@@ -70,7 +70,7 @@
 				}
 			},
 			fmtTime(val) {
-				return dateFtt('yyyy-MM-dd hh:mm:ss', new Date(val))
+				return dateFtt('yyyy-MM-dd hh:mm:ss', val)
 			},
 			formatMoney(val){
 				return fmtMoney2(val)

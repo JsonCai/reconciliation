@@ -53,6 +53,14 @@ export function resetDateFormat(date) {
 }
 
 export function dateFtt(fmt, date) { //author: meizz 
+
+	if (date.indexOf('T') != -1) {
+		date = date.replace('T', ' ')
+	}
+
+	date = date.replace(/-/g, ':').replace(' ', ':');
+	const time = date.split(':')
+	date = new Date(time[0], (time[1] - 1), time[2], time[3], time[4], time[5]);
 	var o = {
 		"M+": date.getMonth() + 1, //月份 
 		"d+": date.getDate(), //日 
@@ -135,40 +143,7 @@ function compressAndUploadImgs(file) {
 	return new Promise((reslove, reject) => {
 		console.log('压缩图片开始' + file)
 		var path = file;
-		var parent_file_path = path.substring(0, path.lastIndexOf('/') + 1);
-		var file_name = path.substring(path.lastIndexOf('/') + 1, path.length);
-		var file_pure_name = file_name.substring(0, file_name.indexOf('.'));
-		var file_type = file_name.substring(file_name.indexOf('.'));
-		var random_num = new Date().getTime();
-		var file_compress_name = random_num + file_type;
-		// #ifdef APP-PLUS
-		plus.zip.compressImage({
-				src: path,
-				dst: 'compresspic/' + file_compress_name,
-				quality: '20',
-				overwrite: true
-			},
-			function() {
-				// console.log('压缩成功');
-				var relativePath = "compresspic/" + file_compress_name;
-				console.log('compresspic')
-				console.log(relativePath)
-				//检查图片是否已存在
-				plus.io.resolveLocalFileSystemURL(relativePath, function(entry) {
-					reslove(entry.toLocalURL())
-				}, function(e) {
-					console.log('图片不存在')
-					console.log(e)
-					reslove(path)
-				});
-			},
-			function(error) {
-				console.log('图片压缩失败')
-				console.log(error)
-				reslove(path)
-			});
-		// #endif
-		// #ifdef MP-WEIXIN
+
 		uni.compressImage({
 			src: path,
 			quality: 20,
@@ -183,7 +158,6 @@ function compressAndUploadImgs(file) {
 				reslove(path)
 			}
 		})
-		// #endif
 	})
 }
 

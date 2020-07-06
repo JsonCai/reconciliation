@@ -7,7 +7,7 @@
 				<view class="info" v-else>
 					<view class="info-item">
 						<text>{{ userInfo.employeeName }}</text>
-						<image class="sex-img" :src="userInfo.gender == 1 ? boySrc : girlSrc"></image>
+						<image class="sex-img" :src="userInfo.gender == 1 ? boySrc : girlSrc" v-if="userInfo.gender != 0"></image>
 					</view>
 					<view class="info-item">
 						<text class="roleName fc-c">

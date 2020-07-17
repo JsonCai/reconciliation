@@ -27,9 +27,9 @@
 		 @getuserinfo="wxGetUserInfo">
 			授权登录
 		</button>
-		
+
 		<view class="big-btn" @tap="logout" v-else>退出</view>
-		
+
 		<!-- #endif -->
 		<uni-popup ref="popup" type="center">
 			<selectCompany :tenants="tenants" @selCompany="selCompany" />
@@ -57,7 +57,7 @@
 		},
 		data() {
 			return {
-				sessionKey:'',
+				sessionKey: '',
 				unionId: '',
 				cid: '',
 				tenants: [],
@@ -101,7 +101,7 @@
 				} catch (err) {
 					console.log(err)
 				}
-	
+
 				return userInfo
 			},
 			doLogin() {
@@ -145,18 +145,32 @@
 				this.showLoading()
 				let _this = this;
 				console.log(re)
-				const encryptedData = re.detail.encryptedData
-				const iv = re.detail.iv
-				const uInfo = this.decryptData(this.sessionKey,encryptedData,iv)
-				this.unionId = uInfo.unionId
-				uni.getUserInfo({
-					provider: 'weixin',
-					success: function(infoRes) {
-						_this.userInfo = infoRes.userInfo
-						_this.getCompany()
-					},
-					fail(res) {}
-				});
+				if (re.detail.encryptedData) {
+					const encryptedData = re.detail.encryptedData
+					const iv = re.detail.iv
+					const uInfo = this.decryptData(this.sessionKey, encryptedData, iv)
+					if (uInfo && uInfo.unionId) {
+						this.unionId = uInfo.unionId
+						uni.getUserInfo({
+							provider: 'weixin',
+							success: function(infoRes) {
+								_this.userInfo = infoRes.userInfo
+								_this.getCompany()
+							},
+							fail(res) {
+								_this.dismissLoading()
+							}
+						});
+						return
+					}
+				}
+
+				_this.dismissLoading()
+				uni.showToast({
+					title: "授权失败",
+					icon: 'none'
+				})
+
 			},
 			logout() {
 				let _this = this
@@ -173,23 +187,23 @@
 									success:function(){}
 								})
 								// #ifdef MP-WEIXIN
-									this.showLoading()
-									uni.login({
-										provider: 'weixin',
-										success: (res) => {
-											console.log(res)
-											if (res.errMsg == 'login:ok') {
-												this.wxCode = res.code
-												console.log(this.wxCode)
-												getWxUid({
-													code:this.wxCode
-												}).then(r => {
-													this.sessionKey = r.data.data.unionid
-													this.dismissLoading()
-												})
-											}
-										},
-									})
+								this.showLoading()
+								uni.login({
+									provider: 'weixin',
+									success: (res) => {
+										console.log(res)
+										if (res.errMsg == 'login:ok') {
+											this.wxCode = res.code
+											console.log(this.wxCode)
+											getWxUid({
+												code: this.wxCode
+											}).then(r => {
+												this.sessionKey = r.data.data.unionid
+												this.dismissLoading()
+											})
+										}
+									},
+								})
 								// #endif  
 							} catch (e) {
 								// error
@@ -237,7 +251,7 @@
 
 				}
 			},
-			getCompany(){
+			getCompany() {
 				const p = getCompany(this.unionId)
 				const p1 = p.then(res => {
 					console.log(res)
@@ -297,7 +311,7 @@
 			}
 		},
 		onLoad() {
-			
+
 			if (this.checkLogin()) {
 				this.isLogin = true
 				try {
@@ -316,25 +330,25 @@
 				} catch (e) {
 					// error
 				}
-			}else{
+			} else {
 				// #ifdef MP-WEIXIN  
-					this.showLoading()
-					uni.login({
-						provider: 'weixin',
-						success: (res) => {
-							console.log(res)
-							if (res.errMsg == 'login:ok') {
-								this.wxCode = res.code
-								console.log(this.wxCode)
-								getWxUid({
-									code:this.wxCode
-								}).then(r => {
-									this.sessionKey = r.data.data.unionid
-									this.dismissLoading()
-								})
-							}
-						},
-					})
+				this.showLoading()
+				uni.login({
+					provider: 'weixin',
+					success: (res) => {
+						console.log(res)
+						if (res.errMsg == 'login:ok') {
+							this.wxCode = res.code
+							console.log(this.wxCode)
+							getWxUid({
+								code: this.wxCode
+							}).then(r => {
+								this.sessionKey = r.data.data.unionid
+								this.dismissLoading()
+							})
+						}
+					},
+				})
 				// #endif  
 			}
 		}

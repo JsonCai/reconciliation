@@ -2,8 +2,6 @@
 	<view v-if="show" class="v-time-picker">
 		<view @tap.stop="onCancel" style="height: 100%;width: 100%;"></view>
 		<!-- 时间选择器 -->
-		
-		<!-- #ifdef APP-PLUS  -->
 		<view class="v-title">
 			<text class="sel-btn" @tap.stop="onCancel">取消</text>
 			<text class="time-picker-title">选择时间</text>
@@ -20,18 +18,6 @@
 				<view class="item" v-for="(item,index) in currentDays" :key="index">{{item}}日</view>
 			</picker-view-column>
 		</picker-view>
-		<!-- #endif   -->
-		<!-- #ifdef MP-WEIXIN  -->
-			<view class="section">
-			  <view class="section__title">日期选择器</view>
-			  <picker mode="date" :value="date" start="2015-09-01" end="2030-09-01" @change="bindChange">
-			    <view class="picker">
-			      当前选择: {{date}}
-			    </view>
-			  </picker>
-			 <view />
-		<!-- #endif   -->
-	</view>
 	</view>
 </template>
 
@@ -69,10 +55,7 @@
 		},
 		mounted() {
 			const date = new Date()
-			// this.value[0] = date.getFullYear();
-			// this.value[1] = date.getMonth();
-			// this.value[2] = date.getDate()-1;
-			this.$set(this.value, 0, date.getFullYear());
+			this.$set(this.value, 0, date.getFullYear() - 1990);
 			this.$set(this.value, 1, date.getMonth());
 			this.$set(this.value, 2, date.getDate() - 1);
 			const daySize = new Date(this.value[0], this.value[1] + 1, 0).getDate();
@@ -83,7 +66,7 @@
 			bindChange(e) {
 				const val = e.detail.value;
 				this.value = val;
-				const daySize = new Date(val[0] + 1990, val[1] + 1, 0).getDate();
+				const daySize = new Date(val[0], val[1] + 1, 0).getDate();
 				this.currentDays = this.days.slice(0, daySize);
 			},
 			onConfirm() {

@@ -1,10 +1,10 @@
 <template>
 	<view class="v-list">
-		<view class="item-wrap" v-for="(item,index) in year" :key="index.toString()" @tap="onYearClick(item)" v-if="!selectYaer">
+		<view class="item-wrap" v-for="(item,index) in year" :key="index" @tap="onYearClick(item)" v-if="!selectYaer">
 			<text class="t-label">{{item}}年财务</text>
 			<image src="../../../static/images/arrow-right01.png" class="arrow-right"></image>
 		</view>
-		<view class="item-wrap" v-for="(item,index) in month" :key="index.toString()" @tap="onMonthClick(item)">
+		<view class="item-wrap" v-for="(item,index) in month" :key="index" @tap="onMonthClick(item)">
 			<text class="t-label">{{item}}月财务明细</text>
 			<image src="../../../static/images/arrow-right01.png" class="arrow-right"></image>
 		</view>

@@ -47,7 +47,9 @@
 	} from '@/api/login/login';
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import selectCompany from '@/components/selectCompany/selectCompany'
-
+	import {
+		getMessageBox
+	} from '@/api/message/message.js'
 	export default {
 		components: {
 			uniPopup,
@@ -70,6 +72,21 @@
 			};
 		},
 		methods: {
+			getNoReadNum(){
+				getMessageBox().then(res => {
+					if(res.code == '0'){
+						const temp = res.data.messageChannels.map(v => v.unReadMessageCount)
+						const n = temp.reduce((pre, item) => {
+							return pre + item
+						}, 0)
+						console.log(n)
+						uni.setTabBarBadge({
+						  index: 1,
+						  text:n + ''
+						})
+					}
+				})
+			},
 			decryptData(sessionKey, encryptedData, iv) {
 				sessionKey = new Buffer(sessionKey, 'base64')
 				encryptedData = new Buffer(encryptedData, 'base64')
@@ -110,6 +127,7 @@
 					if (res.data.data.employee.tenantId) {
 						this.setCompanyId(res.data.data.employee.tenantId)
 					}
+					this.getNoReadNum()
 				}).catch(err => {
 					uni.showToast({
 						icon: 'none',
@@ -150,6 +168,10 @@
 							try {
 								_this.isLogin = false
 								uni.clearStorageSync();
+								uni.removeTabBarBadge({
+									index:1,
+									success:function(){}
+								})
 								// #ifdef MP-WEIXIN
 									this.showLoading()
 									uni.login({
@@ -290,6 +312,7 @@
 					if (userInfo) {
 						this.userInfo = userInfo
 					}
+					this.getNoReadNum()
 				} catch (e) {
 					// error
 				}

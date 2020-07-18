@@ -24,8 +24,7 @@
 		MessageTypes
 	} from '@/config/config.js'
 
-	const imgList = [
-		{
+	const imgList = [{
 			img: "../../static/images/msg_approve.png",
 			title: "老板",
 			content: "待审批消息",
@@ -42,7 +41,7 @@
 			title: "出纳",
 			content: "待收款消息",
 			code: MessageTypes.cashierCollectCode
-		},{
+		}, {
 			img: "../../static/images/msg_apply.png",
 			title: "采购员",
 			content: "申报消息",
@@ -112,6 +111,15 @@
 								messageItem.latestMessageTime = item.latestMessageTime
 								return messageItem
 							}))
+						const temp = res.data.messageChannels.map(v => v.unReadMessageCount)
+						const n = temp.reduce((pre, item) => {
+							return pre + item
+						}, 0)
+						console.log(n)
+						uni.setTabBarBadge({
+							index: 1,
+							text: n + ''
+						})
 					})
 					.catch(err => {
 						console.log(err)
@@ -124,6 +132,10 @@
 				console.log('刷新已读')
 				this.reload()
 			})
+		},
+		onTabItemTap(e) {
+			console.log('切换导航栏')
+			this.reload();
 		}
 	}
 </script>

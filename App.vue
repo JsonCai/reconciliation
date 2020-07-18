@@ -1,10 +1,13 @@
 <script>
+	import {
+		getMessageBox
+	} from '@/api/message/message.js'
 	export default {
 		onLaunch: function() {
 			
 		},
 		onShow: function() {
-			
+			uni.$emit('onShow')
 		},
 		onHide: function() {
 			console.log('App Hide')

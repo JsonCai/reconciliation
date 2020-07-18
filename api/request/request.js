@@ -8,6 +8,7 @@ function getAuthorization(){
 }
 function onHttpSuccess(res, resolve, reject) {
 	if (res.statusCode == 403) {
+		uni.$emit('loginOut')
 		uni.switchTab({
 			url: '/pages/me/me'
 		})

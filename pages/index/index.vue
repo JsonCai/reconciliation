@@ -21,6 +21,9 @@
 	</view>
 </template>
 <script>
+	import {
+		getMessageBox
+	} from '@/api/message/message.js'
 	import indexNavItem from '@/components/indexNavItem/indexNavItem.vue'
 	import noLogin from '@/components/noLogin/noLogin.vue'
 	export default {
@@ -62,7 +65,26 @@
 				uni.navigateTo({
 					url: '../reportScope/reportScope'
 				})
-			}
+			},
+			getNoReadNum(){
+				getMessageBox().then(res => {
+					if(res.code == '0'){
+						const temp = res.data.messageChannels.map(v => v.unReadMessageCount)
+						const n = temp.reduce((pre, item) => {
+							return pre + item
+						}, 0)
+						console.log(n)
+						uni.setTabBarBadge({
+						  index: 1,
+						  text:n + ''
+						})
+					}
+				})
+			},
+		},
+		onTabItemTap(e) {
+			console.log('切换导航栏')
+			this.getNoReadNum();
 		}
 	}
 </script>

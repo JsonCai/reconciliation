@@ -18,6 +18,11 @@ const store = new Vuex.Store({
 		setCid(state,cid){
 			state.cid = cid
 		},
+		clearInfo(state){
+			state.token = ''
+			state.roles = []
+			state.cid = ''
+		}
 	}
 })
 export default store

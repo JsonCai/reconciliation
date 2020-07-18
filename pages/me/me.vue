@@ -180,37 +180,41 @@
 					success: function(res) {
 						if (res.confirm) {
 							try {
-								_this.isLogin = false
-								uni.clearStorageSync();
-								uni.removeTabBarBadge({
-									index:1,
-									success:function(){}
-								})
-								// #ifdef MP-WEIXIN
-								this.showLoading()
-								uni.login({
-									provider: 'weixin',
-									success: (res) => {
-										console.log(res)
-										if (res.errMsg == 'login:ok') {
-											this.wxCode = res.code
-											console.log(this.wxCode)
-											getWxUid({
-												code: this.wxCode
-											}).then(r => {
-												this.sessionKey = r.data.data.unionid
-												this.dismissLoading()
-											})
-										}
-									},
-								})
-								// #endif  
+								_this.onLoginOut()
 							} catch (e) {
 								// error
 							}
 						}
 					}
 				});
+			},
+			onLoginOut(){
+				this.isLogin = false
+				uni.clearStorageSync();
+				uni.removeTabBarBadge({
+					index:1,
+					success:function(){}
+				})
+				this.$store.commit('clearInfo')
+				// #ifdef MP-WEIXIN
+				this.showLoading()
+				uni.login({
+					provider: 'weixin',
+					success: (res) => {
+						console.log(res)
+						if (res.errMsg == 'login:ok') {
+							this.wxCode = res.code
+							console.log(this.wxCode)
+							getWxUid({
+								code: this.wxCode
+							}).then(r => {
+								this.sessionKey = r.data.data.unionid
+								this.dismissLoading()
+							})
+						}
+					},
+				})
+				// #endif  
 			},
 			checkLogin() {
 				try {
@@ -351,6 +355,19 @@
 				})
 				// #endif  
 			}
+			uni.$on("loginOut", () => {
+				console.log('退出登录')
+				this.onLoginOut()
+			})
+			
+			uni.$on("onShow", () => {
+				console.log('进入app')
+				this.getNoReadNum();
+			})
+		},
+		onTabItemTap(e) {
+			console.log('切换导航栏')
+			this.getNoReadNum();
 		}
 	};
 </script>

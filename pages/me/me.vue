@@ -72,17 +72,17 @@
 			};
 		},
 		methods: {
-			getNoReadNum(){
+			getNoReadNum() {
 				getMessageBox().then(res => {
-					if(res.code == '0'){
+					if (res.code == '0') {
 						const temp = res.data.messageChannels.map(v => v.unReadMessageCount)
 						const n = temp.reduce((pre, item) => {
 							return pre + item
 						}, 0)
 						console.log(n)
 						uni.setTabBarBadge({
-						  index: 1,
-						  text:n + ''
+							index: 1,
+							text: n + ''
 						})
 					}
 				})
@@ -188,12 +188,12 @@
 					}
 				});
 			},
-			onLoginOut(){
+			onLoginOut() {
 				this.isLogin = false
 				uni.clearStorageSync();
 				uni.removeTabBarBadge({
-					index:1,
-					success:function(){}
+					index: 1,
+					success: function() {}
 				})
 				this.$store.commit('clearInfo')
 				// #ifdef MP-WEIXIN
@@ -336,7 +336,7 @@
 				}
 			} else {
 				// #ifdef MP-WEIXIN  
-				this.showLoading()
+				// this.showLoading()
 				uni.login({
 					provider: 'weixin',
 					success: (res) => {
@@ -359,15 +359,17 @@
 				console.log('退出登录')
 				this.onLoginOut()
 			})
-			
+
 			uni.$on("onShow", () => {
 				console.log('进入app')
 				this.getNoReadNum();
 			})
 		},
 		onTabItemTap(e) {
-			console.log('切换导航栏')
-			this.getNoReadNum();
+			if (this.isLogin) {
+				console.log('切换导航栏')
+				this.getNoReadNum();
+			}
 		}
 	};
 </script>
